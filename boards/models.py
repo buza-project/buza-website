@@ -20,6 +20,12 @@ class Board(models.Model):
 	def save(self):
 		self.slug = slugify(self.name)
 
+	def __unicode__(self):
+		return self.slug
+
+	def __str__(self):
+		return self.title
+
 
 class Question(models.Model):
 	'''each class has list of questions'''
@@ -40,6 +46,9 @@ class Question(models.Model):
 
 	def __unicode__(self):
 		return self.slug
+
+	def __str__(self):
+		return self.title
 
 
 class Answer(models.Model):

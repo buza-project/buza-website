@@ -1,0 +1,39 @@
+Metadata-Version: 1.1
+Name: buza
+Version: 0.0.1
+Summary: buza
+Home-page: None
+Author: Ctrl Space
+Author-email: dev@buza.com
+License: BSD
+Description: gem
+        =========================
+        
+        This is an application scaffold for Molo_.
+        
+        Getting started
+        ---------------
+        In a separate terminal::
+        
+            $ redis-server
+        
+        To set up enviroment::
+        
+            $ virtualenv ve
+            $ pip install -e .
+            $ ./manage.py migrate
+            $ ./manage.py createsuperuser
+            $ ./manage.py runserver
+        
+        You can now connect access the demo site on http://localhost:8000
+        
+        To get started::
+        
+        	* log in to : http://localhost:8000
+        
+        .. _Molo: https://molo.readthedocs.org
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application

@@ -12,13 +12,14 @@ from taggit.managers import TaggableManager
 class Board(models.Model):
 	'''the model for each class'''
 
-	title = models.CharField(max_length=3, unique=True)
+	title = models.CharField(max_length=25, unique=True)
 	description = models.CharField(max_length=100)
 	created_at = models.DateTimeField(auto_now_add=True)
 	slug = models.SlugField(editable=False)
 
-	def save(self):
-		self.slug = slugify(self.name)
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.title)
+		super(Board, self).save(*args, **kwargs)
 
 	def __unicode__(self):
 		return self.slug
@@ -41,8 +42,9 @@ class Question(models.Model):
 
 	tags = TaggableManager()
 
-	def save(self):
+	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
+		super(Question, self).save(*args, **kwargs)
 
 	def __unicode__(self):
 		return self.slug

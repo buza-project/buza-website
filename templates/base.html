@@ -11,12 +11,13 @@
 	<div id="header">
 		<span class="logo">Eboard</span>
 
-		{% if request.user.is_authenticated %}
+
 		<ul class="menu">
-		 <li {% if section == "home" %}class="selected"{% endif %}><a href="{% url "home" %}"><h2>Questions</h2></a></li>
-         <li {% if section == "resources" %}class="selected"{% endif %}><a href="{% url "resources" %}"><h2>Resources</h2></a></li>
-         <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "users" %}"><h2>People</h2></a></li>
-         
+		 <li {% if section == "all_classrooms" %}class="selected"{% endif %}><a href="{% url "classrooms_url" %}"><h2>Classrooms</h2></a></li>
+         {% if request.user.is_authenticated %}
+         <li {% if section == "resources" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Questions</h2></a></li>
+         <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Users</h2></a></li>
+
      </ul>
      {%endif%}
 
@@ -32,7 +33,7 @@
                     <a href="{% url "logged_out" %}"> Logout</a>
                      </div>
                  </div>
-      
+
      	{% else %}
      		 <a href="{% url "login" %}" style="background-color: silver; padding: 10px;font-weight: bold; border-radius: 10%;">Log-In</a>
      		  <a href="{% url "register" %}" style="background-color: lightblue; padding: 10px;font-weight: bold; border-radius: 10%;">Sign-Up</a>
@@ -43,7 +44,7 @@
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <li class="{{ message.tags }}"> 
+        <li class="{{ message.tags }}">
             {{message|safe}}
             <a href="#" class="close">x</a>
         </li>

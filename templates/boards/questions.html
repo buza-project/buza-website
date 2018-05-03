@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block questions %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <link rel='stylesheet' href="{% static 'css/boards.css' %}">
+    <title>Buza</title>
+  </head>
+  <body>
+    <h1>Questions</h1>
+    <div class="boards">
+      {{questions}}
+    {% for question in questions %}
+    <div class="board">
+      <br>
+      {{ question.title }}
+      </div>
+    {% endfor %}
+    </div>
+  </body>
+</html>
+{% endblock %}

@@ -31,10 +31,8 @@ urlpatterns = [
 
     # boards
     # url(r'^$', views.home, name='home'),
-    url(r'^questions/(?P<subject>\d+)/$', views.board_questions_view,
-        name='board_questions'),
-    url(r'^question/(?P<id>\d+)/(?P<slug>\d+)/$', views.question_view,
-        name='board_questions'),
+    url(r'^questions/', views.all_questions, name='questions'),
+    url(r'^questions/', include('boards.urls')),
 
 ]
 

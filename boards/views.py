@@ -2,31 +2,38 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 from .models import Board, Question, Answer
 
 # Create your views here.
 
 
-def home(request):
+# checks if the user is logged in
+def all_questions(request):
+
+	questions = Question.objects.all()
+	# some ordering logic for the questions
+	print(questions)
+	return render(request, 'boards/questions.html', {'section': 'all_questions', 'questions': questions})
+
+
+def view_question(request, pk, slug):
+	questions = Question.objects.get(pk=pk)
+	# view one specific question
+
+	return render(request, 'boards/questions.html', {'section': 'all_questions', 'questions': questions})
+
+
+@login_required
+def all_classrooms(request):
 	boards = Board.objects.all()
 
-	# looks for template named home and passes a var called boards
-	return render(request, 'boards/home.html', {'boards': boards})
+	return render(request, 'boards/classrooms.html', {'section': 'classrooms', 'boards': boards})
 
 
-def board_questions_view(request, subject):
-	'''view all set of questions for a board'''
-
-	boards = Board.objects.all()
-	questions = Question.objects.filter(board=subject)
-	return render(request, 'boards/home.html', {'boards': boards})
-
-
-def question_view(request, id, slug):
-	'''view a specific question, by slugname or id'''
-	question = Question.objects.get(id=id)
-	if not question:
-		question = Question.objects.get(slug=slug)
-	answers = Answer.objects.filter(question=question)
-	return render(
-		request, 'boards/home.html', {'question': question, 'answers': answers})
+@login_required
+def all_users(request):
+	users = User.objects.all()
+	return render(request, 'boards/users.html', {'section': 'all_users', 'users': users})

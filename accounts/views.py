@@ -32,12 +32,6 @@ def user_login(request):
 		return render(request, 'accounts/login.html', {'form': form})
 
 
-# checks if the user is logged in
-@login_required
-def home(request):
-	return render(request, 'accounts/home.html', {'section': 'home'})
-
-
 def logged_out(request):
 	print('logged out')
 	logout(request)
@@ -97,7 +91,7 @@ def edit(request):
 	print(request.user)
 	if request.method == 'POST':
 		user_form = UserEditForm(instance=request.user, data=request.POST)
-		profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+		profile_form = ProfileEditForm(instance=request.user.user_profile, data=request.POST, files=request.FILES)
 		if user_form.is_valid() and profile_form.is_valid():
 			# get the user's userinfo and their profile details
 			user_form.save()

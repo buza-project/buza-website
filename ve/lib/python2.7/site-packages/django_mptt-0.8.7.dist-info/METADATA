@@ -1,0 +1,31 @@
+Metadata-Version: 2.0
+Name: django-mptt
+Version: 0.8.7
+Summary: Utilities for implementing Modified Preorder Tree Traversal
+        with your Django Models and working with trees of Model instances.
+Home-page: http://github.com/django-mptt/django-mptt
+Author: Craig de Stigter
+Author-email: craig.ds@gmail.com
+License: MIT License
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Utilities
+
+UNKNOWN
+
+

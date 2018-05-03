@@ -13,13 +13,31 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 from boards import views
+from accounts import views as account_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.home, name='home')
+
+    # users
+    url(r'^', account_views.user_login, name='user_login'),
+    url(r'^account/', include('accounts.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+
+    # boards
+    # url(r'^$', views.home, name='home'),
+    url(r'^questions/(?P<subject>\d+)/$', views.board_questions_view,
+        name='board_questions'),
+    url(r'^question/(?P<id>\d+)/(?P<slug>\d+)/$', views.question_view,
+        name='board_questions'),
+
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)

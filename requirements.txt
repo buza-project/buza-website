@@ -4,3 +4,5 @@ django-taggit-autocomplete-modified
 django-taggit
 django_compressor==2.2
 django-mptt==0.8.7
+social-auth-app-django
+pillow

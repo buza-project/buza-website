@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['buza.com', 'eboard.com', u'localhost']
 
+AUTH_PROFILE_MODULE = 'accounts.Profile'
 
 # Application definition
 

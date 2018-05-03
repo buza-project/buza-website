@@ -20,13 +20,12 @@ from django.conf.urls.static import static
 
 
 from boards import views
-from accounts import views as account_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # users
-    url(r'^', account_views.user_login, name='user_login'),
+    # url(r'^', account_views.user_login, name='user_login'),
     url(r'^account/', include('accounts.urls')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 

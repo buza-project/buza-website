@@ -12,6 +12,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 
 def user_login(request):
+	print("login")
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -44,7 +45,7 @@ def logged_out(request):
 	return render(request, 'registration/logout.html', {'section': 'logged_out'})
 
 
-#Changing the user's password
+# Changing the user's password
 @login_required
 def password_change(request):
 	if request.method == 'POST':
@@ -60,50 +61,51 @@ def password_change(request):
 		form = PasswordChangeForm(request.user)
 	return render(request, 'registration/password_change_index.html', {'form': form})
 
+
 @login_required
 def password_change_done(request):
-    return render(request, 'registration/password_change_done_index.html', {'section': 'password_done'})
+	'''resetting your password'''
+	return render(request, 'registration/password_change_done_index.html', {'section': 'password_done'})
 
 
-#resetting your password
-def password_change_done(request):
-    return render(request, 'registration/password_change_done_index.html', {'section': 'password_done'})
-
-#the view for creating user accounts
 def register(request):
-	if request.method== 'POST':
+	'''the view for creating user accounts'''
+	print("register")
+	if request.method == 'POST':
 		user_form = UserRegistrationForm(request.POST)
 
 		if user_form.is_valid():
-			#create a new user objec but do not save it as of yet
-			new_user= user_form.save(commit=False)
+			# create a new user objec but do not save it as of yet
+			new_user = user_form.save(commit=False)
 
-			#Set the selected password
+			# Set the selected password
 			new_user.set_password(user_form.cleaned_data['password'])
-			#now we can save the user
+			# now we can save the user
 			new_user.save()
-			profile = Profile.objects.create(user=new_user)
+			profile = Profile.objects.create(author_id=new_user)
+			profile.save()
 			return render(request, 'accounts/register_done.html', {'new_user': new_user})
 	else:
-		#not a post method
-		user_form= UserRegistrationForm()
+		# user did not fill in form correctly
+		user_form = UserRegistrationForm()
 	return render(request, 'accounts/register.html', {'user_form': user_form})
 
 
-#allowing users to edit their own profiles
+# allowing users to edit their own profiles
 @login_required
 def edit(request):
-	if request.method== 'POST':
-		user_form= UserEditForm(instance= request.user, data=request.POST)
-		profile_form= ProfileEditForm(instance=request.user.profile, data= request.POST, files=request.FILES)
+	print(request.user)
+	if request.method == 'POST':
+		user_form = UserEditForm(instance=request.user, data=request.POST)
+		profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
 		if user_form.is_valid() and profile_form.is_valid():
-			#get the user's userinfo and their profile details
+			# get the user's userinfo and their profile details
 			user_form.save()
 			profile_form.save()
-			messages.success(request,'Profile updated successfully')
+			messages.success(request, 'Profile updated successfully')
 		else:
 			messages.error(request, 'Error updating your profile')
 	else:
 		user_form = UserEditForm(instance=request.user)
-		profile_form= ProfileEditForm(instance=request.user.profile)
-	return render(request,'accounts/edit.html',{'user_form':user_form, 'profile_form':profile_form} )
+		profile_form = ProfileEditForm(instance=request.user.user_profile)
+	return render(request, 'accounts/edit.html', {'user_form': user_form, 'profile_form': profile_form} )

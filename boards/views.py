@@ -6,17 +6,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .models import Board, Question, Answer
+from accounts.models import Profile
 
 # Create your views here.
 
 
 # checks if the user is logged in
+@login_required
 def all_questions(request):
 
 	questions = Question.objects.all()
 	# some ordering logic for the questions
-	print(questions)
-	return render(request, 'boards/questions.html', {'section': 'all_questions', 'questions': questions})
+	profiles = Profile.objects.all()
+	print(profiles)
+	return render(request, 'boards/questions.html', {'section': 'questions', 'questions': questions})
 
 
 def view_question(request, pk, slug):

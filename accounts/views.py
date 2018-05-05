@@ -29,7 +29,7 @@ def user_login(request):
 	else:
 		# the request was not a post
 		form = LoginForm()
-		return render(request, 'accounts/login.html', {'form': form})
+		return render(request, 'registration/login.html', {'form': form})
 
 
 def logged_out(request):
@@ -101,5 +101,10 @@ def edit(request):
 			messages.error(request, 'Error updating your profile')
 	else:
 		user_form = UserEditForm(instance=request.user)
-		profile_form = ProfileEditForm(instance=request.user.user_profile)
+		try:
+			profile = request.user.user_profile
+		except:
+			profile = Profile.objects.create(author_id=request.user)
+			profile.save()
+		profile_form = ProfileEditForm(instance=profile)
 	return render(request, 'accounts/edit.html', {'user_form': user_form, 'profile_form': profile_form} )

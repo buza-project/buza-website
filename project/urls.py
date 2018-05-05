@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 
 from boards import views
@@ -25,7 +26,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # users
-    # url(r'^', account_views.user_login, name='user_login'),
     url(r'^account/', include('accounts.urls')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
@@ -33,7 +33,8 @@ urlpatterns = [
     # url(r'^$', views.home, name='home'),
     url(r'^questions/', views.all_questions, name='questions'),
     url(r'^questions/', include('boards.urls')),
-
+    # what do you want"
+    url(r'^', auth_views.login, name='user_login'),
 ]
 
 if settings.DEBUG:

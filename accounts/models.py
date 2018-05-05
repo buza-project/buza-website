@@ -16,4 +16,4 @@ class Profile(models.Model):
 	reputation = models.IntegerField(blank=True, default=0)
 
 	def __str__(self):
-		return 'Profile for username {}'.format(self.user.username)
+		return 'Profile for author_id {}'.format(self.author_id)

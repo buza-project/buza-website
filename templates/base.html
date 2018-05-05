@@ -16,7 +16,7 @@
 		 <li {% if section == "all_classrooms" %}class="selected"{% endif %}><a href="{% url "classrooms_url" %}"><h2>Classrooms</h2></a></li>
          {% if request.user.is_authenticated %}
          <li {% if section == "resources" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Questions</h2></a></li>
-         <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Users</h2></a></li>
+         <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "users" %}"><h2>Users</h2></a></li>
 
      </ul>
      {%endif%}

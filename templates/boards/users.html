@@ -6,15 +6,15 @@
   <head>
     <meta charset="utf-8">
      <link rel='stylesheet' href="{% static 'css/boards.css' %}">
-    <title>Buza</title>
+    <title>Users</title>
   </head>
   <body>
-    <h1>Subjects</h1>
+    <h1>Users</h1>
     <div class="boards">
-    {% for board in boards %}
+    {% for user in users %}
     <div class="board">
       <br>
-      {{ board.title }}
+      {{ user.username }}
       </div>
     {% endfor %}
     </div>

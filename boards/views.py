@@ -17,8 +17,6 @@ def all_questions(request):
 
 	questions = Question.objects.all()
 	# some ordering logic for the questions
-	profiles = Profile.objects.all()
-	print(profiles)
 	return render(request, 'boards/questions.html', {'section': 'questions', 'questions': questions})
 
 

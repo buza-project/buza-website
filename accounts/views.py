@@ -12,7 +12,6 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 
 def user_login(request):
-	print("login")
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -64,7 +63,6 @@ def password_change_done(request):
 
 def register(request):
 	'''the view for creating user accounts'''
-	print("register")
 	if request.method == 'POST':
 		user_form = UserRegistrationForm(request.POST)
 
@@ -88,7 +86,6 @@ def register(request):
 # allowing users to edit their own profiles
 @login_required
 def edit(request):
-	print(request.user)
 	if request.method == 'POST':
 		user_form = UserEditForm(instance=request.user, data=request.POST)
 		profile_form = ProfileEditForm(instance=request.user.user_profile, data=request.POST, files=request.FILES)

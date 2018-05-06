@@ -1,10 +1,11 @@
-{% load staticfiles %}
+{% load staticfiles static %}
 
 <!DOCTYPE html>
 <head>
 	<title>{%block title %} {%endblock%}</title>
 	<link href="{% static "css/base.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href="{% static 'css/boards.css' %}">
 </head>
 
 <body>
@@ -13,7 +14,7 @@
 
 
 		<ul class="menu">
-		 <li {% if section == "all_classrooms" %}class="selected"{% endif %}><a href="{% url "classrooms_url" %}"><h2>Classrooms</h2></a></li>
+		 <li {% if section == "all_boards" %}class="selected"{% endif %}><a href="{% url "all_boards" %}"><h2>Boards{% load static %}</h2></a></li>
          {% if request.user.is_authenticated %}
          <li {% if section == "resources" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Questions</h2></a></li>
          <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "users" %}"><h2>Users</h2></a></li>

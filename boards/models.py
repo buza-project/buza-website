@@ -16,6 +16,8 @@ class Board(models.Model):
 	description = models.CharField(max_length=100)
 	created_at = models.DateTimeField(auto_now_add=True)
 	slug = models.SlugField(editable=False)
+	users_count = models.IntegerField(default=0) #number of active users
+	questions_count = models.IntegerField(default=0) #number of questions
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -26,6 +28,9 @@ class Board(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	class Meta:
+		ordering = ('created_at',)
 
 
 class Question(models.Model):
@@ -52,6 +57,9 @@ class Question(models.Model):
 	def __str__(self):
 		return self.title
 
+	class Meta:
+		ordering = ('created_at',)
+
 
 class Answer(models.Model):
 	'''users can post questions that will display on the classroom'''
@@ -62,6 +70,10 @@ class Answer(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
 	user = models.ForeignKey(User, related_name='answered_by')
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		ordering = ('created_at',)
 
 
 class Comment(models.Model):
@@ -70,10 +82,10 @@ class Comment(models.Model):
 	comment = models.CharField(max_length=200)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
-	user = models.ForeignKey(User, related_name='commented_by')
 
 	class Meta:
 		abstract = True
+		ordering = ('created_at',)
 
 
 class QuestionComment(Comment):
@@ -81,8 +93,14 @@ class QuestionComment(Comment):
 	user = models.ForeignKey(User, related_name='question_commented_by')
 	question = models.ForeignKey(Question, related_name="question_comments")
 
+	class Meta:
+		ordering = ('created_at',)
+
 
 class AnswerComment(Comment):
 	'''a comment for a question'''
 	user = models.ForeignKey(User, related_name='answer_commented_by')
 	answer = models.ForeignKey(Answer, related_name="reply_comments")
+
+	class Meta:
+		ordering = ('created_at',)

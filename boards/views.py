@@ -28,10 +28,18 @@ def view_question(request, pk, slug):
 
 
 @login_required
-def all_classrooms(request):
+def all_boards(request):
 	boards = Board.objects.all()
 
-	return render(request, 'boards/classrooms.html', {'section': 'classrooms', 'boards': boards})
+	return render(request, 'boards/classrooms.html', {'boards': boards})
+
+
+@login_required
+def my_boards(request):
+	# profile = request.user.user_profile
+	profile = Profile.objects.get(author_id=request.user)
+	my_boards = profile.boards.all()
+	return render(request, 'boards/classrooms.html', {'boards': my_boards})
 
 
 @login_required

@@ -1,15 +1,11 @@
 {% extends "base.html" %}
-{% load static %}
+
 {% block content %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-     <link rel='stylesheet' href="{% static 'css/boards.css' %}">
-    <title>Buza</title>
-  </head>
-  <body>
-    <h1>Subjects</h1>
+    <h1>Boards</h1>
+    <div>
+               <a href="{% url "all_boards" %}" style="background-color: silver; padding: 10px;font-weight: bold; border-radius: 10%;">all-boards</a>
+          <a href="{% url "my_boards" %}" style="background-color: lightblue; padding: 10px;font-weight: bold; border-radius: 10%;">my-boards</a>
+    </div>
     <div class="boards">
     {% for board in boards %}
     <div class="board">
@@ -18,6 +14,4 @@
       </div>
     {% endfor %}
     </div>
-  </body>
-</html>
 {% endblock %}

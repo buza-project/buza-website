@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+from boards.models import Board
 
 # Models will be added to the db
 
@@ -15,5 +16,9 @@ class Profile(models.Model):
 	grade = models.IntegerField(blank=True, default=7)
 	reputation = models.IntegerField(blank=True, default=0)
 
+	# users can have multiple boards
+	boards = models.ManyToManyField(Board, related_name="my_boards")
+
 	def __str__(self):
 		return 'Profile for author_id {}'.format(self.author_id)
+

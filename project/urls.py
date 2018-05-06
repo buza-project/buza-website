@@ -32,7 +32,7 @@ urlpatterns = [
     # boards
     # url(r'^$', views.home, name='home'),
     url(r'^home/', views.all_questions, name='questions'),
-    url(r'^question/', include('boards.urls')),
+    # url(r'^buza/', include('boards.urls')),
     url(r'^boards/', include('boards.urls')),
     # what do you want"
     url(r'^', auth_views.login, name='user_login'),

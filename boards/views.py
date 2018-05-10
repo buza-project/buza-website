@@ -17,14 +17,18 @@ def all_questions(request):
 
 	questions = Question.objects.all()
 	# some ordering logic for the questions
-	return render(request, 'boards/questions.html', {'section': 'questions', 'questions': questions})
+	return render(
+		request, 'boards/questions.html',
+		{'section': 'questions', 'questions': questions})
 
 
-def view_question(request, pk, slug):
-	questions = Question.objects.get(pk=pk)
-	# view one specific question
-
-	return render(request, 'boards/questions.html', {'section': 'all_questions', 'questions': questions})
+def view_question(request, question_id, question_slug, board_name):
+	# we have a question, we need a board and a user
+	question = Question.objects.get(pk=question_id)
+	profile = question.user.user_profile
+	return render(
+		request, 'boards/question_view.html',
+		{'question': question, 'board': question.board, 'user': question.user, 'profile': profile})
 
 
 @login_required
@@ -36,8 +40,13 @@ def all_boards(request):
 
 @login_required
 def board_questions(request, board_name):
-	print("waz the issue")
-	questions = Question.objects.filter(title=board_name)
+	print("this is a board " + board_name)
+	try:
+		board = Board.objects.get(title=board_name)
+	except:
+		board = Board.objects.get(slug=board_name)
+
+	questions = Question.objects.filter(board=board)
 	return render(request, 'boards/questions.html', {'questions': questions})
 
 
@@ -52,7 +61,8 @@ def my_boards(request):
 @login_required
 def all_users(request):
 	users = User.objects.all()
-	return render(request, 'boards/users.html', {'section': 'all_users', 'users': users})
+	return render(
+		request, 'boards/users.html', {'section': 'all_users', 'users': users})
 
 
 def update_boards():

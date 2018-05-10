@@ -1,7 +1,7 @@
 from django.conf.urls import url
 # from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import views as auth_views
-
+from django.contrib.auth.views import logout
 from . import views
 
 urlpatterns = [

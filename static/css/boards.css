@@ -4,6 +4,7 @@
     width: 40%;
     background: pink;
     cursor: pointer;
+    color: white;
     text-align: center;
     border: 3px solid white;
     padding: 10px
@@ -19,7 +20,7 @@
 }
 
 div.boards > div:nth-of-type(odd) {
-    background: grey;
+    background: lightgrey;
      margin-left: : 5px;
 ;
 

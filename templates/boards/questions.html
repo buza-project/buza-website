@@ -10,12 +10,15 @@
   </head>
   <body>
     <h1>Questions</h1>
+
     <div class="boards">
     {% for question in questions %}
+    <a href="{% url 'view_question' question.board.slug question.id question.slug %}" style="font-weight: bold;color: white;">
     <div class="board">
       <br>
       {{ question.title }}
       </div>
+    </a>
     {% endfor %}
     </div>
   </body>

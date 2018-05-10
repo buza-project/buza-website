@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{question.title}}
+<br>
+{{question.description}}
+<br>
+{{board.title}}
+<br>
+asked on: {{question.created_at}}
+<br>
+asked by: {{user.username}}
+<br>
+{% endblock %}

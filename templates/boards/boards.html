@@ -9,13 +9,13 @@
     <br>
     <div class="boards">
     {% for board in boards %}
+    <a href="{% url 'board_questions' board.slug %}" style="font-weight: bold;color: white;">
     <div class="board">
-      <br>
-      <a href="{% url 'board_questions' board.title %}" style="font-weight: bold;color: white;">
       {{ board.title }}
-    </a>
+      <br>
       members: {{board.users_count}}
       questions: {{board.questions_count}}
+    </a>
       </div>
     {% endfor %}
     </div>

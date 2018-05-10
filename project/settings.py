@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'taggit',
     'accounts',
     'social_django',
+    'tinymce',
 
 ]
 

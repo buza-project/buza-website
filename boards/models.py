@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 from taggit.managers import TaggableManager
+from tinymce.models import HTMLField
 # Create your models here.
 
 
@@ -37,7 +38,7 @@ class Question(models.Model):
 	'''each class has list of questions'''
 
 	title = models.CharField(max_length=100, blank=False)
-	description = models.CharField(max_length=400)
+	description = HTMLField()
 	media = models.FileField(upload_to='media/questions/')
 	board = models.ForeignKey(Board, related_name='questions')
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -64,7 +65,7 @@ class Question(models.Model):
 class Answer(models.Model):
 	'''users can post questions that will display on the classroom'''
 
-	answer = models.CharField(max_length=400)
+	answer = HTMLField()
 	media = models.CharField(max_length=400)
 	question = models.ForeignKey(Question, related_name="answers")
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -79,7 +80,7 @@ class Answer(models.Model):
 class Comment(models.Model):
 	'''a comment can be for a question or an answer'''
 
-	comment = models.CharField(max_length=200)
+	comment = HTMLField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
 

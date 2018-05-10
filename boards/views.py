@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Board, Question, Answer
 from accounts.models import Profile
+from .forms import AskForm
 
 # Create your views here.
 
@@ -72,3 +73,9 @@ def update_boards():
 		board.users_count = board.my_boards.all().count()
 		board.questions_count = board.questions.all().count()
 		board.save()
+
+
+@login_required
+def ask_question(request):
+	ask_form = AskForm(instance=request.user, data=request.POST)
+	return render(request, 'boards/ask_question.html', {'form': ask_form})

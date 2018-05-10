@@ -6,8 +6,9 @@ from . import views
 urlpatterns = [
 	url(r'^questions/$', views.all_questions, name='all_questions'),
 	url(r'^all/$', views.all_boards, name='all_boards'),
-	url(r'^mine/$', views.my_boards, name='my_boards'),
+	url(r'^my-boards/$', views.my_boards, name='my_boards'),
 	url(r'^users/$', views.all_users, name='users'),
+	url(r'^ask-question/$', views.ask_question, name='ask_question'),
 	url(r'^(?P<board_name>[\w|\W]+)/(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',
 		views.view_question, name='view_question'),
 	url(r'^(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',

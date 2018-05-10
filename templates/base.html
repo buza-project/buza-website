@@ -6,16 +6,18 @@
 	<link href="{% static "css/base.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href="{% static 'css/boards.css' %}">
+     <script src="{% static 'js/tinymce/js/tinymce/tinymce.min.js' %}"></script>
+
+  <script type="text/javascript" src="{% static 'js/tinymce/custom.js' %}" ></script>
 </head>
 
 <body>
 	<div id="header">
 		<span class="logo">Buza</span>
 
-
+         {% if request.user.is_authenticated %}
 		<ul class="menu">
 		 <li {% if section == "all_boards" %}class="selected"{% endif %}><a href="{% url 'all_boards' %}"><h2>Boards</h2></a></li>
-         {% if request.user.is_authenticated %}
          <li {% if section == "resources" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Questions</h2></a></li>
          <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "users" %}"><h2>Users</h2></a></li>
 
@@ -24,7 +26,11 @@
 
      <span class="user">
      {% if request.user.is_authenticated %}
-        <div class="dropdown" style="float:right;">
+     <div>
+        <a href="{% url "ask_question" %}" style="background-color: red; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Ask a question</a>
+     </div>
+
+     <div class="dropdown" style="float:right;">
              <button class="dropbtn">Hello {{request.user.first_name}}
       <i class="fa fa-caret-down"></i> </button>
             <div class="dropdown-content">
@@ -37,7 +43,7 @@
 
      	{% else %}
      		 <a href="{% url "login" %}" style="background-color: silver; padding: 10px;font-weight: bold; border-radius: 10%;">Log-In</a>
-     		  <a href="{% url "register" %}" style="background-color: lightblue; padding: 10px;font-weight: bold; border-radius: 10%;">Sign-Up</a>
+     		  <a href="{% url "register" %}" style="background-color: lightblue; padding: 20px;font-weight: bold; border-radius: 10%;">Sign-Up</a>
      	{% endif %}
      </span>
 	</div>

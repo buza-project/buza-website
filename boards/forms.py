@@ -6,4 +6,4 @@ class AskForm(forms.ModelForm):
 
 	class Meta:
 		model = Question
-		fields = ('board', 'title', 'description', 'media', 'tags')
+		fields = ('title', 'description', 'board', 'media', 'tags')

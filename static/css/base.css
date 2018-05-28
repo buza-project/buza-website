@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Muli);
- @font-face { font-family: Chalk; src: url('fonts/dk-cool-crayon.woff') format('woff'); } 
+ @font-face { font-family: Chalk; src: url('fonts/dk-cool-crayon.woff') format('woff'); }
 body {
     margin:0;
     padding:0;
@@ -16,7 +16,7 @@ a {
 }
 
 a:hover {
-    
+
     font-weight: bold;
     font-family: 'Chalk'
 }
@@ -289,7 +289,7 @@ img.user-detail {
 }
 
 .dropdown .dropbtn {
-    font-size: 16px;    
+    font-size: 16px;
     border: none;
     outline: none;
     color: white;
@@ -326,4 +326,8 @@ img.user-detail {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.form-body {
+    border-radius: 5px;background-color: #f2f2f2;padding: 20px;
 }

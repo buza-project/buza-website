@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .models import Board, Question, Answer
+from django.http import HttpResponse
 from accounts.models import Profile
 from .forms import AskForm
 
@@ -77,5 +78,16 @@ def update_boards():
 
 @login_required
 def ask_question(request):
+	if request.method == 'POST':
+		ask_form = AskForm(files=request.FILES, instance=request.user, data=request.POST)
+
+		if ask_form.is_valid():
+			new_question = ask_form.save(commit=False)
+			new_question.user = request.user
+			new_question.save()
+			return render(request, 'boards/question_view.html', {'question': new_question, 'board': new_question.board, 'user': new_question.user, 'profile': new_question.user.user_profile})
+
+		# else:
+		# 	return HttpResponse(ask_form.errors.media)
 	ask_form = AskForm(instance=request.user, data=request.POST)
 	return render(request, 'boards/ask_question.html', {'form': ask_form})

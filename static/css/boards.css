@@ -22,7 +22,6 @@
 div.boards > div:nth-of-type(odd) {
     background: lightgrey;
      margin-left: : 5px;
-;
 
 }
 

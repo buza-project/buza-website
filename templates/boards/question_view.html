@@ -3,7 +3,11 @@
 {% block content %}
 {{question.title}}
 <br>
+<div >
+	<a style="background-color: red;">Like Dislike</a>
+	<br>
 {{question.description}}
+</div>
 <br>
 {{board.title}}
 <br>
@@ -11,4 +15,15 @@ asked on: {{question.created_at}}
 <br>
 asked by: {{user.username}}
 <br>
+ {% if request.user.is_authenticated and request.user == user%}
+     <div name="edit a question">
+        <a href="{% url 'edit_question' question.id question.slug %}" style="background-color: yellow; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Edit Question</a>
+     </div>
+     <div name="remove question">
+        <a href="" style="background-color: red; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Delete Question</a>
+     </div>
+     {% endif %}
+      <a name="answer question" style="background-color: red;">
+     		Answer the Question (add this here)
+     </a>
 {% endblock %}

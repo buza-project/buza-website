@@ -17,3 +17,10 @@ class AskForm(forms.ModelForm):
 	class Meta:
 		model = Question
 		fields = ('board', )
+
+
+class EditQuestionFomr(forms.ModelForm):
+	#users should not be able to edit files
+	class Meta:
+		model = Question
+		fields = ('title', 'description', 'media', 'tags')

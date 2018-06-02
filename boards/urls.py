@@ -9,6 +9,8 @@ urlpatterns = [
 	url(r'^my-boards/$', views.my_boards, name='my_boards'),
 	url(r'^users/$', views.all_users, name='users'),
 	url(r'^ask-question/$', views.ask_question, name='ask_question'),
+	url(r'^edit/(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',
+		views.edit_question, name='edit_question'),
 	url(r'^(?P<board_name>[\w|\W]+)/(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',
 		views.view_question, name='view_question'),
 	url(r'^(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',

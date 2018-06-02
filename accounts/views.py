@@ -74,7 +74,7 @@ def register(request):
 			new_user.set_password(user_form.cleaned_data['password'])
 			# now we can save the user
 			new_user.save()
-			profile = Profile.objects.create(author_id=new_user)
+			profile = Profile.objects.create(user=new_user)
 			profile.save()
 			return render(request, 'accounts/register_done.html', {'new_user': new_user})
 	else:
@@ -99,9 +99,9 @@ def edit(request):
 	else:
 		user_form = UserEditForm(instance=request.user)
 		try:
-			profile = request.user.user_profile
+			profile = Profile.objects.get(pk=request.user.pk)
 		except:
-			profile = Profile.objects.create(author_id=request.user)
+			profile = Profile.objects.create(user=request.user)
 			profile.save()
 		profile_form = ProfileEditForm(instance=profile)
 	return render(request, 'accounts/edit.html', {'user_form': user_form, 'profile_form': profile_form} )

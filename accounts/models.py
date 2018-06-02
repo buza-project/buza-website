@@ -1,13 +1,14 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
 from boards.models import Board
 
 # Models will be added to the db
 
 
 class Profile(models.Model):
-	author_id = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user_profile', on_delete=models.CASCADE) #there is a 1-1 relation btn users and profile
+	user = models.OneToOneField(
+		settings.AUTH_USER_MODEL, related_name='user_profile',
+		on_delete=models.CASCADE)  # there is a 1-1 relation btn users and profile
 	photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
 	school = models.CharField(blank=True, null=True, max_length=100)
 	interests = models.CharField(blank=True, null=True, max_length=300)

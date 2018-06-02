@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import Profile
 
-# Register your models here.
+
 class ProfileAdmin(admin.ModelAdmin):
-	list_display= ['author_id', 'school','reputation']
+	# Register your models here.
+	list_display = ['user', 'school', 'reputation']
 admin.site.register(Profile, ProfileAdmin)

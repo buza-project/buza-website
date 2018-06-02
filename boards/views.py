@@ -27,7 +27,7 @@ def all_questions(request):
 def view_question(request, question_id, question_slug, board_name):
 	# we have a question, we need a board and a user
 	question = Question.objects.get(pk=question_id)
-	profile = question.user.user_profile
+	profile = Profile.objects.get(pk=request.user.pk)
 	return render(
 		request, 'boards/question_view.html',
 		{'question': question, 'board': question.board, 'user': question.user, 'profile': profile})
@@ -82,10 +82,24 @@ def ask_question(request):
 		ask_form = AskForm(files=request.FILES, instance=request.user, data=request.POST)
 
 		if ask_form.is_valid():
-			new_question = ask_form.save(commit=False)
-			new_question.user = request.user
+			# user = ask_form.save(commit=False)
+			# user.save()
+			print("-----------------")
+			board = Board.objects.get(pk=request.POST['board'])
+			new_question = Question(
+				title=request.POST['title'],
+				description=request.POST['description'],
+				board=board,
+				tags=request.POST['tags'],
+				media=request.FILES.get('media', None),
+				user=request.user)
 			new_question.save()
-			return render(request, 'boards/question_view.html', {'question': new_question, 'board': new_question.board, 'user': new_question.user, 'profile': new_question.user.user_profile})
+			return render(
+				request, 'boards/question_view.html',
+				{'question': new_question,
+					'board': new_question.board,
+					'user': new_question.user,
+					'profile': Profile.objects.get(pk=request.user.pk)})
 
 		# else:
 		# 	return HttpResponse(ask_form.errors.media)

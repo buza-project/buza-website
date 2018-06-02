@@ -52,6 +52,15 @@ class Question(models.Model):
 		self.slug = slugify(self.title)
 		super(Question, self).save(*args, **kwargs)
 
+	def update(self, title, description, media, board, tags, *args, **kwargs):
+		self.title = title
+		self.description = description
+		self.media = media
+		self.board = board
+		self. slug = slugify(title)
+		self.tags = tags
+		super(Question, self).save(*args, **kwargs)
+
 	def __unicode__(self):
 		return self.slug
 

@@ -92,7 +92,7 @@ def edit(request):
 		if user_form.is_valid() and profile_form.is_valid():
 			# get the user's userinfo and their profile details
 			user_form.save()
-			profile_form.save()
+			profile_form.save(request.user)
 
 			messages.success(request, 'Profile updated successfully')
 		else:

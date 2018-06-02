@@ -9,8 +9,8 @@ class AskForm(forms.ModelForm):
 		widget=TinyMCE(attrs={'required': True, 'cols': 30, 'rows': 10}))
 	media = forms.FileField(
 		required=False,
-		help_text='any files to clearify your question')
-	tags = forms.CharField(required=False)
+		help_text='any files to clarify your question')
+	tags = forms.CharField(max_length=40, required=False)
 	# label='3 Upload file 1',
 	# help_text='*'
 
@@ -19,8 +19,16 @@ class AskForm(forms.ModelForm):
 		fields = ('board', )
 
 
-class EditQuestionFomr(forms.ModelForm):
-	#users should not be able to edit files
+class EditQuestionForm(forms.ModelForm):
+	# users should not be able to edit titles
+	title = forms.CharField(max_length=100)
+	description = forms.CharField(
+		widget=TinyMCE(attrs={'required': True, 'cols': 30, 'rows': 10}))
+	media = forms.FileField(
+		required=False,
+		help_text='any files to clarify your question')
+	tags = forms.CharField(max_length=40, required=False)
+
 	class Meta:
 		model = Question
-		fields = ('title', 'description', 'media', 'tags')
+		fields = ('board', 'media', 'title', 'description', 'tags')

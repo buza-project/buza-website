@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 from .models import Board, Question, Answer
 from accounts.models import Profile
-from .forms import AskForm
+from .forms import AskForm, EditQuestionForm
 
 # Create your views here.
 
@@ -115,13 +115,26 @@ def edit_question(request, question_id, question_slug):
 	user = User.objects.get(pk=question.user.pk)
 	profile = Profile.objects.get(pk=user.pk)
 	if request.method == 'POST':
-		edit_form = AskForm(files=request.FILES, instance=request.user, data=request.POST)
+		edit_form = EditQuestionForm(files=request.FILES, instance=request.user, data=request.POST)
 		if edit_form.is_valid():
 			edit_form.save()
+			question.update(
+				request.POST['title'],
+				request.POST['description'],
+				request.FILES.get('media'),
+				Board.objects.get(pk=request.POST['board']),
+				request.POST['tags'])
+
+			question.save()
 			messages.success(request, 'Edit question complete')
-			return render(request, 'boards/question_view.html',
-				{'question': question, 'board': question.board, 'user': question.user, 'profile': profile})
+			return render(
+				request, 'boards/question_view.html',
+				{'question': question, 'board': question.board,
+					'user': question.user, 'profile': profile})
 		else:
 			messages.error(request, 'There was an error while editing your question')
+	else:
+		edit_form = EditQuestionForm(instance=question)
 	return render(
-		request, 'boards/edit_question.html')
+		request, 'boards/edit_question.html',
+		{'form': edit_form, 'user': user, 'question': question})

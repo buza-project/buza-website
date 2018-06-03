@@ -1,12 +1,12 @@
 
 {% extends "base.html" %}
 {% load staticfiles static %}
+{% block title %}Ask a question{% endblock %}
 {% block content %}
 Are you here to ask a QWESHIN?
 
 <form action="." method="post" enctype="multipart/form-data">
 <div class="form-body" style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
-{% csrf_token %}
     {%if form.errors %}
     {{form.errors}}
 {% endif %}
@@ -36,7 +36,7 @@ Are you here to ask a QWESHIN?
 
      <div>
     <div>
-    <label for="country">Board</label>
+    <label for="country">Subject</label>
             <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
     {{form.board}}
    </div>
@@ -48,7 +48,7 @@ Are you here to ask a QWESHIN?
     {{form.tags}}
     </div>
 </div>
-
+    {% csrf_token %}
     <input type="submit" value="Ask">
     </div>
 </form>

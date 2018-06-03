@@ -74,7 +74,7 @@ def register(request):
 			new_user.set_password(user_form.cleaned_data['password'])
 			# now we can save the user
 			new_user.save()
-			profile = Profile.objects.create(author_id=new_user)
+			profile = Profile.objects.create(user=new_user)
 			profile.save()
 			return render(request, 'accounts/register_done.html', {'new_user': new_user})
 	else:
@@ -87,21 +87,22 @@ def register(request):
 @login_required
 def edit(request):
 	if request.method == 'POST':
-		user_form = UserEditForm(instance=request.user, data=request.POST)
-		profile_form = ProfileEditForm(instance=request.user.user_profile, data=request.POST, files=request.FILES)
+		user_form = UserEditForm(instance=request.user, files=request.FILES, data=request.POST)
+		profile_form = ProfileEditForm(instance=request.user.user_profile, files=request.FILES, data=request.POST)
 		if user_form.is_valid() and profile_form.is_valid():
 			# get the user's userinfo and their profile details
 			user_form.save()
-			profile_form.save()
+			profile_form.save(request.user)
+
 			messages.success(request, 'Profile updated successfully')
 		else:
 			messages.error(request, 'Error updating your profile')
 	else:
 		user_form = UserEditForm(instance=request.user)
 		try:
-			profile = request.user.user_profile
+			profile = Profile.objects.get(pk=request.user.pk)
 		except:
-			profile = Profile.objects.create(author_id=request.user)
+			profile = Profile.objects.create(user=request.user)
 			profile.save()
 		profile_form = ProfileEditForm(instance=profile)
 	return render(request, 'accounts/edit.html', {'user_form': user_form, 'profile_form': profile_form} )

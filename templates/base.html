@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <head>
-	<title>{%block title %} {%endblock%}</title>
+	<title>{%block title %} Buza Home{%endblock%}</title>
 	<link href="{% static "css/base.css" %}" rel="stylesheet">
     <link href="{% static "css/boards.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,7 +18,7 @@
 
          {% if request.user.is_authenticated %}
 		<ul class="menu">
-		 <li {% if section == "all_boards" %}class="selected"{% endif %}><a href="{% url 'all_boards' %}"><h2>Boards</h2></a></li>
+		 <li {% if section == "all_boards" %}class="selected"{% endif %}><a href="{% url 'all_boards' %}"><h2>Subjects</h2></a></li>
          <li {% if section == "resources" %}class="selected"{% endif %}><a href="{% url "questions" %}"><h2>Questions</h2></a></li>
          <li {% if section == "users" %}class="selected"{% endif %}><a href="{% url "users" %}"><h2>Users</h2></a></li>
 
@@ -28,7 +28,7 @@
      <span class="user">
      {% if request.user.is_authenticated %}
      <div>
-        <a href="{% url "ask_question" %}" style="background-color: red; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Ask a question</a>
+        <a href="{% url "ask_question" %}" style="background-color: yellow; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;color: grey;">Ask a question</a>
      </div>
 
      <div class="dropdown" style="float:right;">

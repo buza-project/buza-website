@@ -1,6 +1,7 @@
 
 {% extends "base.html" %}
 {% load staticfiles static %}
+{% block title %}Ask a question{% endblock %}
 {% block content %}
 Are you here to ask a QWESHIN?
 
@@ -35,7 +36,7 @@ Are you here to ask a QWESHIN?
 
      <div>
     <div>
-    <label for="country">Board</label>
+    <label for="country">Subject</label>
             <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
     {{form.board}}
    </div>

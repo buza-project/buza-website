@@ -13,6 +13,13 @@
 <br>
 asked on: {{question.created_at}}
 <br>
+updated on: {{question.updated_at}}
+<br>
+
+{% if question.media %}
+media files: {{question.media}}
+<br>
+{% endif %}
 asked by: {{user.username}}
 <br>
  {% if request.user.is_authenticated and request.user == user%}

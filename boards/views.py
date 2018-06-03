@@ -56,7 +56,7 @@ def board_questions(request, board_name):
 @login_required
 def my_boards(request):
 	# profile = request.user.user_profile
-	profile = Profile.objects.get(author_id=request.user)
+	profile = Profile.objects.get(user=request.user)
 	my_boards = profile.boards.all()
 	return render(request, 'boards/boards.html', {'boards': my_boards})
 

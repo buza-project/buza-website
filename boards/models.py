@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils import timezone
 
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
@@ -59,6 +60,7 @@ class Question(models.Model):
 		self.board = board
 		self. slug = slugify(title)
 		self.tags = tags
+		self.updated_at = timezone.now()
 		super(Question, self).save(*args, **kwargs)
 
 	def __unicode__(self):

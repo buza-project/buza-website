@@ -21,5 +21,5 @@ class Profile(models.Model):
 	boards = models.ManyToManyField(Board, related_name="my_boards")
 
 	def __str__(self):
-		return 'Profile for author_id {}'.format(self.author_id)
+		return 'Profile for user {}'.format(self.user)
 

@@ -27,7 +27,7 @@ def all_questions(request):
 def view_question_delete_(request, question_id, question_slug, board_name=None):
 	# we have a question, we need a board and a user
 	question = Question.objects.get(pk=question_id)
-	profile = Profile.objects.get(pk=request.user.pk)
+	profile = request.user.user_profile
 	answers = []
 	if question.answers.all():
 		answers = question.answers.all()
@@ -59,8 +59,8 @@ def board_questions(request, board_name):
 
 @login_required
 def my_boards(request):
-	# profile = request.user.user_profile
-	profile = Profile.objects.get(user=request.user)
+	profile = request.user.user_profile
+	# profile = Profile.objects.get(user=request.user)
 	my_boards = profile.boards.all()
 	return render(request, 'boards/boards.html', {'boards': my_boards})
 
@@ -143,13 +143,13 @@ def edit_question(request, question_id, question_slug):
 def view_question(request, question_id, question_slug, board_name=None):
 	question = Question.objects.get(pk=question_id)
 	user = request.user
-	profile = Profile.objects.get(pk=user.pk)
+	profile = user.user_profile
 	answers = []
 	has_answered = False
 	if question.answers.all():
 		answers = question.answers.all()
 		# check if any of these answers are mine
-		if answers.get(user=request.user):
+		if answers.filter(user=request.user):
 			has_answered = True
 
 	if request.method == 'POST':
@@ -158,13 +158,13 @@ def view_question(request, question_id, question_slug, board_name=None):
 		if answer_form.is_valid():
 			answer_form.save(commit=False)
 			answer_form.question = question
-			answer_form.user = user
-			# new_answer = Answer(
-			# 	answer=request.POST['answer'],
-			# 	media=request.POST['media'],
-			# 	question=request.POST['question'],
-			# 	user=user)
 			answer_form.save()
+			new_answer = Answer(
+				answer=request.POST['answer'],
+				media=request.FILES.get('media'),
+				question=question,
+				user=user)
+			new_answer.save()
 			messages.success(request, 'Answer posted')
 			return render(
 				request, 'boards/question_view.html',
@@ -181,5 +181,6 @@ def view_question(request, question_id, question_slug, board_name=None):
 		{'question': question, 'board': question.board,
 			'user': question.user, 'profile': profile,
 			'answers': answers,
+			'answer_form': answer_form,
 			'has_answered': has_answered})
 

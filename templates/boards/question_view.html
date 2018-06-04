@@ -34,19 +34,8 @@ asked by: {{user.username}}
  {% if request.user.is_authenticated %}
  <p>Comment</p>
  {% else %}
- <p>Login to comment</p>
+<a href="{% url "login" %}" > Login</a>to comment
  {% endif %}
-
-     {% if request.user.is_authenticated and not has_answered %}
-     <form action="." method="post" enctype="multipart/form-data">
-        <h2>Add your answer</h2>
-        {{answer_form}}
-    {% csrf_token %}
-    <input type="submit" value="Post Answer">
-</form>
-    {% elif not has_answered %}
-    <a href="{% url "login" %}" > log-in</p> here to answer
-     {% endif %}
 
      {% block answers %}
         {% if answers %}
@@ -55,6 +44,21 @@ asked by: {{user.username}}
             {% endfor %}
         {%endif%}
     {% endblock %}
+    {% if request.user.is_authenticated and not has_answered %}
+     <form action="." method="post" enctype="multipart/form-data">
+        <h2>Add your answer</h2>
+        {{answer_form}}
+    {% csrf_token %}
+    <input type="submit" value="Post Answer">
+</form>
+    {% elif not has_answered %}
+    <a href="{% url "login" %}" > log-in here to answer </a>
+     {% endif %}
 
-     </a>
+     <br>
+     Not the answer you were looking for? Browse other questions tagged:
+{% endblock %}
+
+{% block footer %}
+
 {% endblock %}

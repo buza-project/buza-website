@@ -2,14 +2,14 @@
 
 {% block title %}View you account{% endblock %}
 {% block content %}
-<h1>Edit your account</h1>
-<p>You can update your details below:</p>
+<h1>{{user.firstname}} {{user.surname}}</h1>
+<br>
+<p>{{user.email}}</p>
+<p>{{profile.bio}}</p><br>
+<br>
+<p>{{profile.photo}}</p><br>
+<p>{{profile.school}}</p><br>
+<p>{{profile.grade}}</p><br>
 
-<form action="." method="post" enctype="multipart/form-data">
-	{{user_form.as_p}}
-	{{profile_form.as_p}}
-	{% csrf_token %}
-	<p><input type="submit" value="Save changes"></p>
 
-</form>
 {% endblock %}

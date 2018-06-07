@@ -17,7 +17,7 @@ updated on: {{question.updated_at}}
 <br>
 
 {% if question.media %}
-media files: {{question.media}}
+media files: <img src="{{question.media.url }}" alt="unable to load image" width="500px">
 <br>
 {% endif %}
 asked by: {{user.username}}

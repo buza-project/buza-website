@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
+from django.views.generic import TemplateView
 
 from boards import views
 
@@ -34,9 +35,12 @@ urlpatterns = [
     url(r'^home/', views.all_questions, name='questions'),
     # url(r'^buza/', include('boards.urls')),
     url(r'^subjects/', include('boards.urls')),
-    # what do you want"
+    # REACT JS
+    url(r'^react/', TemplateView.as_view(template_name='index.html')),
+    # change this to 404"
     url(r'^', auth_views.login, name='user_login'),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.MEDIA_ROOT)

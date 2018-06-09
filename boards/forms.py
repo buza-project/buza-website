@@ -1,5 +1,5 @@
 from django import forms
-from .models import Question
+from .models import Question, Answer
 from tinymce.widgets import TinyMCE
 
 
@@ -32,3 +32,13 @@ class EditQuestionForm(forms.ModelForm):
 	class Meta:
 		model = Question
 		fields = ('board', 'media', 'title', 'description', 'tags')
+
+
+class AnswerForm(forms.ModelForm):
+	media = forms.FileField(
+		required=False,
+		help_text='any files to clarify your answer')
+
+	class Meta:
+		model = Answer
+		fields = ('answer', 'media')

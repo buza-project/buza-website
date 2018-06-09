@@ -77,12 +77,11 @@ class Answer(models.Model):
 	'''users can post questions that will display on the classroom'''
 
 	answer = HTMLField()
-	media = models.CharField(max_length=400)
+	media = models.FileField(upload_to='media/answers/')
 	question = models.ForeignKey(Question, related_name="answers")
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(null=True)
 	user = models.ForeignKey(User, related_name='answered_by')
 	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(null=True)
 
 	class Meta:
 		ordering = ('created_at',)

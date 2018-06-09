@@ -55,6 +55,7 @@ nosetests.xml
 .project
 .pydevproject
 ve/
+/ve/
 logs/*.log
 *.pid
 .vscode/

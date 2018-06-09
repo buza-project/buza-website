@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}View you account{% endblock %}
+{% block content %}
+<h1>{{user.firstname}} {{user.surname}}</h1>
+<br>
+<p>{{user.email}}</p>
+<p>{{profile.bio}}</p><br>
+<br>
+<p>{{profile.photo}}</p><br>
+<p>{{profile.school}}</p><br>
+<p>{{profile.grade}}</p><br>
+
+
+{% endblock %}

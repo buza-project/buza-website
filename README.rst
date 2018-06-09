@@ -7,15 +7,22 @@ Getting started
 ---------------
 In a separate terminal::
 
-    $ redis-server
+	$ redis-server
 
 To set up enviroment::
 
     $ virtualenv ve
+    $ source ve/bin/activate
     $ pip install -e .
     $ ./manage.py migrate
     $ ./manage.py createsuperuser
     $ ./manage.py runserver
+
+
+To deactivate server and virtual environment:
+---------------
+	press CTRL R
+	$ deactivate
 
 You can now connect access the demo site on http://localhost:8000
 

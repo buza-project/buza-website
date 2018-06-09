@@ -1,10 +1,8 @@
-
 {% extends "base.html" %}
-{% load staticfiles static %}
-{% block title %}Ask a question{% endblock %}
+{% block title %}Edit Question{% endblock %}
 {% block content %}
-Are you here to ask a QWESHIN?
-
+<div> Edit your question here </div>
+Edit the question
 <form action="." method="post" enctype="multipart/form-data">
 <div class="form-body" style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
     {%if form.errors %}
@@ -48,8 +46,8 @@ Are you here to ask a QWESHIN?
     {{form.tags}}
     </div>
 </div>
-    {% csrf_token %}
-    <input type="submit" value="Ask">
+	{% csrf_token %}
+    <input type="submit" value="Save Changes">
     </div>
-</form>
+
 {% endblock %}

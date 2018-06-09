@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils import timezone
 
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
@@ -17,8 +18,8 @@ class Board(models.Model):
 	description = models.CharField(max_length=100)
 	created_at = models.DateTimeField(auto_now_add=True)
 	slug = models.SlugField(editable=False)
-	users_count = models.IntegerField(default=0) #number of active users
-	questions_count = models.IntegerField(default=0) #number of questions
+	users_count = models.IntegerField(default=0)  # number of active users
+	questions_count = models.IntegerField(default=0)  # number of questions
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -39,7 +40,7 @@ class Question(models.Model):
 
 	title = models.CharField(max_length=100, blank=False)
 	description = HTMLField()
-	media = models.FileField(upload_to='media/questions/')
+	media = models.ImageField(upload_to='questions')  # inside of media
 	board = models.ForeignKey(Board, related_name='questions')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
@@ -50,6 +51,16 @@ class Question(models.Model):
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
+		super(Question, self).save(*args, **kwargs)
+
+	def update(self, title, description, media, board, tags, *args, **kwargs):
+		self.title = title
+		self.description = description
+		self.media = media
+		self.board = board
+		self. slug = slugify(title)
+		self.tags = tags
+		self.updated_at = timezone.now()
 		super(Question, self).save(*args, **kwargs)
 
 	def __unicode__(self):
@@ -66,7 +77,7 @@ class Answer(models.Model):
 	'''users can post questions that will display on the classroom'''
 
 	answer = HTMLField()
-	media = models.CharField(max_length=400)
+	media = models.ImageField(upload_to='answers/')
 	question = models.ForeignKey(Question, related_name="answers")
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)

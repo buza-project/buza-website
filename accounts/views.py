@@ -100,7 +100,7 @@ def edit(request):
 	else:
 		user_form = UserEditForm(instance=request.user)
 		try:
-			profile = Profile.objects.get(pk=request.user.pk)
+			profile = request.user.user_profile
 		except:
 			profile = Profile.objects.create(user=request.user)
 			profile.save()

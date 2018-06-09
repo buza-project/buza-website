@@ -79,10 +79,9 @@ class Answer(models.Model):
 	answer = HTMLField()
 	media = models.ImageField(upload_to='answers/')
 	question = models.ForeignKey(Question, related_name="answers")
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(null=True)
 	user = models.ForeignKey(User, related_name='answered_by')
 	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(null=True)
 
 	class Meta:
 		ordering = ('created_at',)

@@ -7,7 +7,7 @@ class AskForm(forms.ModelForm):
 	title = forms.CharField(max_length=100)
 	description = forms.CharField(
 		widget=TinyMCE(attrs={'required': True, 'cols': 30, 'rows': 10}))
-	media = forms.FileField(
+	media = forms.ImageField(
 		required=False,
 		help_text='any files to clarify your question')
 	tags = forms.CharField(max_length=40, required=False)
@@ -24,7 +24,7 @@ class EditQuestionForm(forms.ModelForm):
 	title = forms.CharField(max_length=100)
 	description = forms.CharField(
 		widget=TinyMCE(attrs={'required': True, 'cols': 30, 'rows': 10}))
-	media = forms.FileField(
+	media = forms.ImageField(
 		required=False,
 		help_text='any files to clarify your question')
 	tags = forms.CharField(max_length=40, required=False)

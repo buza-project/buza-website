@@ -18,8 +18,8 @@ class Board(models.Model):
 	description = models.CharField(max_length=100)
 	created_at = models.DateTimeField(auto_now_add=True)
 	slug = models.SlugField(editable=False)
-	users_count = models.IntegerField(default=0) #number of active users
-	questions_count = models.IntegerField(default=0) #number of questions
+	users_count = models.IntegerField(default=0)  # number of active users
+	questions_count = models.IntegerField(default=0)  # number of questions
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -40,7 +40,7 @@ class Question(models.Model):
 
 	title = models.CharField(max_length=100, blank=False)
 	description = HTMLField()
-	media = models.FileField(upload_to='media/questions/')
+	media = models.ImageField(upload_to='questions')  # inside of media
 	board = models.ForeignKey(Board, related_name='questions')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
@@ -77,7 +77,7 @@ class Answer(models.Model):
 	'''users can post questions that will display on the classroom'''
 
 	answer = HTMLField()
-	media = models.CharField(max_length=400)
+	media = models.ImageField(upload_to='answers/')
 	question = models.ForeignKey(Question, related_name="answers")
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)

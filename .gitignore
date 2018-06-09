@@ -1,0 +1,85 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+ve/
+/ve/
+logs/*.log
+*.pid
+.vscode/
+
+local.py
+/static/
+/media/
+db.sqlite3
+db.sqlite4
+docs/_build
+.DS_Store
+.cache/
+/htmlcov/
+
+celerybeat-schedule
+celerybeat-schedule.db
+
+*/settings/secrets.py
+
+# PyCharm / IntelliJ
+.idea/
+gem_test.db
+
+# test db
+gem_test.db
+node_modules/
+db.sqlite3-journal

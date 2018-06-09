@@ -106,3 +106,11 @@ def edit(request):
 			profile.save()
 		profile_form = ProfileEditForm(instance=profile)
 	return render(request, 'accounts/edit.html', {'user_form': user_form, 'profile_form': profile_form} )
+
+
+@login_required
+def view(request):
+
+	return render(
+		request, 'accounts/edit.html',
+		{'user': request.user, 'profile': request.user.user_profile})

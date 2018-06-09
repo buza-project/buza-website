@@ -87,12 +87,13 @@ def register(request):
 @login_required
 def edit(request):
 	if request.method == 'POST':
-		user_form = UserEditForm(instance=request.user, data=request.POST)
-		profile_form = ProfileEditForm(instance=request.user.user_profile, data=request.POST, files=request.FILES)
+		user_form = UserEditForm(instance=request.user, files=request.FILES, data=request.POST)
+		profile_form = ProfileEditForm(instance=request.user.user_profile, files=request.FILES, data=request.POST)
 		if user_form.is_valid() and profile_form.is_valid():
 			# get the user's userinfo and their profile details
 			user_form.save()
-			profile_form.save()
+			profile_form.save(request.user)
+
 			messages.success(request, 'Profile updated successfully')
 		else:
 			messages.error(request, 'Error updating your profile')

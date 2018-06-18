@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from .models import Board, Question, Answer
-from .project.accounts.models import Profile
+from project.accounts.models import Profile
 from .forms import AskForm, EditQuestionForm, AnswerForm
 from .serializers import QuestionSerializer
 from rest_framework import viewsets

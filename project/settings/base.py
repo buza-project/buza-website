@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['buza.com', 'eboard.com', u'localhost']
 
-AUTH_PROFILE_MODULE = 'accounts.Profile'
+AUTH_PROFILE_MODULE = 'project.accounts.Profile'
 
 # Application definition
 
@@ -159,7 +159,7 @@ EMAIL_USE_TLS = True
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'accounts.authenticate.EmailAuthBackEnd',
+    'project.accounts.authenticate.EmailAuthBackEnd',
 
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',

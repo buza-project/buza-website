@@ -1,0 +1,30 @@
+.board{
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+    background: pink;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    border: 3px solid white;
+    padding: 10px
+}
+
+.board:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.boards {
+	display: flex;
+	width: 90%;
+}
+
+div.boards > div:nth-of-type(odd) {
+    background: lightgrey;
+     margin-left: : 5px;
+
+}
+
+div.boards > div:nth-of-type(3n) {
+	display: grid;
+}

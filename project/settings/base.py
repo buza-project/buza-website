@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'project.accounts',
     'project.boards',
     'social_django',
+    'vote',
     'tinymce',
 
 ]

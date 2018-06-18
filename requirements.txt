@@ -10,3 +10,4 @@ psycopg2==2.7.4
 djangorestframework==3.8.2
 django-extra-fields==1.0.0
 django-tinymce==2.7.0
+django-vote==2.1.7

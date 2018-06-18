@@ -27,14 +27,14 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # users
-    url(r'^account/', include('accounts.urls')),
+    url(r'^account/', include('project.accounts.urls')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     # boards
     # url(r'^$', views.home, name='home'),
     url(r'^home/', views.all_questions, name='questions'),
     # url(r'^buza/', include('boards.urls')),
-    url(r'^subjects/', include('boards.urls')),
+    url(r'^subjects/', include('project.boards.urls')),
     # REACT JS
     url(r'^react/', TemplateView.as_view(template_name='index.html')),
     # change this to 404"

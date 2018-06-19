@@ -1,0 +1,34 @@
+{% load vote_tags %}
+
+
+{% vote_exists parent request.user  as has_voted %}
+{%if not request.user.is_authenticated%}
+I need to login
+{% elif has_voted%}
+	I already voted
+{% elif  parent.user == request.user %}
+		  <a href="" class="tooltip">
+         <i class="material-icons " style="color: grey;font-size: 60px;">
+          thumb_up</i>
+      <span class="tooltiptext">You cannot vote for your own question</span>
+   </a>
+   <div>e
+     {{votes}}
+   </div>
+  <a href="" class="tooltip">
+         <i class="material-icons" style="color: grey;font-size: 60px; ">thumb_down</i>
+         <span class="tooltiptext" style="background: lightCoral;">You cannot vote for your own question</span>
+       </a>
+{% else %}
+	{# user can vote #}}
+  <a href="" class="tooltip">
+         <i class="material-icons " style="color: lightgreen;font-size: 24px;">
+          thumb_up</i>
+      <span class="tooltiptext">Was this answer helpful</span>
+   </a>
+
+  <a href="" class="tooltip">
+         <i class="material-icons" style="color: lightCoral;font-size: 24px; ">thumb_down</i>
+         <span class="tooltiptext" style="background: lightCoral;">This answer was not helpful</span>
+       </a>
+{% endif %}

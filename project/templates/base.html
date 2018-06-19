@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <head>
 	<title>{%block title %} Buza Home{%endblock%}</title>
-	<link href="{% static "css/base.css" %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "css/base_style.css" %}" >
     <link href="{% static "css/boards.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' href="{% static 'css/boards.css' %}">
      <script src="{% static 'js/tinymce/js/tinymce/tinymce.min.js' %}"></script>
-
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   <script type="text/javascript" src="{% static 'js/tinymce/custom.js' %}" ></script>
 </head>
 
@@ -63,7 +63,10 @@
 	<div id="content">
             {% block content %}
             {% endblock %}
-
+    </div>
+    <div id=footer>
+        {% block footer %}
+        {% endblock %}
     </div>
 
 </body>

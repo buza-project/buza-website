@@ -28,3 +28,41 @@ div.boards > div:nth-of-type(odd) {
 div.boards > div:nth-of-type(3n) {
 	display: grid;
 }
+
+/*** this is for the help text tool tip **/
+.tooltip {
+    position: relative;
+    display: inline;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: lightgreen;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 120%;
+    left: 0%;
+    font-size: 12px;
+    font-family:helvetica, sans-serif;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    font-size: 2px;
+    border-color: transparent  transparent transparent transparent;
+
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

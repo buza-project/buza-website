@@ -17,3 +17,8 @@ def vote_exists(model, user=AnonymousUser(), action=UP):
     elif user.is_anonymous():
         return False
     return model.votes.exists(user.pk, action=action)
+
+
+@register.simple_tag
+def vote_count(model):
+    return model.votes.count()

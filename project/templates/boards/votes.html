@@ -20,17 +20,32 @@ I need to login
          <i class="material-icons" style="color: grey;font-size: 40px; ">thumb_down_alt</i>
          <span class="tooltiptext" style="background: lightCoral;">You cannot vote for your own question</span>
        </a>
+         <a href="" class="tooltip">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">star_border</i>
+        <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
+        </a>
        </div>
+
 {% else %}
-	{# user can vote #}}
+	{# user can vote #}
+  <div style="padding-top: 55%;">
   <a href="" class="tooltip">
-         <i class="material-icons " style="color: lightgreen;font-size: 24px;">
+         <i class="material-icons " style="color: lightgreen;font-size: 40px;">
           thumb_up</i>
       <span class="tooltiptext">Was this answer helpful</span>
    </a>
 
+      <div style="color: lightgreen;font-size: 40px;">
+     {% vote_count parent %}
+   </div>
+
   <a href="" class="tooltip">
-         <i class="material-icons" style="color: lightCoral;font-size: 24px; ">thumb_down</i>
+         <i class="material-icons" style="color: lightCoral;font-size: 40px; ">thumb_down</i>
          <span class="tooltiptext" style="background: lightCoral;">This answer was not helpful</span>
        </a>
+  <a href="" class="tooltip">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">star_border</i>
+        <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
+        </a>
+     </div>
 {% endif %}

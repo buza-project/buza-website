@@ -35,6 +35,7 @@ asked by: {{user.username}}
  {% if request.user.is_authenticated and request.user == user %}
         <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
         <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
+        <i class="material-icons">share</i>
 
      {% endif %}
  </div>

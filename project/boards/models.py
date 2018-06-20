@@ -5,10 +5,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils import timezone
-
+from project.vote.models import VoteModel
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
-from vote.models import VoteModel
 # Create your models here.
 
 
@@ -116,3 +115,4 @@ class AnswerComment(Comment):
 
 	class Meta:
 		ordering = ('created_at',)
+

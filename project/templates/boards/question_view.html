@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{question.title}}</h1>
+<h1>{{question.title}}
+ <i class="material-icons" style="float: right;">share</i></h1>
 <br>
 <div id="question_view" style="width: 80%;
     text-align: center; left:50%;display: flex; padding-left: 1%;">
@@ -35,7 +36,6 @@ asked by: {{user.username}}
  {% if request.user.is_authenticated and request.user == user %}
         <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
         <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
-        <i class="material-icons">share</i>
 
      {% endif %}
  </div>

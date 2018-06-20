@@ -3,14 +3,14 @@
 {% block content %}
 <h1>{{question.title}}</h1>
 <br>
-<div id="question_view" style="width: 50%;
-    text-align: center; left:50%;margin-left: 100px;display: flex;">
-    <div id="votes" style="width: 10%;float: left;height: 100%;">
+<div id="question_view" style="width: 80%;
+    text-align: center; left:50%;display: flex; padding-left: 1%;">
+    <div id="votes" style="width: 5%;float: left;height: 100%;padding-right: 5%;">
 	     {% block like %}
                 {% include "boards/votes.html" with parent=question user=answer.user%}
          {% endblock %}
 	</div>
-    <div id="content" style="width: 80%;float: right;height: 100%;background: azure">
+    <div id="content" style="width: 80%;float: right;height: 100%;background: azure; font-size: 16px;">
 {{question.description}}
 <br>
 {{board.title}}
@@ -26,23 +26,19 @@ media files: <img src="{{question.media.url }}" alt="unable to load image" width
 {% endif %}
 asked by: {{user.username}}
 <br>
-</div>
- {% if request.user.is_authenticated and request.user == user %}
-     <div name="edit_question">
-        <a href="{% url 'edit_question' question.id question.slug %}" style="background-color: yellow; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Edit Question</a>
-     </div>
-     <div name="remove_question">
-        <a href="" style="background-color: red; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Delete Question</a>
-     </div>
-     {% endif %}
-
+ <div name="question_meta">
  {% if request.user.is_authenticated %}
- <a href="#myLink">
- <p style=" color: grey; float: center;font-style: italic;">Add Comment</p>
-</a>
+ <a href=""><p style=" color: grey; float:left;font-style: italic;">Add a comment</p></a>
  {% else %}
 <a href="{% url "login" %}" > Login</a>to comment
- {% endif %}
+{% endif %}
+ {% if request.user.is_authenticated and request.user == user %}
+        <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
+        <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
+
+     {% endif %}
+ </div>
+ </div>
  </div>
      {% block answers %}
         {% if answers %}

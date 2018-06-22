@@ -11,8 +11,6 @@ urlpatterns = [
 	url(r'^ask-question/$', views.ask_question, name='ask_question'),
 	url(r'^edit/(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',
 		views.edit_question, name='edit_question'),
-	url(r'^api/(?P<pk>\d+)/(?P<question_slug>[\-\w]+)/$',
-		views.QuestionViewSet, name='api_view'),
 	url(r'^(?P<board_name>[\w|\W]+)/(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',
 		views.view_question, name='view_question'),
 	url(r'^(?P<question_id>\d+)/(?P<question_slug>[\-\w]+)/$',
@@ -21,6 +19,4 @@ urlpatterns = [
 	url(r'^(?P<board_name>[\w|\W]+)/$', views.board_questions, name='board_questions'),
 	url(r'^(?P<board_name>[\-\w]+)/$', views.board_questions, name='board_questions'),
 
-
-	# url(r'^question/(?P<id>\d+)/(?P<slug>\d+)/$', views.question_view, name='board_questions'),
 ]

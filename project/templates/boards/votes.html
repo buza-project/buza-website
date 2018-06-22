@@ -9,6 +9,7 @@ I need to login
 {% elif  parent.user == request.user %}
 <div style="padding-top: 55%;">
 		  <a href="" class="tooltip">
+
          <i class="material-icons " style="color: grey;font-size: 40px;">
           thumb_up_alt</i>
       <span class="tooltiptext">You cannot vote for your own question</span>
@@ -16,10 +17,13 @@ I need to login
    <div style="color: lightgreen;font-size: 40px;">
      {% vote_count parent %}
    </div>
-  <a href="" class="tooltip">
-         <i class="material-icons" style="color: grey;font-size: 40px; ">thumb_down_alt</i>
+
+       <form action="" method="post" enctype="multipart/form-data" class="tooltip">
+                 <i class="material-icons" style="color: grey;font-size: 40px; ">thumb_down_alt</i>
          <span class="tooltiptext" style="background: lightBlue;">You cannot vote for your own question</span>
-       </a>
+    {% csrf_token %}
+    <input type="submit" value="Post Answer" name= 'vote-up'>
+       </form>
          <a href="" class="tooltip">
         <i class="material-icons" style="color: yellow;font-size: 40px;">star_border</i>
         <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
@@ -29,11 +33,14 @@ I need to login
 {% else %}
 	{# user can vote #}
   <div style="padding-top: 55%;">
-  <a href="" class="tooltip">
+  <form action="" method="post" enctype="multipart/form-data" class="tooltip">
          <i class="material-icons " style="color: lightgreen;font-size: 40px;">
-          thumb_up</i>
-      <span class="tooltiptext">Was this answer helpful</span>
-   </a>
+          thumb_up<span class="tooltiptext">Was this answer helpful</span>
+    {% csrf_token %}
+    <input type="submit" value="" name= 'vote-up' >
+    </i>
+
+       </form>
 
       <div style="color: lightgreen;font-size: 40px;">
      {% vote_count parent %}

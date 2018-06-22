@@ -6,6 +6,8 @@ from project.vote.managers import VotableManager
 UP = 0
 DOWN = 1
 
+STAR = False
+
 
 class VoteManager(models.Manager):
 
@@ -24,7 +26,11 @@ class VoteManager(models.Manager):
 class Vote(models.Model):
     ACTION_FIELD = {
         UP: 'num_vote_up',
-        DOWN: 'num_vote_down'
+        DOWN: 'num_vote_down',
+
+    }
+    STAR_FIELD = {
+        STAR: 'star_question'
     }
 
     user_id = models.BigIntegerField()
@@ -32,12 +38,14 @@ class Vote(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
     action = models.PositiveSmallIntegerField(default=UP)
+    star = models. BooleanField(default=STAR)
     create_at = models.DateTimeField(auto_now_add=True)
 
     objects = VoteManager()
 
     class Meta:
-        unique_together = ('user_id', 'content_type', 'object_id', 'action')
+        unique_together = (
+            'user_id', 'content_type', 'object_id', 'action', 'star')
         index_together = ('content_type', 'object_id')
 
     @classmethod
@@ -52,11 +60,24 @@ class Vote(models.Model):
 
         return cls.objects.filter(**kwargs)
 
+    @classmethod
+    def stars_question(cls, model, instance=None, star=STAR):
+        ct = ContentType.objects.get_for_model(model)
+        kwargs = {
+            "content_type": ct,
+            "star": star
+        }
+        if instance is not None:
+            kwargs["object_id"] = instance.pk
+
+        return cls.objects.filter(**kwargs)
+
 
 class VoteModel(models.Model):
     vote_score = models.IntegerField(default=0, db_index=True)
     num_vote_up = models.PositiveIntegerField(default=0, db_index=True)
     num_vote_down = models.PositiveIntegerField(default=0, db_index=True)
+    star_question = models.BooleanField(default=STAR)
     votes = VotableManager()
 
     class Meta:
@@ -91,3 +112,11 @@ class VoteModel(models.Model):
     @is_voted_down.setter
     def is_voted_down(self, value):
         self._is_voted_down = value
+
+    @property
+    def is_starred(self):
+        return self._is_starred
+
+    @property
+    def set_star(self, value=False):
+        self._set_star = value

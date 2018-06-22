@@ -38,7 +38,7 @@ ol {
 }
 
 #header {
-    padding:10px 100px;
+    padding:10px 10px;
     font-size:14px;
     background:#198680;
     color:#fff;
@@ -50,9 +50,9 @@ ol {
 
 #header .logo {
     font-family: 'Chalk', sans-serif;
-    float:left;
     color:white;
-    font-size:50px;
+    float: center;
+    font-size:20px;
     }
 
 #header ul.menu {

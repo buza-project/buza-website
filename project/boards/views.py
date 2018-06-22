@@ -11,6 +11,7 @@ from project.accounts.models import Profile
 from .forms import AskForm, EditQuestionForm, AnswerForm
 from .serializers import QuestionSerializer
 from rest_framework import viewsets
+from project.vote.models import Vote
 
 # Create your views here.
 
@@ -91,7 +92,8 @@ def ask_question(request):
 					'user': new_question.user,
 					'profile': Profile.objects.get(pk=request.user.pk)})
 
-	ask_form = AskForm(instance=request.user, files=request.FILES, data=request.POST)
+	ask_form = AskForm(
+		instance=request.user, files=request.FILES, data=request.POST)
 	return render(request, 'boards/ask_question.html', {'form': ask_form})
 
 
@@ -100,8 +102,9 @@ def edit_question(request, question_id, question_slug):
 	question = Question.objects.get(pk=question_id)
 	user = User.objects.get(pk=question.user.pk)
 	profile = Profile.objects.get(pk=user.pk)
-	if request.method == 'POST':
-		edit_form = EditQuestionForm(files=request.FILES, instance=request.user, data=request.POST)
+	if request.method == 'POST'and 'answer-question':
+		edit_form = EditQuestionForm(
+			files=request.FILES, instance=request.user, data=request.POST)
 		if edit_form.is_valid():
 			edit_form.save()
 			question.update(
@@ -138,20 +141,21 @@ def view_question(request, question_id, question_slug, board_name=None):
 		# check if any of these answers are mine
 		if answers.filter(user=user):
 			has_answered = True
+	if request.method == 'POST' and 'vote-up' in request.POST:
+		print("--------------------------------in the vvote method ")
+		question.votes.up(request.user.pk)
 
-	if request.method == 'POST':
+	if request.method == 'POST' and 'answer' in request.POST:
 		answer_form = AnswerForm(
 			files=request.FILES, instance=user, data=request.POST)
 		if answer_form.is_valid():
-			answer_form.save(commit=False)
-			answer_form.question = question
-			answer_form.save()
 			new_answer = Answer(
 				answer=request.POST['answer'],
 				media=request.FILES.get('media'),
 				question=question,
 				user=user)
 			new_answer.save()
+			has_answered = True
 			messages.success(request, 'Answer posted')
 			return render(
 				request, 'boards/question_view.html',
@@ -170,12 +174,3 @@ def view_question(request, question_id, question_slug, board_name=None):
 			'answers': answers,
 			'answer_form': answer_form,
 			'has_answered': has_answered})
-
-
-class QuestionViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    lookup_key = 'pk'
-    queryset = Question.objects.all().order_by('created_on')
-    serializer_class = QuestionSerializer

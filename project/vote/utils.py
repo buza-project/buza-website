@@ -15,7 +15,7 @@ def instance_required(func):
 
 
 def add_field_to_objects(model, objects, user_id):
-    from vote.models import Vote, UP, DOWN
+    from vote.models import Vote, UP, DOWN, STAR
     content_type = ContentType.objects.get_for_model(model)
     object_ids = [r.id for r in objects]
 
@@ -23,10 +23,11 @@ def add_field_to_objects(model, objects, user_id):
         user_id=user_id,
         content_type=content_type,
         object_id__in=object_ids
-    ).values_list("object_id", "action")
+    ).values_list("object_id", "action", "star")
 
     for r in objects:
         r.is_voted_up = (r.pk, UP) in voted_object_ids
         r.is_voted_down = (r.pk, DOWN) in voted_object_ids
+        r.is_starred = (r.pk, STAR) in voted_object_ids
 
     return objects

@@ -9,6 +9,7 @@ from project.vote.utils import instance_required, add_field_to_objects
 
 UP = 0
 DOWN = 1
+STAR = False
 
 
 class VotedQuerySet(QuerySet):
@@ -90,6 +91,45 @@ class _VotableManager(models.Manager):
         except (OperationalError, IntegrityError):
             return False
 
+    def star(self, user_id, star):
+        try:
+            with transaction.atomic():
+                self.instance = self.model.objects.select_for_update().get(
+                    pk=self.instance.pk)
+
+                content_type = ContentType.objects.get_for_model(self.model)
+                try:
+                    vote = self.through.objects.get(user_id=user_id,
+                                                    content_type=content_type,
+                                                    object_id=self.instance.pk)
+                    if vote.star == star:
+                        return False
+                    vote.star = star
+                    vote.save()
+                except self.through.DoesNotExist:
+                    if not star:
+                        return False
+                    # if you do not have a vote yet
+                    self.through.objects.create(user_id=user_id,
+                                                content_type=content_type,
+                                                object_id=self.instance.pk,
+                                                star=star)
+
+                star_statistics_field = self.through.STAR_FIELD.get(star)
+                if star:
+                    # if a star was added, increment
+                    setattr(self.instance, star_statistics_field,
+                            getattr(self.instance, star_statistics_field) + 1)
+                else:
+                    setattr(self.instance, star_statistics_field,
+                            getattr(self.instance, star_statistics_field) - 1)
+
+                self.instance.save()
+
+            return True
+        except (OperationalError, IntegrityError):
+            return False
+
     @instance_required
     def up(self, user_id):
         return self.vote(user_id, action=UP)
@@ -97,6 +137,10 @@ class _VotableManager(models.Manager):
     @instance_required
     def down(self, user_id):
         return self.vote(user_id, action=DOWN)
+
+    @instance_required
+    def get_star(self, user_id, star=STAR):
+        return self.star(user_id, star=star)
 
     @instance_required
     def delete(self, user_id):
@@ -117,8 +161,11 @@ class _VotableManager(models.Manager):
                 self.instance = self.model.objects.select_for_update().get(
                     pk=self.instance.pk)
                 statistics_field = self.through.ACTION_FIELD.get(vote.action)
+                star_statistics_field = self.through.STAR_FIELD.get(vote.star)
                 setattr(self.instance, statistics_field,
                         getattr(self.instance, statistics_field) - 1)
+                setattr(self.instance, star_statistics_field,
+                        getattr(self.instance, star_statistics_field) - 1)
 
                 self.instance.save()
 

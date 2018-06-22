@@ -4,14 +4,14 @@
 <h1>{{question.title}}
  <i class="material-icons" style="float: right;">share</i></h1>
 <br>
-<div id="question_view" style="width: 80%;
+<div id="question_view" style="width: 90%;
     text-align: center; left:50%;display: flex; padding-left: 1%;">
     <div id="votes" style="width: 5%;float: left;height: 100%;padding-right: 5%;">
 	     {% block like %}
                 {% include "boards/votes.html" with parent=question user=answer.user%}
          {% endblock %}
 	</div>
-    <div id="content" style="width: 80%;float: right;height: 100%;background: azure; font-size: 16px;">
+    <div id="content" style="width: 90%;float: right;height: 100%;background: azure; font-size: 16px;">
 {{question.description}}
 <br>
 {{board.title}}
@@ -49,11 +49,11 @@ asked by: {{user.username}}
         {%endif%}
     {% endblock %}
     {% if request.user.is_authenticated and not has_answered %}
-     <form action="." method="post" enctype="multipart/form-data">
+     <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/"" method="post" enctype="multipart/form-data">
         <h2>Add your answer</h2>
         {{answer_form}}
     {% csrf_token %}
-    <input type="submit" value="Post Answer">
+    <input type="submit" value="Post Answer" name= 'answer-button'>
 </form>
     {% elif not has_answered %}
     <a href="{% url "login" %}" > log-in here to answer </a>

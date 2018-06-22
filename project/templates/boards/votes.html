@@ -5,7 +5,11 @@
 {%if not request.user.is_authenticated%}
 I need to login
 {% elif has_voted%}
-	I already voted
+already voted
+         <a href="" class="tooltip">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline</i>
+        <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
+        </a>
 {% elif  parent.user == request.user %}
 <div style="padding-top: 55%;">
 		  <a href="" class="tooltip">
@@ -18,14 +22,12 @@ I need to login
      {% vote_count parent %}
    </div>
 
-       <form action="" method="post" enctype="multipart/form-data" class="tooltip">
+       <a href="" class="tooltip">
                  <i class="material-icons" style="color: grey;font-size: 40px; ">thumb_down_alt</i>
          <span class="tooltiptext" style="background: lightBlue;">You cannot vote for your own question</span>
-    {% csrf_token %}
-    <input type="submit" value="Post Answer" name= 'vote-up'>
-       </form>
+       </a>
          <a href="" class="tooltip">
-        <i class="material-icons" style="color: yellow;font-size: 40px;">star_border</i>
+        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline</i>
         <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
         </a>
        </div>
@@ -50,9 +52,9 @@ I need to login
          <i class="material-icons" style="color: lightBlue;font-size: 40px; ">thumb_down</i>
          <span class="tooltiptext" style="background: lightBlue;">This answer was not helpful</span>
        </a>
-  <a href="" class="tooltip">
-        <i class="material-icons" style="color: yellow;font-size: 40px;">star_border</i>
+         <a href="" class="tooltip">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline</i>
         <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
         </a>
-     </div>
+       </div>
 {% endif %}

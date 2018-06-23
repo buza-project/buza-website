@@ -7,7 +7,7 @@
     text-align: center; left:50%;display: flex; padding-left: 1%;">
     <div id="votes" style="width: 5%;float: left;height: 100%;padding-right: 5%;">
 	     {% block like %}
-                {% include "boards/question_votes.html" with parent=question user=answer.user%}
+                {% include "boards/question_votes.html" with parent=question%}
          {% endblock %}
 	</div>
     <div id="content" style="width: 90%;float: right;height: 100%;background: lightblue; font-size: 16px;">
@@ -43,13 +43,12 @@ asked by: {{user.username}}
      {% block answers %}
         {% if answers %}
             {%for answer in answers %}
-                <h3 style="text-align: center;">Answers </h3>
                 {% include "boards/answer_view.html" with answer=answer user=answer.user%}
             {% endfor %}
         {%endif%}
     {% endblock %}
     {% if request.user.is_authenticated and not has_answered %}
-     <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/"" method="post" enctype="multipart/form-data">
+     <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/" method="post" enctype="multipart/form-data">
         <h2>Add your answer</h2>
         {{answer_form}}
     {% csrf_token %}

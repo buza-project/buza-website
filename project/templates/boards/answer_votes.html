@@ -1,43 +1,44 @@
 {% load vote_tags %}
 
-{% vote_exists parent request.user  as has_voted %}
 {%if not request.user.is_authenticated%}
  <div style="padding-top: 55%;">
   <a href= "login">
-         <i class="material-icons" style="color: lightgreen;font-size: 40px;">
-          thumb_up<span class="tooltiptext">edit</span>
+         <i class="material-icons icon" style="color: lightgreen;font-size: 30px;">
+          thumb_up<span class="tooltiptext">Login to vote for this answer</span>
     </i>
        </a>
 
-      <div style="color: lightgreen;font-size: 40px;">
+      <div style="color: lightgreen;font-size: 30px;">
      {% vote_count parent %}
    </div>
 
     <a href= "login">
-        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline</i>
-        <span class="tooltiptext" style="background: yellow;">Login vote for this answer</span>
+        <i class="material-icons icon" style="color: yellow;font-size: 30px;">bookmark_outline</i>
+        <span class="tooltiptext" style="background:yellow;">Login vote for this answer</span>
         </a>
        </div>
 {% elif  not parent.user == request.user %}
 	{# user can vote #}
-  <div style="padding-top: 55%;">
-  <form action="" method="post" enctype="multipart/form-data" class="tooltip">
-         <i class="material-icons " style="color: lightgreen;font-size: 40px;">
-          thumb_up<span class="tooltiptext">This answer was helpful</span>
+  <div>
+    <form action="" method="post" class="tooltip">
+      <span class="tooltiptext">This answer was helpful</span>
     {% csrf_token %}
-    <input type="submit" value="" name= 'vote-up-answer' >
-    </i>
+      <button type="submit"
+        class="material-icons icon" value="{{answer.id}}" name= 'vote-down-answer' style="color: yellow;">
+         thumb_up </button>
 
        </form>
 
-      <div style="color: lightgreen;font-size: 40px;">
+      <div style="color: lightgreen;font-size: 30px;">
      {% vote_count parent %}
    </div>
 
-  <form action="" method="post" enctype="multipart/form-data" class="tooltip">
-         <i class="material-icons" style="color: lightBlue;font-size: 40px; ">thumb_down</i>
+  <form action="" method="post" class="tooltip">
          <span class="tooltiptext" style="background: lightBlue;">This answer was not helpful</span>
          {% csrf_token %}
-          <input type="submit" value="" name= 'vote-down-answer' >
+          <button type="submit"
+        class="material-icons icon" value="{{answer.id}}" name= 'vote-down-answer' style="color: lightBlue;">
+         thumb_down </button>
        </form>
+      </div>
 {% endif %}

@@ -142,15 +142,21 @@ def view_question(request, question_id, question_slug, board_name=None):
 		# check if any of these answers are mine
 		if answers.filter(user=user):
 			has_answered = True
-	if request.method == 'POST' and 'vote-up' in request.POST:
+	if request.method == 'POST' and 'vote-up-answer' in request.POST:
 		question.votes.up(request.user.pk)
-	elif request.method == 'POST' and 'vote-down' in request.POST:
+	elif request.method == 'POST' and 'vote-down-answer' in request.POST:
 		question.votes.down(request.user.pk)
+	if request.method == 'POST' and 'vote-up-question' in request.POST:
+		question.votes.up(request.user.pk)
 	elif request.method == 'POST' and 'star' in request.POST:
 		question.votes.starred(request.user.pk)
 	elif request.method == 'POST' and 'answer' in request.POST:
 		answer_form = AnswerForm(
 			files=request.FILES, instance=user, data=request.POST)
+		# check if the user has already replied
+		if Answer.objects.get(pk=request.user.pk):
+			messages.success(request, 'Answer poster')
+
 		if answer_form.is_valid():
 			new_answer = Answer(
 				answer=request.POST['answer'],

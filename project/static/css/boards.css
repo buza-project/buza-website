@@ -66,3 +66,10 @@ div.boards > div:nth-of-type(3n) {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+/* CSS For Icon Background buttons */
+
+.icon {
+    border: none;
+    background: transparent;
+}

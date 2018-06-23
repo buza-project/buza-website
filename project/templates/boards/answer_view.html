@@ -1,7 +1,7 @@
-<div id="question_view" style="width: 80%;
+<div id="question_view" style="width: 100%;
     text-align: center; left:50%; padding-left: 1%;background: azure;">
     <div id="votes" style="width: 5%;float: left;padding-right: 5%;">
-    	votes belong here
+                {% include "boards/answer_votes.html" with parent=answer%}
     </div>
 <p>answer: {{answer.answer}}</p>
 <p>answer media : {{answer.media}}</p>

@@ -116,18 +116,10 @@ class _VotableManager(models.Manager):
                     vote = self.through.objects.get(user_id=user_id,
                                                     content_type=content_type,
                                                     object_id=self.instance.pk)
-
-                star_statistics_field = self.through.STAR_FIELD.get(vote.star)
-                print("------------------------------------------")
-                print(star_statistics_field)
-                if star_statistics_field:
-                    # if a star was added, increment
-                    setattr(self.instance, star_statistics_field,
-                            getattr(self.instance, star_statistics_field) + 1)
-
                 self.instance.save()
-
-            return True
+            print("-----------------------------")
+            print(vote.star)
+            return vote.star
         except (OperationalError, IntegrityError):
             return False
 

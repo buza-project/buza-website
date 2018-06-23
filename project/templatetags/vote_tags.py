@@ -25,21 +25,10 @@ def vote_count(model):
 
 
 @register.simple_tag
-def vote_up(model, user=AnonymousUser):
-    print("------------------------------------VOTED UP")
+def is_starred(model, user=AnonymousUser):
     if get_version() >= '2.0':
         if user.is_anonymous:
             return False
     elif user.is_anonymous():
         return False
-    return model.votes.up(user.pk, UP)
-
-
-@register.simple_tag
-def vote_down(model, user=AnonymousUser):
-    if get_version() >= '2.0':
-        if user.is_anonymous:
-            return False
-    elif user.is_anonymous():
-        return False
-    return model.votes.down(user.pk, DOWN)
+    return model.votes.starred(user.pk)

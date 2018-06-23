@@ -1,23 +1,23 @@
-
+<div id="question_view" style="width: 80%;
+    text-align: center; left:50%; padding-left: 1%;background: azure;">
+    <div id="votes" style="width: 5%;float: left;padding-right: 5%;">
+    	votes belong here
+    </div>
 <p>answer: {{answer.answer}}</p>
 <p>answer media : {{answer.media}}</p>
 <p>answered by: {{user}}</p>
 <p>answered on: {{answer.created_at}}</p>
 <p>user profile name: {{user.user_profile}}</p>
 <br>
-<a href="" style="background-color: red;padding: 5px; float: right;"> LIke Dislike</a>
-	<br>
 	{# check if I am the one who asked this question #}
  {% if request.user.is_authenticated and request.user == user %}
-     <div name="edit a question">
-        <a href="" style="background-color: yellow;font-weight: bold; border-radius: 10%;padding: 5px; font-family: 'Chalk', sans-serif;">Edit Answer</a>
-     </div>
-     <br>
-     <div name="remove question">
-        <a href="" style="background-color: red;font-weight: bold; border-radius: 10%;padding: 5px;font-family: 'Chalk', sans-serif;">Delete Answer</a>
+        <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
+        <a href="" style="float:right; padding-left: 5%;">
+        	<i class="material-icons">edit</i> </a>
  {% endif%}
  {% if request.user.is_authenticated %}
  <p style=" color: grey; float: center;font-style: italic;">Add Comment</p>
  {% else %}
-	<p><a href="{% url "login" %}" > Log-in</p>  to comment</p>
+	<p><a href="{% url "login" %}" ></a> Log-in</p>  to comment</p>
 {%endif%}
+</div>

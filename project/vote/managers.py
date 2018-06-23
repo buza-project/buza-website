@@ -91,7 +91,7 @@ class _VotableManager(models.Manager):
         except (OperationalError, IntegrityError):
             return False
 
-    def star(self, user_id, star):
+    def star(self, user_id):
         try:
             with transaction.atomic():
                 self.instance = self.model.objects.select_for_update().get(
@@ -102,27 +102,28 @@ class _VotableManager(models.Manager):
                     vote = self.through.objects.get(user_id=user_id,
                                                     content_type=content_type,
                                                     object_id=self.instance.pk)
-                    if vote.star == star:
-                        return False
-                    vote.star = star
+                    if not vote.star:  # it's already false
+                        vote.star = True
+                    else:
+                        vote.star = False  # else it becomes true
                     vote.save()
                 except self.through.DoesNotExist:
-                    if not star:
-                        return False
                     # if you do not have a vote yet
                     self.through.objects.create(user_id=user_id,
                                                 content_type=content_type,
                                                 object_id=self.instance.pk,
-                                                star=star)
+                                                star=True)
+                    vote = self.through.objects.get(user_id=user_id,
+                                                    content_type=content_type,
+                                                    object_id=self.instance.pk)
 
-                star_statistics_field = self.through.STAR_FIELD.get(star)
-                if star:
+                star_statistics_field = self.through.STAR_FIELD.get(vote.star)
+                print("------------------------------------------")
+                print(star_statistics_field)
+                if star_statistics_field:
                     # if a star was added, increment
                     setattr(self.instance, star_statistics_field,
                             getattr(self.instance, star_statistics_field) + 1)
-                else:
-                    setattr(self.instance, star_statistics_field,
-                            getattr(self.instance, star_statistics_field) - 1)
 
                 self.instance.save()
 
@@ -139,8 +140,8 @@ class _VotableManager(models.Manager):
         return self.vote(user_id, action=DOWN)
 
     @instance_required
-    def get_star(self, user_id, star=STAR):
-        return self.star(user_id, star=star)
+    def starred(self, user_id):
+        return self.star(user_id)
 
     @instance_required
     def delete(self, user_id):

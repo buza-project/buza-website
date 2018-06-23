@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{question.title}}
- <i class="material-icons" style="float: right;">share</i></h1>
-<br>
+<h3 style="float:center">{{question.title}}
+ <i class="material-icons" style="float: right;">share</i></h3>
 <div id="question_view" style="width: 90%;
     text-align: center; left:50%;display: flex; padding-left: 1%;">
     <div id="votes" style="width: 5%;float: left;height: 100%;padding-right: 5%;">
 	     {% block like %}
-                {% include "boards/votes.html" with parent=question user=answer.user%}
+                {% include "boards/question_votes.html" with parent=question user=answer.user%}
          {% endblock %}
 	</div>
-    <div id="content" style="width: 90%;float: right;height: 100%;background: azure; font-size: 16px;">
+    <div id="content" style="width: 90%;float: right;height: 100%;background: lightblue; font-size: 16px;">
 {{question.description}}
 <br>
 {{board.title}}
@@ -44,6 +43,7 @@ asked by: {{user.username}}
      {% block answers %}
         {% if answers %}
             {%for answer in answers %}
+                <h3 style="text-align: center;">Answers </h3>
                 {% include "boards/answer_view.html" with answer=answer user=answer.user%}
             {% endfor %}
         {%endif%}

@@ -136,16 +136,19 @@ def view_question(request, question_id, question_slug, board_name=None):
 	profile = user.user_profile
 	answers = []
 	has_answered = False
+	answer_form = AnswerForm()
 	if question.answers.all():
 		answers = question.answers.all()
 		# check if any of these answers are mine
 		if answers.filter(user=user):
 			has_answered = True
 	if request.method == 'POST' and 'vote-up' in request.POST:
-		print("--------------------------------in the vvote method ")
 		question.votes.up(request.user.pk)
-
-	if request.method == 'POST' and 'answer' in request.POST:
+	elif request.method == 'POST' and 'vote-down' in request.POST:
+		question.votes.down(request.user.pk)
+	elif request.method == 'POST' and 'star' in request.POST:
+		question.votes.starred(request.user.pk)
+	elif request.method == 'POST' and 'answer' in request.POST:
 		answer_form = AnswerForm(
 			files=request.FILES, instance=user, data=request.POST)
 		if answer_form.is_valid():
@@ -164,8 +167,6 @@ def view_question(request, question_id, question_slug, board_name=None):
 					'answers': answers, 'has_answered': has_answered})
 		else:
 			messages.success(request, 'There was an error posting your reply')
-	else:
-		answer_form = AnswerForm()
 
 	return render(
 		request, 'boards/question_view.html',

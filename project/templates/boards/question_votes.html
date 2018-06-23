@@ -1,0 +1,60 @@
+{% load vote_tags %}
+
+
+{% vote_exists parent request.user  as has_voted %}
+{%if not request.user.is_authenticated%}
+ <div style="padding-top: 55%;">
+  <a href= "login">
+         <i class="material-icons " style="color: lightgreen;font-size: 40px;">
+          thumb_up<span class="tooltiptext">Login to vote for this question</span>
+    </i>
+       </a>
+
+      <div style="color: lightgreen;font-size: 40px;">
+     {% vote_count parent %}
+   </div>
+
+    <a href= "login">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline</i>
+        <span class="tooltiptext" style="background: yellow;">Login to bookmark this question</span>
+        </a>
+       </div>
+{% elif  parent.user == request.user %}
+<div style="padding-top: 55%;">
+         <form action="" method="post" enctype="multipart/form-data" class="tooltip">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline<input type="submit" value="" name= 'star' ></i>
+        <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
+        </form>
+       </div>
+
+{% else %}
+	{# user can vote #}
+  <div style="padding-top: 55%;">
+  <form action="" method="post" enctype="multipart/form-data" class="tooltip">
+         <i class="material-icons " style="color: lightgreen;font-size: 40px;">
+          thumb_up<span class="tooltiptext">Was this answer helpful</span>
+    {% csrf_token %}
+    <input type="submit" value="" name= 'vote-up' >
+    </i>
+
+       </form>
+
+      <div style="color: lightgreen;font-size: 40px;">
+     {% vote_count parent %}
+   </div>
+
+  <form action="" method="post" enctype="multipart/form-data" class="tooltip">
+         <i class="material-icons" style="color: lightBlue;font-size: 40px; ">thumb_down</i>
+         <span class="tooltiptext" style="background: lightBlue;">This answer was not helpful</span>
+         {% csrf_token %}
+          <input type="submit" value="" name= 'vote-down' >
+       </form>
+
+    <form action="" method="post" enctype="multipart/form-data" class="tooltip">
+        <i class="material-icons" style="color: yellow;font-size: 40px;">bookmark_outline</i>
+        <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
+        {% csrf_token %}
+          <input type="submit" value="" name= 'star' >
+        </form>
+       </div>
+{% endif %}

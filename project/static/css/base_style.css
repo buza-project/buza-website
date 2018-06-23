@@ -39,7 +39,6 @@ ol {
 
 #header {
     padding:10px 10px;
-    font-size:14px;
     background:#198680;
     color:#fff;
     border-top:8px solid #af7044;
@@ -59,11 +58,13 @@ ol {
     list-style:none;
     float:left;
     margin:0;
+    font-size:2px
     padding:0;
 }
 #header ul.menu li {
     float:left;
     padding:4px 10px;
+    font-size: 15px;
 }
 
 #header ul.menu li.selected a, #header ul.menu li.selected a:hover {

@@ -117,7 +117,6 @@ class _VotableManager(models.Manager):
                                                     content_type=content_type,
                                                     object_id=self.instance.pk)
                 self.instance.save()
-            print("-----------------------------")
             print(vote.star)
             return vote.star
         except (OperationalError, IntegrityError):
@@ -134,6 +133,14 @@ class _VotableManager(models.Manager):
     @instance_required
     def starred(self, user_id):
         return self.star(user_id)
+
+    @instance_required
+    def get_star(self, user_id):
+        content_type = ContentType.objects.get_for_model(self.model)
+        vote = self.through.objects.get(user_id=user_id,
+                                        content_type=content_type,
+                                        object_id=self.instance.pk)
+        return vote.star
 
     @instance_required
     def delete(self, user_id):

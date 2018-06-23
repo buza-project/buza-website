@@ -31,4 +31,4 @@ def is_starred(model, user=AnonymousUser):
             return False
     elif user.is_anonymous():
         return False
-    return model.votes.starred(user.pk)
+    return model.votes.get_star(user.pk)

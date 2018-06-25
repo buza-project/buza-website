@@ -3,8 +3,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from project.vote.managers import VotableManager
 
-UP = 0
-DOWN = 1
+UP = 1
+DOWN = -1
 
 STAR = False
 

@@ -7,8 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from project.vote.utils import instance_required, add_field_to_objects
 
-UP = 0
-DOWN = 1
+UP = 1
+DOWN = -1
 STAR = False
 
 
@@ -65,16 +65,15 @@ class _VotableManager(models.Manager):
                                                     content_type=content_type,
                                                     object_id=self.instance.pk)
                     if vote.action == action:
+                        # user has double tapped
+                        vote.action = 0
+                        vote.save()
                         return False
                     vote.action = action
                     vote.save()
 
                     # will delete your up if you vote down some instance that
                     # you have vote up
-                    voted_field = self.through.ACTION_FIELD.get(
-                        int(not action))
-                    setattr(self.instance, voted_field,
-                            getattr(self.instance, voted_field) - 1)
                 except self.through.DoesNotExist:
                     self.through.objects.create(user_id=user_id,
                                                 content_type=content_type,

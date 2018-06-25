@@ -143,9 +143,10 @@ def view_question(request, question_id, question_slug, board_name=None):
 		if answers.filter(user=user):
 			has_answered = True
 	if request.method == 'POST' and 'vote-up-answer' in request.POST:
-		question.votes.up(request.user.pk)
+		print("-------------")
+		answer.votes.up(request.user.pk)
 	elif request.method == 'POST' and 'vote-down-answer' in request.POST:
-		question.votes.down(request.user.pk)
+		answer.votes.down(request.user.pk)
 	if request.method == 'POST' and 'vote-up-question' in request.POST:
 		question.votes.up(request.user.pk)
 	elif request.method == 'POST' and 'star' in request.POST:

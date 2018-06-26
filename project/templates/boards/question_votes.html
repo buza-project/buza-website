@@ -43,7 +43,7 @@
         <span class="tooltiptext" style="background: yellow;">Click to mark as favourite question</span>
         {% csrf_token %}
         <button type="submit"
-        class="material-icons icon" value="" name= 'star' style="color: yellow;">
+        class="material-icons icon" value="" name= 'star' style="color: yellow; font-size: 20px;">
         {% is_starred parent request.user as star%}
          {% if star %}
          bookmark

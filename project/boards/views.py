@@ -151,14 +151,14 @@ def view_question(request, question_id, question_slug, board_name=None):
 		question.votes.up(request.user.pk)
 	elif request.method == 'POST' and 'star' in request.POST:
 		question.votes.starred(request.user.pk)
-	elif request.method == 'POST' and 'answer' in request.POST:
+	elif request.method == 'POST' and 'answer-button' in request.POST:
 		answer_form = AnswerForm(
-			files=request.FILES, instance=user, data=request.POST)
+			files=request.FILES, data=request.POST)
 		# check if the user has already replied
-		if Answer.objects.get(pk=request.user.pk):
+		if question.answers.count() > 0:
 			messages.success(request, 'Answer poster')
 
-		if answer_form.is_valid():
+		elif answer_form.is_valid():
 			new_answer = Answer(
 				answer=request.POST['answer'],
 				media=request.FILES.get('media'),
@@ -166,6 +166,7 @@ def view_question(request, question_id, question_slug, board_name=None):
 				user=user)
 			new_answer.save()
 			has_answered = True
+			answers = question.answers.all()
 			messages.success(request, 'Answer posted')
 			return render(
 				request, 'boards/question_view.html',

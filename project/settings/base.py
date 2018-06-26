@@ -81,6 +81,7 @@ TEMPLATES = [
             ],
             'libraries':{
                 'vote_tags': 'project.templatetags.vote_tags',
+                'board_tags': 'project.templatetags.board_tags',
 
             }
         },

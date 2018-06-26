@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load board_tags %}
 {% block content %}
 <h3 style="float:center">{{question.title}}
  <i class="material-icons" style="float: right;">share</i></h3>
@@ -47,7 +47,8 @@ asked by: {{user.username}}
             {% endfor %}
         {%endif%}
     {% endblock %}
-    {% if request.user.is_authenticated and not has_answered %}
+    {% already_answered question request.user as is_answered %}
+    {% if request.user.is_authenticated and not is_answered %}
      <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/" method="post" enctype="multipart/form-data">
         <h2>Add your answer</h2>
         {{answer_form}}

@@ -137,11 +137,6 @@ def view_question(request, question_id, question_slug, board_name=None):
 	answers = []
 	has_answered = False
 	answer_form = AnswerForm()
-	if question.answers.all():
-		answers = question.answers.all()
-		# check if any of these answers are mine
-		if answers.filter(user=user):
-			has_answered = True
 	if request.method == 'POST' and 'vote-up-answer' in request.POST:
 		print("-------------")
 		answer.votes.up(request.user.pk)
@@ -155,8 +150,8 @@ def view_question(request, question_id, question_slug, board_name=None):
 		answer_form = AnswerForm(
 			files=request.FILES, data=request.POST)
 		# check if the user has already replied
-		if question.answers.count() > 0:
-			messages.success(request, 'Answer poster')
+		if question.answers.filter(user=request.user).count() > 0:
+			messages.success(request, 'Answer update')
 
 		elif answer_form.is_valid():
 			new_answer = Answer(
@@ -168,11 +163,12 @@ def view_question(request, question_id, question_slug, board_name=None):
 			has_answered = True
 			answers = question.answers.all()
 			messages.success(request, 'Answer posted')
+			# replace with http redirect url
 			return render(
 				request, 'boards/question_view.html',
 				{'question': question, 'board': question.board,
 					'user': question.user, 'profile': profile,
-					'answers': answers, 'has_answered': has_answered})
+					'answers': answers})
 		else:
 			messages.success(request, 'There was an error posting your reply')
 
@@ -181,5 +177,4 @@ def view_question(request, question_id, question_slug, board_name=None):
 		{'question': question, 'board': question.board,
 			'user': question.user, 'profile': profile,
 			'answers': answers,
-			'answer_form': answer_form,
-			'has_answered': has_answered})
+			'answer_form': answer_form})

@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils import timezone
-
+from project.vote.models import VoteModel
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 # Create your models here.
@@ -35,7 +35,7 @@ class Board(models.Model):
 		ordering = ('created_at',)
 
 
-class Question(models.Model):
+class Question(VoteModel, models.Model):
 	'''each class has list of questions'''
 
 	title = models.CharField(max_length=100, blank=False)
@@ -73,7 +73,7 @@ class Question(models.Model):
 		ordering = ('created_at',)
 
 
-class Answer(models.Model):
+class Answer(VoteModel, models.Model):
 	'''users can post questions that will display on the classroom'''
 
 	answer = HTMLField()
@@ -115,3 +115,4 @@ class AnswerComment(Comment):
 
 	class Meta:
 		ordering = ('created_at',)
+

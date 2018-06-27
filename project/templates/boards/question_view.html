@@ -1,13 +1,17 @@
 {% extends "base.html" %}
-
+{% load board_tags %}
 {% block content %}
-{{question.title}}
-<br>
-<div >
-	<a style="background-color: red;">Like Dislike</a>
-	<br>
+<h3 style="float:center">{{question.title}}
+ <i class="material-icons" style="float: right;">share</i></h3>
+<div id="question_view" style="width: 90%;
+    text-align: center; left:50%;display: flex; padding-left: 1%;">
+    <div id="votes" style="width: 5%;float: left;height: 100%;padding-right: 5%;">
+	     {% block like %}
+                {% include "boards/question_votes.html" with parent=question%}
+         {% endblock %}
+	</div>
+    <div id="content" style="width: 90%;float: right;height: 100%;background: lightblue; font-size: 16px;">
 {{question.description}}
-</div>
 <br>
 {{board.title}}
 <br>
@@ -22,23 +26,20 @@ media files: <img src="{{question.media.url }}" alt="unable to load image" width
 {% endif %}
 asked by: {{user.username}}
 <br>
- {% if request.user.is_authenticated and request.user == user %}
-     <div name="edit_question">
-        <a href="{% url 'edit_question' question.id question.slug %}" style="background-color: yellow; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Edit Question</a>
-     </div>
-     <div name="remove_question">
-        <a href="" style="background-color: red; padding: 10px;font-weight: bold; border-radius: 10%;font-family: 'Chalk', sans-serif;float:right;">Delete Question</a>
-     </div>
-     {% endif %}
-
+ <div name="question_meta">
  {% if request.user.is_authenticated %}
- <a href="#myLink">
- <p style=" color: grey; float: center;font-style: italic;">Add Comment</p>
-</a>
+ <a href=""><p style=" color: grey; float:left;font-style: italic;">Add a comment</p></a>
  {% else %}
 <a href="{% url "login" %}" > Login</a>to comment
- {% endif %}
+{% endif %}
+ {% if request.user.is_authenticated and request.user == user %}
+        <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
+        <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
 
+     {% endif %}
+ </div>
+ </div>
+ </div>
      {% block answers %}
         {% if answers %}
             {%for answer in answers %}
@@ -46,21 +47,18 @@ asked by: {{user.username}}
             {% endfor %}
         {%endif%}
     {% endblock %}
-    {% if request.user.is_authenticated and not has_answered %}
-     <form action="." method="post" enctype="multipart/form-data">
+    {% already_answered question request.user as is_answered %}
+    {% if request.user.is_authenticated and not is_answered %}
+     <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/" method="post" enctype="multipart/form-data">
         <h2>Add your answer</h2>
         {{answer_form}}
     {% csrf_token %}
-    <input type="submit" value="Post Answer">
+    <input type="submit" value="Post Answer" name= 'answer-button'>
 </form>
     {% elif not has_answered %}
     <a href="{% url "login" %}" > log-in here to answer </a>
      {% endif %}
 
-     <br>
+
      Not the answer you were looking for? Browse other questions tagged:
-{% endblock %}
-
-{% block footer %}
-
 {% endblock %}

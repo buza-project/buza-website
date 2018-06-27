@@ -34,7 +34,7 @@ urlpatterns = [
     # url(r'^$', views.home, name='home'),
     url(r'^home/', views.all_questions, name='questions'),
     # url(r'^buza/', include('boards.urls')),
-    url(r'^subjects/', include('project.boards.urls')),
+    url(r'^subjects/', include('project.boards.urls'), name="boards"),
     # REACT JS
     url(r'^react/', TemplateView.as_view(template_name='index.html')),
     # change this to 404"

@@ -38,8 +38,7 @@ ol {
 }
 
 #header {
-    padding:10px 100px;
-    font-size:14px;
+    padding:10px 10px;
     background:#198680;
     color:#fff;
     border-top:8px solid #af7044;
@@ -50,20 +49,22 @@ ol {
 
 #header .logo {
     font-family: 'Chalk', sans-serif;
-    float:left;
     color:white;
-    font-size:50px;
+    float: center;
+    font-size:20px;
     }
 
 #header ul.menu {
     list-style:none;
     float:left;
     margin:0;
+    font-size:2px
     padding:0;
 }
 #header ul.menu li {
     float:left;
     padding:4px 10px;
+    font-size: 15px;
 }
 
 #header ul.menu li.selected a, #header ul.menu li.selected a:hover {
@@ -326,8 +327,4 @@ img.user-detail {
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
-
-.form-body {
-    border-radius: 5px;background-color: #f2f2f2;padding: 20px;
 }

@@ -17,6 +17,7 @@ from project.vote.models import Vote
 
 
 # checks if the user is logged in
+
 @login_required
 def all_questions(request):
 
@@ -36,7 +37,6 @@ def all_boards(request):
 
 @login_required
 def board_questions(request, board_name):
-	print("this is a board " + board_name)
 	try:
 		board = Board.objects.get(title=board_name)
 	except:

@@ -1,14 +1,10 @@
-gem
+BUza
 =========================
 
-This is an application scaffold for Molo_.
+This is the code for Buza mobi site
 
 Getting started
 ---------------
-In a separate terminal::
-
-	$ redis-server
-
 To set up enviroment::
 
     $ virtualenv ve
@@ -29,5 +25,3 @@ You can now connect access the demo site on http://localhost:8000
 To get started::
 
 	* log in to : http://localhost:8000
-
-.. _Molo: https://molo.readthedocs.org

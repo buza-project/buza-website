@@ -134,15 +134,20 @@ def view_question(request, question_id, question_slug, board_name=None):
 	question = Question.objects.get(pk=question_id)
 	user = question.user
 	profile = user.user_profile
-	answers = []
-	has_answered = False
 	answer_form = AnswerForm()
+	try:
+		answers = question.answers.all()
+	except:
+		answers = []
 	if request.method == 'POST' and 'vote-up-answer' in request.POST:
-		print("-------------")
+		answer_id = request.POST['vote-up-answer']
+		answer = question.answers.get(pk=answer_id)
 		answer.votes.up(request.user.pk)
 	elif request.method == 'POST' and 'vote-down-answer' in request.POST:
+		answer_id = request.POST['vote-down-answer']
+		answer = question.answers.get(pk=answer_id)
 		answer.votes.down(request.user.pk)
-	if request.method == 'POST' and 'vote-up-question' in request.POST:
+	elif request.method == 'POST' and 'vote-up-question' in request.POST:
 		question.votes.up(request.user.pk)
 	elif request.method == 'POST' and 'star' in request.POST:
 		question.votes.starred(request.user.pk)
@@ -158,9 +163,8 @@ def view_question(request, question_id, question_slug, board_name=None):
 				answer=request.POST['answer'],
 				media=request.FILES.get('media'),
 				question=question,
-				user=user)
+				user=request.user)
 			new_answer.save()
-			has_answered = True
 			answers = question.answers.all()
 			messages.success(request, 'Answer posted')
 			# replace with http redirect url

@@ -78,7 +78,8 @@ class _VotableManager(models.Manager):
                     self.through.objects.create(user_id=user_id,
                                                 content_type=content_type,
                                                 object_id=self.instance.pk,
-                                                action=action)
+                                                action=action,
+                                                star=False)
 
                 statistics_field = self.through.ACTION_FIELD.get(action)
                 setattr(self.instance, statistics_field,
@@ -111,12 +112,12 @@ class _VotableManager(models.Manager):
                     self.through.objects.create(user_id=user_id,
                                                 content_type=content_type,
                                                 object_id=self.instance.pk,
-                                                star=True)
+                                                star=True,
+                                                action=0)
                     vote = self.through.objects.get(user_id=user_id,
                                                     content_type=content_type,
                                                     object_id=self.instance.pk)
                 self.instance.save()
-            print(vote.star)
             return vote.star
         except (OperationalError, IntegrityError):
             return False
@@ -136,10 +137,15 @@ class _VotableManager(models.Manager):
     @instance_required
     def get_star(self, user_id):
         content_type = ContentType.objects.get_for_model(self.model)
+        print("----------------")
         vote = self.through.objects.get(user_id=user_id,
                                         content_type=content_type,
                                         object_id=self.instance.pk)
-        return vote.star
+        print(vote)
+        if vote:
+            return vote.star
+        else:
+            return False
 
     @instance_required
     def delete(self, user_id):

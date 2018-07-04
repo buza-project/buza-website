@@ -6,6 +6,8 @@ matrix:
     - { python: '2.7', env: TOXENV=py27 }
     - { python: '3.6', env: TOXENV=py36 }
     - { python: '3.7', env: TOXENV=py37 }
+  allow_failures:
+    - python: '3.7'  # Travis doesn't support Python 3.7 yet.
 
 install:
   - pip install tox

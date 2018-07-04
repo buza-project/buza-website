@@ -6,8 +6,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.rst')) as f:
     README = f.read()
 
-with open(os.path.join(here, 'requirements.txt')) as f:
-    requires = f.read().split("\n")
 
 setup(name='buza',
       version='0.0.1',
@@ -25,6 +23,16 @@ setup(name='buza',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      install_requires=requires,
-      tests_require=requires,
+      install_requires=[
+          'Django ~=1.11.0',
+
+          # General libraries
+          'Pillow',
+
+          # Django libraries
+          'django-taggit',
+          'social-auth-app-django',
+          'django-tinymce',
+          'djangorestframework',
+      ],
       entry_points={})

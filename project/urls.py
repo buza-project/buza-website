@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 
 from django.views.generic import TemplateView
 
-from boards import views
+from project.boards import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

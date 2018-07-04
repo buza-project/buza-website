@@ -11,7 +11,7 @@
 }
 
 .board:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0;
 }
 
 .boards {
@@ -72,4 +72,49 @@ div.boards > div:nth-of-type(3n) {
 .icon {
     border: none;
     background: transparent;
+}
+
+
+/* QUESTIONS */
+.all_questions {
+    width: 100%;
+    color: black;
+    padding: 10px;
+
+}
+.question{
+    box-shadow: 0 0px 0px 0 #26ccc2dd;
+    transition: 0.3s;
+    width: 100%;
+    text-align: center;
+    background: white;
+    border: 1px solid lightgrey;
+
+
+}
+.question:hover {
+    box-shadow: 0 8px 16px 0;
+}
+.question-title{
+color:#198680;
+}
+.user-format {
+    float: left;
+    text-align: left;
+    font-size: 20;
+    font-weight: bold;
+
+}
+.date{
+    color: grey;
+    font-size: 9px;
+    font-weight: normal;
+
+}
+.votes{
+
+}
+
+.star-button{
+
 }

@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 {% load board_tags %}
 {% block content %}
-<h3 style="float:center">{{question.title}}
+<div class="question">
+<h3>{{question.title}}
  <i class="material-icons" style="float: right;">share</i></h3>
-<div id="question_view" style="width: 90%;
-    text-align: center; left:50%;display: flex; padding-left: 1%;">
-    <div id="votes" style="width: 5%;float: left;height: 100%;padding-right: 5%;">
-	     {% block like %}
-                {% include "boards/question_votes.html" with parent=question%}
-         {% endblock %}
-	</div>
-    <div id="content" style="width: 90%;float: right;height: 100%;background: lightblue; font-size: 16px;">
+
 {{question.description}}
 <br>
 {{board.title}}
@@ -25,6 +19,10 @@ media files: <img src="{{question.media.url }}" alt="unable to load image" width
 <br>
 {% endif %}
 asked by: {{user.username}}
+
+         {% block like %}
+                {% include "boards/question_votes.html" with parent=question%}
+         {% endblock %}
 <br>
  <div name="question_meta">
  {% if request.user.is_authenticated %}
@@ -37,7 +35,6 @@ asked by: {{user.username}}
         <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
 
      {% endif %}
- </div>
  </div>
  </div>
      {% block answers %}

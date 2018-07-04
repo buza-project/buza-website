@@ -14,34 +14,29 @@
     {% for question in questions %}
 
     <div class="question">
-      <h3>
+
          <a href="{% url 'view_question' question.board.slug question.id question.slug %}">
-      {{ question.title }}
-       </a>
+      <h3>{{ question.title }}
+
        <i class="material-icons" style="float: right;">share</i>
   </h3>
-  asked by: {{user.username}}
+  asked by: {{user.username}} {{question.created_at}}
 <br>
       {{question.description}}
 <br>
-{{board.title}}
-<br>
-asked on: {{question.created_at}}
-<br>
-updated on: {{question.updated_at}}
+board: {{board.title}}
 <br>
 
 {% if question.media %}
 media files: <img src="{{question.media.url }}" alt="unable to load image" width="500px">
 <br>
+ </a>
 {% endif %}
        {% block like %}
                 {% include "boards/question_votes.html" with parent=question%}
          {% endblock %}
       </div>
-
-    <br>
-    {% endfor %}
+        {% endfor %}
     </div>
   </body>
 </html>

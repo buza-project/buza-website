@@ -7,7 +7,7 @@ with open(os.path.join(here, 'README.rst')) as f:
     README = f.read()
 
 
-setup(name='buza',
+setup(name='buza-website',
       version='0.0.1',
       description='buza',
       long_description=README,

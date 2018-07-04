@@ -68,6 +68,7 @@ db.sqlite4
 docs/_build
 .DS_Store
 .cache/
+.pytest_cache/
 /htmlcov/
 
 celerybeat-schedule

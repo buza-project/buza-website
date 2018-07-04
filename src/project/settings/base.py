@@ -26,8 +26,6 @@ SECRET_KEY = 'a3ifdy4nu!!77g4@gxd13s-%+*fn%cxwn!&s6$28k4i94%w55j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['buza.com', 'eboard.com', u'localhost']
-
 AUTH_PROFILE_MODULE = 'project.accounts.Profile'
 
 # Application definition

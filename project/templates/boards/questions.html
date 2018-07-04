@@ -10,21 +10,22 @@
   <body>
     <h1>Questions</h1>
 
-    <div class="all_questions">
+    <div name="all_questions">
     {% for question in questions %}
-
     <div class="question">
-
+      <div class=user-format>
+        <button type="submit" class="material-icons icon" name='view_user'>account_circle </button>
+          {{request.user.username}}
+       <a class="date"> {{question.created_at}}</a>
+ </div>
+  <br>
          <a href="{% url 'view_question' question.board.slug question.id question.slug %}">
-      <h3>{{ question.title }}
+          <br>
+      <div class="question-title">{{ question.title }}
 
        <i class="material-icons" style="float: right;">share</i>
-  </h3>
-  asked by: {{user.username}} {{question.created_at}}
-<br>
+  </div>
       {{question.description}}
-<br>
-board: {{board.title}}
 <br>
 
 {% if question.media %}
@@ -32,6 +33,8 @@ media files: <img src="{{question.media.url }}" alt="unable to load image" width
 <br>
  </a>
 {% endif %}
+board: {{question.board.title}}
+<br>
        {% block like %}
                 {% include "boards/question_votes.html" with parent=question%}
          {% endblock %}

@@ -18,7 +18,7 @@
          {% if request.user.is_authenticated %}
         <div>
       <div class="dropdown" style="float:left;">
-             <button class="dropbtn"><i class="material-icons" style="font-size: 40px;">account_circle</i><br>{{request.user.first_name}}
+             <button class="dropbtn"><i class="material-icons" style="font-size: 40px;">account_circle</i><br>{{request.user.username}}
       <i class="fa fa-caret-down"></i> </button>
             <div class="dropdown-content">
                 <a href="{% url 'view' %}">View Account</a>

@@ -5,7 +5,7 @@ This is the code for Buza mobi site
 
 Getting started
 ---------------
-To set up enviroment::
+To set up environment::
 
     $ virtualenv ve
     $ source ve/bin/activate

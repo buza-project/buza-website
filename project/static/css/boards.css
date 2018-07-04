@@ -77,16 +77,15 @@ div.boards > div:nth-of-type(3n) {
 
 /* QUESTIONS */
 .all_questions {
-    width: 90%;
-    padding-left: 20%;
-    left: 50%;
+    width: 100%;
     color: black;
     padding: 10px;
 }
 .question{
-    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 0px 0px 0 #26ccc2dd;
     transition: 0.3s;
     width: 100%;
+    left: 50%;
     cursor: pointer;
     text-align: center;
     background: white;
@@ -95,4 +94,12 @@ div.boards > div:nth-of-type(3n) {
 }
 .question:hover {
     box-shadow: 0 8px 16px 0;
+}
+
+.votes{
+
+}
+
+.star-button{
+
 }

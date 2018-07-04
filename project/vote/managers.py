@@ -137,14 +137,12 @@ class _VotableManager(models.Manager):
     @instance_required
     def get_star(self, user_id):
         content_type = ContentType.objects.get_for_model(self.model)
-        print("----------------")
-        vote = self.through.objects.get(user_id=user_id,
-                                        content_type=content_type,
-                                        object_id=self.instance.pk)
-        print(vote)
-        if vote:
+        try:
+            vote = self.through.objects.get(user_id=user_id,
+                                            content_type=content_type,
+                                            object_id=self.instance.pk)
             return vote.star
-        else:
+        except:
             return False
 
     @instance_required

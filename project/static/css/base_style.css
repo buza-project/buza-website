@@ -34,30 +34,29 @@ ol {
 }
 
 #header {
-    padding:10px 10px;
+    padding:5px 5px;
     background:#198680;
-    color:#fff;
+    color:white;
     overflow:auto;
 }
 
 #header .logo {
     font-family: 'Chalk', sans-serif;
     color:white;
-    float: center;
-    font-size:20px;
+    font-size:25px;
+    text-align: center;
     }
 
 #header ul.menu {
     list-style:none;
-    float:left;
+    padding-left:30%;
     margin:0;
-    font-size:2px
-    padding:0;
+    font-size:30px;
 }
 #header ul.menu li {
     float:left;
     padding:4px 10px;
-    font-size: 15px;
+    font-size: 60px;
 }
 
 #header ul.menu li.selected a, #header ul.menu li.selected a:hover {
@@ -66,10 +65,10 @@ ol {
 }
 
 #header a {
-    color:#FFD700;
+    color:white;
 }
 #header a:hover {
-    color:#fff;
+    color:yellow;
 }
 
 #header .user {
@@ -87,7 +86,6 @@ form {
 }
 
 form p {
-    width:100%;
     overflow:auto;
 }
 
@@ -274,32 +272,32 @@ img.user-detail {
     color:#ccc;
 }
 
-
+.base-icon{
+    font-size: 50px;
+}
 /*******THIS IS FOR THE USER DROP DOWN MENU*/
 .dropdown {
     float: left;
     overflow: hidden;
-    color: #af7044;
+
 }
 
 .dropdown .dropbtn {
     font-size: 16px;
     border: none;
     outline: none;
-    color: white;
+    color: yellow;
     padding: 14px 16px;
-    background-color: inherit;
+    background:#1986801f;
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: silver;
+    background-color:#1986801f;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white;
-    color: black;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -307,15 +305,15 @@ img.user-detail {
 
 .dropdown-content a {
     float: none;
-    color: black;
     padding: 12px 16px;
+    background-color:#198680;
     text-decoration: none;
     display: block;
     text-align: left;
 }
 
 .dropdown-content a:hover {
-    background-color: #ddd;
+    background-color:silver;
 }
 
 .dropdown:hover .dropdown-content {

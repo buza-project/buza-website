@@ -13,20 +13,15 @@
     <div class="all_questions">
     {% for question in questions %}
 
-
     <div class="question">
       <h3>
          <a href="{% url 'view_question' question.board.slug question.id question.slug %}">
       {{ question.title }}
        </a>
        <i class="material-icons" style="float: right;">share</i>
-
-    <div id="votes" style="width: 5%;float: left;padding-right: 5%;">
-       {% block like %}
-                {% include "boards/question_votes.html" with parent=question%}
-         {% endblock %}
-  </div>
   </h3>
+  asked by: {{user.username}}
+<br>
       {{question.description}}
 <br>
 {{board.title}}
@@ -40,8 +35,9 @@ updated on: {{question.updated_at}}
 media files: <img src="{{question.media.url }}" alt="unable to load image" width="500px">
 <br>
 {% endif %}
-asked by: {{user.username}}
-<br>
+       {% block like %}
+                {% include "boards/question_votes.html" with parent=question%}
+         {% endblock %}
       </div>
 
     <br>

@@ -14,6 +14,15 @@ To set up environment::
     $ ./manage.py createsuperuser
     $ ./manage.py runserver
 
+Or, using ``pipenv``::
+
+    $ cp .env.example .env
+    $ pipenv install --dev
+    $ pipenv shell
+    $ django-admin migrate
+    $ django-admin createsuperuser
+    $ django-admin runserver
+
 
 To deactivate server and virtual environment:
 ---------------

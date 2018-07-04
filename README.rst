@@ -1,4 +1,4 @@
-BUza
+Buza
 =========================
 
 This is the code for Buza mobi site

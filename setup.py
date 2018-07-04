@@ -20,9 +20,12 @@ setup(name='buza',
       author_email='dev@buza.com',
       url='None',
       license='BSD',
-      packages=find_packages(),
+
+      package_dir={'': 'src'},
+      packages=find_packages('src'),
       include_package_data=True,
       zip_safe=False,
+
       install_requires=[
           'Django ~=1.11.0',
 

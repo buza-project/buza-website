@@ -2,14 +2,15 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render
 
-from .models import Board, Question, Answer
 from project.accounts.models import Profile
-from .forms import AskForm, EditQuestionForm, AnswerForm
+
+from .forms import AnswerForm, AskForm, EditQuestionForm
+from .models import Answer, Board, Question
 
 
 # Create your views here.

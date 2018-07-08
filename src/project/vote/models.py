@@ -1,7 +1,9 @@
-from django.db import models
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+
 from project.vote.managers import VotableManager
+
 
 UP = 1
 DOWN = -1

@@ -1,6 +1,7 @@
 from django import forms
-from .models import Question, Answer
 from tinymce.widgets import TinyMCE
+
+from .models import Answer, Question
 
 
 class AskForm(forms.ModelForm):

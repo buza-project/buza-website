@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.urls import resolve
-from django.core.urlresolvers import reverse
 
 from project.boards.views import home
 

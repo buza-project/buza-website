@@ -2,9 +2,10 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from project.boards.models import (
-    Board, Question, Answer,
-    AnswerComment, QuestionComment)
+
+from project.boards.models import (Answer, AnswerComment, Board, Question,
+                                   QuestionComment)
+
 
 # Register your models here.
 

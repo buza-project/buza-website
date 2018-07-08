@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 
-from django import template
+from django import get_version, template
 from django.contrib.auth.models import AnonymousUser
-from django import get_version
+
 
 register = template.Library()
 

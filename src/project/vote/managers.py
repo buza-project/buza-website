@@ -1,13 +1,14 @@
-from django.db import transaction, IntegrityError
+from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError, transaction
 from django.db.models import Manager
 from django.db.models.query import QuerySet
 from django.db.utils import OperationalError
-from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
 from project.vote import models
-from project.vote.utils import instance_required, add_field_to_objects
+from project.vote.utils import add_field_to_objects, instance_required
+
 
 UP = 1
 DOWN = -1

@@ -1,7 +1,10 @@
 from django.conf.urls import url
-# from django.contrib.auth import authenticate, login, logout
 
 from . import views
+
+
+# from django.contrib.auth import authenticate, login, logout
+
 
 urlpatterns = [
     url(r'^questions/$', views.all_questions, name='all_questions'),

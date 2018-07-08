@@ -41,10 +41,10 @@ class Question(VoteModel, models.Model):
 	title = models.CharField(max_length=100, blank=False)
 	description = HTMLField()
 	media = models.ImageField(upload_to='questions')  # inside of media
-	board = models.ForeignKey(Board, related_name='questions')
+	board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='questions')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
-	user = models.ForeignKey(User, related_name='asked_by')
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='asked_by')
 	slug = models.SlugField(editable=False)
 
 	tags = TaggableManager()
@@ -78,8 +78,8 @@ class Answer(VoteModel, models.Model):
 
 	answer = HTMLField()
 	media = models.ImageField(upload_to='answers/')
-	question = models.ForeignKey(Question, related_name="answers")
-	user = models.ForeignKey(User, related_name='answered_by')
+	question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answered_by')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(null=True)
 
@@ -101,8 +101,8 @@ class Comment(models.Model):
 
 class QuestionComment(Comment):
 	'''a comment for a question'''
-	user = models.ForeignKey(User, related_name='question_commented_by')
-	question = models.ForeignKey(Question, related_name="question_comments")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_commented_by')
+	question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="question_comments")
 
 	class Meta:
 		ordering = ('created_at',)
@@ -110,8 +110,8 @@ class QuestionComment(Comment):
 
 class AnswerComment(Comment):
 	'''a comment for a question'''
-	user = models.ForeignKey(User, related_name='answer_commented_by')
-	answer = models.ForeignKey(Answer, related_name="reply_comments")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_commented_by')
+	answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name="reply_comments")
 
 	class Meta:
 		ordering = ('created_at',)

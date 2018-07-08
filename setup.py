@@ -27,7 +27,7 @@ setup(name='buza-website',
       zip_safe=False,
 
       install_requires=[
-          'Django ~=1.11.0',
+          'Django >2.0',
 
           # General libraries
           'Pillow',

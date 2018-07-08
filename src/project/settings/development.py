@@ -1,3 +1,4 @@
-from .base import *
-DEBUG = True
+from .base import *  # noqa:  F401
 
+
+DEBUG = True

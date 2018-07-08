@@ -1,4 +1,5 @@
 from functools import wraps
+
 from django.contrib.contenttypes.models import ContentType
 
 
@@ -22,7 +23,7 @@ def add_field_to_objects(model, objects, user_id):
     voted_object_ids = Vote.objects.filter(
         user_id=user_id,
         content_type=content_type,
-        object_id__in=object_ids
+        object_id__in=object_ids,
     ).values_list("object_id", "action", "star")
 
     for r in objects:

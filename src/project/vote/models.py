@@ -1,7 +1,9 @@
-from django.db import models
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+
 from project.vote.managers import VotableManager
+
 
 UP = 1
 DOWN = -1
@@ -17,7 +19,7 @@ class VoteManager(models.Manager):
             content_type = ContentType.objects.get_for_model(content_object)
             kwargs.update({
                 'content_type': content_type,
-                'object_id': content_object.pk
+                'object_id': content_object.pk,
             })
 
         return super(VoteManager, self).filter(*args, **kwargs)
@@ -30,7 +32,7 @@ class Vote(models.Model):
 
     }
     STAR_FIELD = {
-        STAR: 'star_question'
+        STAR: 'star_question',
     }
 
     user_id = models.BigIntegerField()
@@ -53,7 +55,7 @@ class Vote(models.Model):
         ct = ContentType.objects.get_for_model(model)
         kwargs = {
             "content_type": ct,
-            "action": action
+            "action": action,
         }
         if instance is not None:
             kwargs["object_id"] = instance.pk
@@ -65,7 +67,7 @@ class Vote(models.Model):
         ct = ContentType.objects.get_for_model(model)
         kwargs = {
             "content_type": ct,
-            "star": star
+            "star": star,
         }
         if instance is not None:
             kwargs["object_id"] = instance.pk
@@ -112,11 +114,3 @@ class VoteModel(models.Model):
     @is_voted_down.setter
     def is_voted_down(self, value):
         self._is_voted_down = value
-
-    @property
-    def is_starred(self):
-        return self._is_starred
-
-    @property
-    def set_star(self, value=False):
-        self._set_star = value

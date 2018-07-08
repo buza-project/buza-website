@@ -24,6 +24,16 @@ Or, using ``pipenv``::
     $ django-admin runserver
 
 
+Running checks and tests
+------------------------
+
+To run all the static checks and tests, invoke Tox::
+
+    $ tox
+
+To run the checks and tests individually, see the "commands" section of ``tox.ini``.
+
+
 To deactivate server and virtual environment:
 ---------------
 	press CTRL R

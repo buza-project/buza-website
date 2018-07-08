@@ -1,11 +1,14 @@
-from django.db import models, transaction, IntegrityError
-from django.db.models.query import QuerySet
-from django.db.utils import OperationalError
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError, transaction
+from django.db.models import Manager
+from django.db.models.query import QuerySet
+from django.db.utils import OperationalError
 from django.utils.translation import ugettext_lazy as _
 
-from project.vote.utils import instance_required, add_field_to_objects
+from project.vote import models
+from project.vote.utils import add_field_to_objects, instance_required
+
 
 UP = 1
 DOWN = -1
@@ -45,7 +48,7 @@ class VotedQuerySet(QuerySet):
         return c
 
 
-class _VotableManager(models.Manager):
+class _VotableManager(Manager):
 
     def __init__(self, through, model, instance, field_name='votes'):
         self.through = through
@@ -142,7 +145,7 @@ class _VotableManager(models.Manager):
                                             content_type=content_type,
                                             object_id=self.instance.pk)
             return vote.star
-        except:
+        except models.Vote.DoesNotExist:
             return False
 
     @instance_required
@@ -156,7 +159,7 @@ class _VotableManager(models.Manager):
                     vote = self.through.objects.select_for_update().get(
                         user_id=user_id,
                         content_type_id=content_type.id,
-                        object_id=self.instance.id
+                        object_id=self.instance.id,
                     )
                 except self.through.DoesNotExist:
                     return False
@@ -191,7 +194,7 @@ class _VotableManager(models.Manager):
         return self.through.objects.filter(
             user_id=user_id,
             content_object=self.instance,
-            action=action
+            action=action,
         ).exists()
 
     def all(self, user_id, action=UP):
@@ -210,7 +213,7 @@ class _VotableManager(models.Manager):
 
     def user_ids(self, action=UP):
         return self.through.votes_for(
-            self.model, self.instance, action
+            self.model, self.instance, action,
         ).order_by('-create_at').values_list('user_id', 'create_at')
 
     def annotate(self, queryset=None, user_id=None,

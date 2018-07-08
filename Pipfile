@@ -7,6 +7,11 @@ name = "pypi"
 buza-website = {editable = true, path = "."}
 
 [dev-packages]
+"flake8" = "*"
+isort = "*"
+mypy = "*"
+tox = "*"
+"flake8-commas" = "*"
 
 [requires]
 python_version = "3.6"

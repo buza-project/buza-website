@@ -1,6 +1,6 @@
 {% load vote_tags %}
 
-{%if not request.user.is_authenticated%}
+{%if not user.is_authenticated%}
  <div>
   <a href= "login">
          <i class="material-icons icon" style="color: lightgreen;font-size: 40px;">
@@ -17,7 +17,7 @@
         <span class="tooltiptext" style="background: yellow;">Login to bookmark this question</span>
         </a>
        </div>
-{% elif  parent.user == request.user %}
+{% elif  parent.user == user %}
 <div >
          <form action="" method="post" enctype="multipart/form-data" class="tooltip">
         <i class="material-icons icon" style="color: yellow;font-size: 40px;">bookmark_outline<input type="submit" value="" name= 'star' ></i>
@@ -42,7 +42,7 @@
         {% csrf_token %}
         <button type="submit"
         class="material-icons icon" value="" name= 'star' style="color: yellow; font-size: 20px;">
-        {% is_starred parent request.user as star%}
+        {% is_starred parent user as star%}
          {% if star %}
          bookmark
          {% else %}

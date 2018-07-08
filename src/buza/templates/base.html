@@ -15,10 +15,10 @@
 <body>
 	<div id="header">
 		<div><span class="logo">Buza <br></span></div>
-         {% if request.user.is_authenticated %}
+         {% if user.is_authenticated %}
         <div>
       <div class="dropdown" style="float:left;">
-             <button class="dropbtn"><i class="material-icons" style="font-size: 40px;">account_circle</i><br>{{request.user.username}}
+             <button class="dropbtn"><i class="material-icons" style="font-size: 40px;">account_circle</i><br>{{user.username}}
       <i class="fa fa-caret-down"></i> </button>
             <div class="dropdown-content">
                 <a href="{% url 'view' %}">View Account</a>

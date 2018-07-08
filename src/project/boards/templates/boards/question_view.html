@@ -25,12 +25,12 @@ asked by: {{user.username}}
          {% endblock %}
 <br>
  <div name="question_meta">
- {% if request.user.is_authenticated %}
+ {% if user.is_authenticated %}
  <a href=""><p style=" color: grey; float:left;font-style: italic;">Add a comment</p></a>
  {% else %}
 <a href="{% url "login" %}" > Login</a>to comment
 {% endif %}
- {% if request.user.is_authenticated and request.user == user %}
+ {% if user.is_authenticated and user == user %}
         <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
         <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
 
@@ -44,8 +44,8 @@ asked by: {{user.username}}
             {% endfor %}
         {%endif%}
     {% endblock %}
-    {% already_answered question request.user as is_answered %}
-    {% if request.user.is_authenticated and not is_answered %}
+    {% already_answered question user as is_answered %}
+    {% if user.is_authenticated and not is_answered %}
      <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/" method="post" enctype="multipart/form-data">
         <h2>Add your answer</h2>
         {{answer_form}}

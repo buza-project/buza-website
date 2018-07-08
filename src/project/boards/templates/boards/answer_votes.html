@@ -1,6 +1,6 @@
 {% load vote_tags %}
 
-{%if not request.user.is_authenticated%}
+{%if not user.is_authenticated%}
  <div style="padding-top: 55%;">
   <a href= "login">
          <i class="material-icons icon" style="color: lightgreen;font-size: 30px;">
@@ -17,7 +17,7 @@
         <span class="tooltiptext" style="background:yellow;">Login vote for this answer</span>
         </a>
        </div>
-{% elif  not parent.user == request.user %}
+{% elif  not parent.user == user %}
 	{# user can vote #}
   <div>
     <form action="" method="post" class="tooltip">

@@ -10,12 +10,12 @@
 <p>user profile name: {{user.user_profile}}</p>
 <br>
 	{# check if I am the one who asked this question #}
- {% if request.user.is_authenticated and request.user == user %}
+ {% if user.is_authenticated and user == user %}
         <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
         <a href="" style="float:right; padding-left: 5%;">
         	<i class="material-icons">edit</i> </a>
  {% endif%}
- {% if request.user.is_authenticated %}
+ {% if user.is_authenticated %}
  <p style=" color: grey; float: center;font-style: italic;">Add Comment</p>
  {% else %}
 	<p><a href="{% url "login" %}" ></a> Log-in</p>  to comment</p>

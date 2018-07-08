@@ -114,11 +114,3 @@ class VoteModel(models.Model):
     @is_voted_down.setter
     def is_voted_down(self, value):
         self._is_voted_down = value
-
-    @property
-    def is_starred(self):
-        return self._is_starred
-
-    @property
-    def set_star(self, value=False):
-        self._set_star = value

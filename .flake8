@@ -1,4 +1,4 @@
 # https://flake8.readthedocs.org/en/stable/config.html
 [flake8]
-exclude = .tox,build,migrations
+exclude = .eggs,.tox,build,migrations
 max-line-length = 88

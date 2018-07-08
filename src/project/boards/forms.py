@@ -1,8 +1,6 @@
 from django import forms
 from .models import Question, Answer
 from tinymce.widgets import TinyMCE
-from project.vote.models import Vote
-from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class AskForm(forms.ModelForm):

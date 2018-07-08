@@ -9,9 +9,6 @@ from django.shortcuts import render
 from .models import Board, Question, Answer
 from project.accounts.models import Profile
 from .forms import AskForm, EditQuestionForm, AnswerForm
-from .serializers import QuestionSerializer
-from rest_framework import viewsets
-from project.vote.models import Vote
 
 
 # Create your views here.

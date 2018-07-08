@@ -13,6 +13,7 @@ mypy = "*"
 tox = "*"
 "flake8-commas" = "*"
 pytest = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.6"

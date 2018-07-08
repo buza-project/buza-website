@@ -7,7 +7,7 @@ with open(os.path.join(here, 'README.rst')) as f:
     README = f.read()
 
 
-setup(name='buza',
+setup(name='buza-website',
       version='0.0.1',
       description='buza',
       long_description=README,
@@ -20,9 +20,12 @@ setup(name='buza',
       author_email='dev@buza.com',
       url='None',
       license='BSD',
-      packages=find_packages(),
+
+      package_dir={'': 'src'},
+      packages=find_packages('src'),
       include_package_data=True,
       zip_safe=False,
+
       install_requires=[
           'Django ~=1.11.0',
 

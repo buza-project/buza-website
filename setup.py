@@ -37,6 +37,7 @@ setup(
         'Pillow',
 
         # Django libraries
+        'django-environ',
         'django-taggit',
         'django-tinymce',
         'djangorestframework',

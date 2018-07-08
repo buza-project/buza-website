@@ -49,6 +49,13 @@
             ],
             "version": "==2.0.7"
         },
+        "django-environ": {
+            "hashes": [
+                "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde",
+                "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"
+            ],
+            "version": "==0.4.5"
+        },
         "django-taggit": {
             "hashes": [
                 "sha256:58aa3e59e0643446e102523f22d137300298e2a537b1c5b0c310d99143f2c2b8",

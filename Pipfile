@@ -12,6 +12,7 @@ isort = "*"
 mypy = "*"
 tox = "*"
 "flake8-commas" = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.6"

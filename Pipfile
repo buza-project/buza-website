@@ -10,6 +10,7 @@ buza-website = {editable = true, path = "."}
 "flake8" = "*"
 isort = "*"
 mypy = "*"
+tox = "*"
 
 [requires]
 python_version = "3.6"

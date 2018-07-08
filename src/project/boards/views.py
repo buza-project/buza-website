@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render
 
 from .models import Board, Question, Answer
@@ -34,11 +35,7 @@ def all_boards(request):
 
 @login_required
 def board_questions(request, board_name):
-    try:
-        board = Board.objects.get(title=board_name)
-    except:
-        board = Board.objects.get(slug=board_name)
-
+    board = Board.objects.get(Q(title=board_name) | Q(slug=board_name))
     questions = Question.objects.filter(board=board)
     return render(request, 'boards/questions.html', {'questions': questions})
 

@@ -1,0 +1,9 @@
+# http://coverage.readthedocs.org/en/latest/config.html
+
+[run]
+branch = True
+
+source =
+    src
+    tests
+

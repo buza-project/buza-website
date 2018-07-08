@@ -10,7 +10,6 @@ with open(os.path.join(here, 'README.rst')) as f:
 
 setup(
     name='buza-website',
-    version='0.0.1',
     description='buza',
     long_description=README,
     classifiers=[
@@ -27,6 +26,9 @@ setup(
     packages=find_packages('src'),
     include_package_data=True,
     zip_safe=False,
+
+    setup_requires=['setuptools_scm'],
+    use_scm_version=True,
 
     install_requires=[
         'Django >2.0',

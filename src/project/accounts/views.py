@@ -122,7 +122,7 @@ def edit(request):
         user_form = UserEditForm(instance=request.user)
         try:
             profile = request.user.user_profile
-        except:
+        except Profile.DoesNotExist:
             profile = Profile.objects.create(user=request.user)
             profile.save()
         profile_form = ProfileEditForm(instance=profile)

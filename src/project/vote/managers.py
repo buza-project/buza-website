@@ -5,6 +5,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
+from project.vote.models import Vote
 from project.vote.utils import instance_required, add_field_to_objects
 
 UP = 1
@@ -142,7 +143,7 @@ class _VotableManager(models.Manager):
                                             content_type=content_type,
                                             object_id=self.instance.pk)
             return vote.star
-        except:
+        except Vote.DoesNotExist:
             return False
 
     @instance_required

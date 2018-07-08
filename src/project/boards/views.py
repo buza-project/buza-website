@@ -133,10 +133,8 @@ def view_question(request, question_id, question_slug, board_name=None):
     user = question.user
     profile = user.user_profile
     answer_form = AnswerForm()
-    try:
-        answers = question.answers.all()
-    except:
-        answers = []
+    answers = question.answers.all()
+
     if request.method == 'POST' and 'vote-up-answer' in request.POST:
         answer_id = request.POST['vote-up-answer']
         answer = question.answers.get(pk=answer_id)

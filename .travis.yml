@@ -3,9 +3,10 @@ cache: pip
 
 matrix:
   include:
-    - { python: '2.7', env: TOXENV=py27 }
-    - { python: '3.6', env: TOXENV=py36 }
-    - { python: '3.7', env: TOXENV=py37 }
+    - { python: '3.6', env: TOXENV=py36-dj2.0 }
+    - { python: '3.6', env: TOXENV=py36-dj2.1dev }
+    - { python: '3.7', env: TOXENV=py37-dj2.0 }
+    - { python: '3.7', env: TOXENV=py37-dj2.1dev }
   allow_failures:
     - python: '3.7'  # Travis doesn't support Python 3.7 yet.
 

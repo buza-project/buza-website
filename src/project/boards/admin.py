@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from project.boards.models import (
-	Board, Question, Answer,
-	AnswerComment, QuestionComment)
+    Board, Question, Answer,
+    AnswerComment, QuestionComment)
 
 # Register your models here.
 

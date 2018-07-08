@@ -159,7 +159,7 @@ class _VotableManager(Manager):
                     vote = self.through.objects.select_for_update().get(
                         user_id=user_id,
                         content_type_id=content_type.id,
-                        object_id=self.instance.id
+                        object_id=self.instance.id,
                     )
                 except self.through.DoesNotExist:
                     return False
@@ -194,7 +194,7 @@ class _VotableManager(Manager):
         return self.through.objects.filter(
             user_id=user_id,
             content_object=self.instance,
-            action=action
+            action=action,
         ).exists()
 
     def all(self, user_id, action=UP):
@@ -213,7 +213,7 @@ class _VotableManager(Manager):
 
     def user_ids(self, action=UP):
         return self.through.votes_for(
-            self.model, self.instance, action
+            self.model, self.instance, action,
         ).order_by('-create_at').values_list('user_id', 'create_at')
 
     def annotate(self, queryset=None, user_id=None,

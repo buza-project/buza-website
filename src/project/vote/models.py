@@ -19,7 +19,7 @@ class VoteManager(models.Manager):
             content_type = ContentType.objects.get_for_model(content_object)
             kwargs.update({
                 'content_type': content_type,
-                'object_id': content_object.pk
+                'object_id': content_object.pk,
             })
 
         return super(VoteManager, self).filter(*args, **kwargs)
@@ -32,7 +32,7 @@ class Vote(models.Model):
 
     }
     STAR_FIELD = {
-        STAR: 'star_question'
+        STAR: 'star_question',
     }
 
     user_id = models.BigIntegerField()
@@ -55,7 +55,7 @@ class Vote(models.Model):
         ct = ContentType.objects.get_for_model(model)
         kwargs = {
             "content_type": ct,
-            "action": action
+            "action": action,
         }
         if instance is not None:
             kwargs["object_id"] = instance.pk
@@ -67,7 +67,7 @@ class Vote(models.Model):
         ct = ContentType.objects.get_for_model(model)
         kwargs = {
             "content_type": ct,
-            "star": star
+            "star": star,
         }
         if instance is not None:
             kwargs["object_id"] = instance.pk

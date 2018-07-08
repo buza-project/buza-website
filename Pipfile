@@ -11,6 +11,7 @@ buza-website = {editable = true, path = "."}
 isort = "*"
 mypy = "*"
 tox = "*"
+"flake8-commas" = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,11 +1,12 @@
-from django.db import models, transaction, IntegrityError
+from django.db import transaction, IntegrityError
+from django.db.models import Manager
 from django.db.models.query import QuerySet
 from django.db.utils import OperationalError
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from project.vote.models import Vote
+from project.vote import models
 from project.vote.utils import instance_required, add_field_to_objects
 
 UP = 1
@@ -46,7 +47,7 @@ class VotedQuerySet(QuerySet):
         return c
 
 
-class _VotableManager(models.Manager):
+class _VotableManager(Manager):
 
     def __init__(self, through, model, instance, field_name='votes'):
         self.through = through
@@ -143,7 +144,7 @@ class _VotableManager(models.Manager):
                                             content_type=content_type,
                                             object_id=self.instance.pk)
             return vote.star
-        except Vote.DoesNotExist:
+        except models.Vote.DoesNotExist:
             return False
 
     @instance_required

@@ -69,7 +69,11 @@ def update_boards():
 @login_required
 def ask_question(request):
     if request.method == 'POST':
-        ask_form = AskForm(files=request.FILES, instance=request.user, data=request.POST)
+        ask_form = AskForm(
+            files=request.FILES,
+            instance=request.user,
+            data=request.POST,
+        )
 
         if ask_form.is_valid():
             board = Board.objects.get(pk=request.POST['board'])

@@ -59,7 +59,11 @@ def password_change(request):
 @login_required
 def password_change_done(request):
     '''resetting your password'''
-    return render(request, 'registration/password_change_done_index.html', {'section': 'password_done'})
+    return render(
+        request,
+        'registration/password_change_done_index.html',
+        {'section': 'password_done'},
+    )
 
 
 def register(request):
@@ -77,19 +81,35 @@ def register(request):
             new_user.save()
             profile = Profile.objects.create(user=new_user)
             profile.save()
-            return render(request, 'accounts/register_done.html', {'new_user': new_user})
+            return render(
+                request,
+                'accounts/register_done.html',
+                {'new_user': new_user},
+            )
     else:
         # user did not fill in form correctly
         user_form = UserRegistrationForm()
-    return render(request, 'accounts/register.html', {'user_form': user_form})
+    return render(
+        request,
+        'accounts/register.html',
+        {'user_form': user_form},
+    )
 
 
 # allowing users to edit their own profiles
 @login_required
 def edit(request):
     if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user, files=request.FILES, data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.user_profile, files=request.FILES, data=request.POST)
+        user_form = UserEditForm(
+            instance=request.user,
+            files=request.FILES,
+            data=request.POST,
+        )
+        profile_form = ProfileEditForm(
+            instance=request.user.user_profile,
+            files=request.FILES,
+            data=request.POST,
+        )
         if user_form.is_valid() and profile_form.is_valid():
             # get the user's userinfo and their profile details
             user_form.save()
@@ -106,7 +126,11 @@ def edit(request):
             profile = Profile.objects.create(user=request.user)
             profile.save()
         profile_form = ProfileEditForm(instance=profile)
-    return render(request, 'accounts/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(
+        request,
+        'accounts/edit.html',
+        {'user_form': user_form, 'profile_form': profile_form},
+    )
 
 
 @login_required

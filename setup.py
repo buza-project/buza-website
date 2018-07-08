@@ -38,9 +38,9 @@ setup(
 
         # Django libraries
         'django-taggit',
-        'social-auth-app-django',
         'django-tinymce',
         'djangorestframework',
+        'social-auth-app-django',
     ],
     entry_points={},
 )

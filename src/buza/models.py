@@ -17,13 +17,11 @@ class BuzaUser(AbstractBaseUser, PermissionsMixin):
     # authentication feilds
     email = models.EmailField(
         _('email address'),
-        unique=True,
         blank=True,
     )
     phone = models.CharField(
         _('phone number'),
         blank=True,
-        unique=True,
         max_length=11,
     )
     user_name = models.CharField(

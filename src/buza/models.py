@@ -1,30 +1,69 @@
 from __future__ import unicode_literals
-from django.conf import settings
-from django.db import models
-from django.core.mail import send_mail
+
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from project.boards.models import Board
+
+from .managers import UserManager
 
 
 # Models will be added to the db
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, related_name='user_profile',
-        on_delete=models.CASCADE)  # there is a 1-1 relation btn users and profile
-    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
-    school = models.CharField(blank=True, null=True, max_length=100)
-    interests = models.CharField(blank=True, null=True, max_length=300)
-    # users can pick from a range of topics
-    bio = models.CharField(blank=True, null=True, max_length=250)
+class BuzaUser(AbstractBaseUser, PermissionsMixin):
+    # authentication feilds
+    email = models.EmailField(
+        _('email address'),
+        unique=True,
+        blank=True,
+    )
+    phone = models.CharField(
+        _('phone number'),
+        blank=True,
+        unique=True,
+        max_length=11,
+    )
+    user_name = models.CharField(
+        _('user name'),
+        blank=True,
+        null=True,
+        unique=True,
+        max_length=15,
+    )
+    # school fields
+    school = models.CharField(_('school name'), blank=True, null=True, max_length=100)
+    school_address = models.CharField(
+        _('school address'),
+        blank=True, null=True,
+        max_length=300,
+    )
     grade = models.IntegerField(blank=True, default=7)
-    reputation = models.IntegerField(blank=True, default=0)
+    # users personal feilds
+    photo = models.ImageField(_('profile photo'),
+                              upload_to='users/%Y/%m/%d',
+                              blank=True)
+    bio = models.CharField(blank=True, null=True, max_length=250)
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
+    is_active = models.BooleanField(_('active'), default=True)
+    full_name = models.CharField(
+        _('name and surname'),
+        blank=True, null=True,
+        max_length=100,
+    )
 
     # users can have multiple boards
-    boards = models.ManyToManyField(Board, related_name="my_boards")
+    subjects = models.ManyToManyField(Board, related_name="my_boards")
+
+    objects = UserManager()
+    USERNAME_FIELD = 'user_name'
+    REQUIRED_FIELDS = ['use_name']
+
+    class Meta:
+        verbose_name = _("user")
+        verbose_name_plural = ("users")
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user)

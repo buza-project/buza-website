@@ -2,6 +2,7 @@
 Django settings module for buza-website using django-environ.
 """
 import environ
+
 from buza.settings_base import *  # noqa: F401
 
 

@@ -5,8 +5,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from project.boards.models import Board
-
 from .managers import UserManager
 
 
@@ -24,7 +22,7 @@ class BuzaUser(AbstractBaseUser, PermissionsMixin):
         blank=True,
         max_length=11,
     )
-    user_name = models.CharField(
+    username = models.CharField(
         _('user name'),
         blank=True,
         null=True,
@@ -53,11 +51,11 @@ class BuzaUser(AbstractBaseUser, PermissionsMixin):
     )
 
     # users can have multiple boards
-    subjects = models.ManyToManyField(Board, related_name="my_boards")
+    # subjects = models.ManyToManyField(Board, related_name="my_boards")
 
     objects = UserManager()
-    USERNAME_FIELD = 'user_name'
-    REQUIRED_FIELDS = ['use_name']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['']
 
     class Meta:
         verbose_name = _("user")

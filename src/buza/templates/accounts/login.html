@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+ {#This form is not being rendered#}
+{% block title %}Buza Login{% endblock %}
+{% block content %}
+{% if equest.user.is_authenticated %}
+<h1>404 Opps Page not found</h1>
+<h1>unfortunetly the page you requested could not be found</h1>
+{% else %}
+<h1>Log into Buza</h1>
+<p>Please use the following form to  log-in</p>
+<form action="." method="post">
+	{{form.as_p}}
+	{% csrf_token%}
+	<p><input type="submit" value="Log-in"></p>
+
+</form>
+{% endif %}
+{% endblock %}

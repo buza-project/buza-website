@@ -9,7 +9,6 @@ ROOT_URLCONF = 'project.urls'
 INSTALLED_APPS = [
     # Buza
     'buza',
-    'project.accounts',
     'project.boards',
     'project.vote',
 

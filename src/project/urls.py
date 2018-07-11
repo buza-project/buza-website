@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # users
-    url(r'^account/', include('project.accounts.urls')),
+    url(r'^account/', include('buza.urls')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     # boards

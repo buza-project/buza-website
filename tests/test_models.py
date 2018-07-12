@@ -6,9 +6,9 @@ from buza.models import BuzaUser
 class TestBUzaUser(TestCase):
 
     def test_email_user(self):
-        email_user = BuzaUser(login="user@buza.com", password="12345", user_name="1234")
-        self.assertEqual(email_user.email, "user@buza.com")
+        email_user = BuzaUser(login="user@buza.com", password="12345", username="1234")
+        self.assertEqual("user@buza.com", email_user.email)
 
     def test_phone_user(self):
-        phone_user = BuzaUser(login="0764270487", password="12345", user_name="1234")
-        self.assertEqual(phone_user.email, "user@buza.com")
+        phone_user = BuzaUser(login="0764270487", password="12345", username="1234")
+        self.assertEqual("0764270487", phone_user.phone)

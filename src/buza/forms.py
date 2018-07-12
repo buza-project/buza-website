@@ -1,6 +1,6 @@
 from django import forms
 
-from buza.models import BuzaUser as User
+from buza.models import User
 
 
 class LoginForm(forms.Form):

@@ -48,4 +48,4 @@ TEMPLATES = [{
 }]
 
 LOGIN_REDIRECT_URL = reverse_lazy('all_questions')
-AUTH_USER_MODEL = 'buza.BuzaUser'
+AUTH_USER_MODEL = 'buza.User'

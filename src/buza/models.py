@@ -11,7 +11,7 @@ from .managers import UserManager
 # Models will be added to the db
 
 
-class BuzaUser(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     # authentication fields
     email = models.EmailField(
         _('email address'),

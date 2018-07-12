@@ -3,7 +3,7 @@ from django.test import TestCase
 from buza import models
 
 
-class TestBuzaUser(TestCase):
+class TestUser(TestCase):
 
     def test_repr(self):
-        assert '<BuzaUser: test>' == repr(models.BuzaUser(username='test'))
+        assert '<User: test>' == repr(models.User(username='test'))

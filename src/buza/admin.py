@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BuzaUser
+from .models import User
 
 
 class BuzaAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class BuzaAdmin(admin.ModelAdmin):
     list_display = ['username', 'school', 'grade']
 
 
-admin.site.register(BuzaUser, BuzaAdmin)
+admin.site.register(User, BuzaAdmin)

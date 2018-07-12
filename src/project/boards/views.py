@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render
 
-from buza.models import BuzaUser as User
+from buza.models import User
 
 from .forms import AnswerForm, AskForm, EditQuestionForm
 from .models import Answer, Board, Question

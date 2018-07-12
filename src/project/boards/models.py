@@ -9,7 +9,7 @@ from django.utils.text import slugify
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 
-from buza.models import BuzaUser as User
+from buza.models import User
 from project.vote.models import VoteModel
 
 

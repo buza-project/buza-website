@@ -12,7 +12,7 @@ from .managers import UserManager
 
 
 class BuzaUser(AbstractBaseUser, PermissionsMixin):
-    # authentication feilds
+    # authentication fields
     email = models.EmailField(
         _('email address'),
         blank=True,
@@ -37,7 +37,7 @@ class BuzaUser(AbstractBaseUser, PermissionsMixin):
         max_length=300,
     )
     grade = models.IntegerField(blank=True, default=7)
-    # users personal feilds
+    # users personal fields
     photo = models.ImageField(_('profile photo'),
                               upload_to='users/%Y/%m/%d',
                               blank=True)

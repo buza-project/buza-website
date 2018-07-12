@@ -25,7 +25,6 @@ class BuzaUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         _('user name'),
         blank=True,
-        null=True,
         unique=True,
         max_length=15,
     )

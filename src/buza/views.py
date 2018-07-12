@@ -120,6 +120,4 @@ def edit(request):
 
 @login_required
 def view(request):
-    return render(
-        request, 'accounts/edit.html',
-        {'user': request.user})
+    return render(request, 'accounts/edit.html')

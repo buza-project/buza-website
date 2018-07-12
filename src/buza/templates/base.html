@@ -21,7 +21,7 @@
              <button class="dropbtn"><i class="material-icons" style="font-size: 40px;">account_circle</i><br>{{user.username}}
       <i class="fa fa-caret-down"></i> </button>
             <div class="dropdown-content">
-                <a href="{% url 'view' %}">View Account</a>
+                <a href="{% url 'user-detail' pk=user.pk %}">View Account</a>
                  <a href="{% url 'edit' %}"> Edit Account</a>
                    <a href="{% url 'password_change' %}"> Change Password</a>
                     <a href="{% url 'logout' %}"> Logout</a>

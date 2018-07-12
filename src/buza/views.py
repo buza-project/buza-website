@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.views import generic
+
+from buza import models
 
 from .forms import LoginForm, UserEditForm, UserRegistrationForm
 
@@ -118,6 +121,5 @@ def edit(request):
     )
 
 
-@login_required
-def view(request):
-    return render(request, 'accounts/edit.html')
+class UserDetail(generic.DetailView):
+    model = models.User

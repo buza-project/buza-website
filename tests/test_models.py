@@ -3,7 +3,7 @@ from django.test import TestCase
 from buza.models import BuzaUser
 
 
-class TestBUzaUser(TestCase):
+class TestBuzaUser(TestCase):
 
     def test_email_user(self):
         email_user = BuzaUser(login="user@buza.com", password="12345", username="1234")

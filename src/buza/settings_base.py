@@ -47,5 +47,8 @@ TEMPLATES = [{
     },
 }]
 
-LOGIN_REDIRECT_URL = reverse_lazy('all_questions')
+# django.contrib.auth
 AUTH_USER_MODEL = 'buza.User'
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
+LOGIN_REDIRECT_URL = reverse_lazy('home')

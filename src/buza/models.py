@@ -20,7 +20,7 @@ class User(AbstractUser):
         blank=True, null=True,
         max_length=300,
     )
-    grade = models.IntegerField(blank=True, default=7)
+    grade = models.IntegerField(blank=True, null=True, default=7)
     # users personal fields
     photo = models.ImageField(_('profile photo'),
                               upload_to='users/%Y/%m/%d',

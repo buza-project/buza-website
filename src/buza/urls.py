@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from django.urls import path
+from django.urls import include, path
 
+import project.urls
 from buza import views
 
 
@@ -45,4 +46,6 @@ urlpatterns = [
         name='password_reset_complete',
     ),
 
+    # Fall back to older project urls.
+    path('', include(project.urls)),  # TODO: Migrate
 ]

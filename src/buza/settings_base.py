@@ -4,7 +4,7 @@ Base Django settings for a buza-website instance.
 from django.urls import reverse_lazy
 
 
-ROOT_URLCONF = 'project.urls'
+ROOT_URLCONF = 'buza.urls'
 
 INSTALLED_APPS = [
     # Buza

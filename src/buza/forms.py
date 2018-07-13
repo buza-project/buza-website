@@ -3,11 +3,6 @@ from django import forms
 from buza.models import User
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
 class UserRegistrationForm(forms.ModelForm):
     # additional fields
     password = forms.CharField(label='Password', widget=forms.PasswordInput)

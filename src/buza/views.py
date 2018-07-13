@@ -1,37 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic
 
 from buza import models
 
-from .forms import LoginForm, UserEditForm, UserRegistrationForm
+from .forms import UserEditForm, UserRegistrationForm
 
 
 # Migrate to class based views
-
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(username=cd['username'], password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse('Successfully logged in ')
-                else:
-                    return HttpResponse('Your account is not yet active')
-            else:
-                return HttpResponse('Username and password do not match a user')
-    else:
-        # the request was not a post
-        form = LoginForm()
-        return render(request, 'registration/login.html', {'form': form})
 
 
 def logged_out(request):

@@ -14,6 +14,7 @@ tox = "*"
 "flake8-commas" = "*"
 pytest = "*"
 pytest-django = "*"
+setuptools-scm = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,11 +1,8 @@
 from django.contrib import admin
 
-from .models import User
+from buza import models
 
 
-class BuzaAdmin(admin.ModelAdmin):
-    # Register your models here.
+@admin.register(models.User)
+class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'school', 'grade']
-
-
-admin.site.register(User, BuzaAdmin)

@@ -1,8 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views import generic
 
 from buza import models
@@ -11,40 +9,6 @@ from .forms import UserEditForm, UserRegistrationForm
 
 
 # Migrate to class based views
-
-
-def logged_out(request):
-    print('logged out')
-    logout(request)
-    # return redirect('logout')
-    return render(request, 'registration/logout.html', {'section': 'logged_out'})
-
-
-# Changing the user's password
-@login_required
-def password_change(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('password_change_done')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'registration/password_change_index.html', {'form': form})
-
-
-@login_required
-def password_change_done(request):
-    '''resetting your password'''
-    return render(
-        request,
-        'registration/password_change_done_index.html',
-        {'section': 'password_done'},
-    )
 
 
 def register(request):

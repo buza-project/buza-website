@@ -25,6 +25,6 @@ class TestUserDetail(TestCase):
         self.assertTemplateUsed(response, 'buza/user_detail.html')
 
         self.assertContains(response, 'Test User', count=2)
-        self.assertContains(response, '<img src="/media/example.jpeg">', count=1)
+        self.assertContains(response, f'<img src="{user.photo.url}">', count=1)
         self.assertContains(response, 'Email: tester@example.com', count=1)
         self.assertContains(response, 'Bio: Example bio.', count=1)

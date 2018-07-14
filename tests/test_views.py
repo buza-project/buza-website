@@ -134,7 +134,7 @@ class TestQuestionCreate(TestCase):
         response = self.client.get(reverse('question-create'))
         self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
 
-    def test_get__authorised(self) -> None:
+    def test_get__authenticated(self) -> None:
         user: models.User = models.User.objects.create()
         self.client.force_login(user)
         response = self.client.get(reverse('question-create'))

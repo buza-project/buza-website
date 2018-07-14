@@ -93,3 +93,36 @@ class TestUserDetail(TestCase):
         self.assertContains(response, f'<img src="{user.photo.url}">', count=1)
         self.assertContains(response, 'Email: tester@example.com', count=1)
         self.assertContains(response, 'Bio: Example bio.', count=1)
+
+
+class TestQuestionDetail(TestCase):
+
+    def test_not_found(self) -> None:
+        response = self.client.get(reverse('user-detail', kwargs=dict(pk=404)))
+        assert HTTPStatus.NOT_FOUND == response.status_code
+
+    def test_get(self) -> None:
+        user = models.User.objects.create()
+        question = models.Question.objects.create(
+            author=user,
+            title='Example question?',
+            body='A question.',
+        )
+        path = reverse('question-detail', kwargs=dict(pk=question.pk))
+        response = self.client.get(path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/question_detail.html')
+
+        assert question == response.context['question']
+        self.assertContains(response, question.title, count=2)
+        self.assertContains(response, question.body, count=1)
+
+
+class TestQuestionList(TestCase):
+
+    def test_get__empty(self) -> None:
+        response = self.client.get(reverse('question-list'))
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/question_list.html')
+
+        self.assertQuerysetEqual(response.context['question_list'], [])

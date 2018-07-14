@@ -69,3 +69,12 @@ def edit(request: HttpRequest) -> HttpResponse:
 
 class UserDetail(generic.DetailView):
     model = models.User
+
+
+class QuestionDetail(generic.DetailView):
+    model = models.Question
+
+
+class QuestionList(generic.ListView):
+    model = models.Question
+    ordering = ['-created']

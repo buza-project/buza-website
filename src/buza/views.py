@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views import generic
 
@@ -11,7 +12,7 @@ from .forms import UserEditForm, UserRegistrationForm
 # Migrate to class based views
 
 
-def register(request):
+def register(request: HttpRequest) -> HttpResponse:
     """the view for creating user accounts"""
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -40,8 +41,8 @@ def register(request):
 
 
 # allowing users to edit their own profiles
-@login_required
-def edit(request):
+@login_required  # type: ignore
+def edit(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         user_form = UserEditForm(
             instance=request.user,

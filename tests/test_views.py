@@ -190,28 +190,26 @@ class TestAnswerCreate(TestCase):
             author=self.user,
             title='question',
         )
+        self.path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
 
-    def test__not_found__anonymous(self) -> None:
+    def test__not_found(self) -> None:
         path = reverse('answer-create', kwargs=dict(question_pk=404))
+        # Anonymous:
         assert HTTPStatus.NOT_FOUND == self.client.get(path).status_code
         assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
-
-    def test__not_found__authenticated(self) -> None:
+        # Authenticated:
         self.client.force_login(self.user)
-        path = reverse('answer-create', kwargs=dict(question_pk=404))
         assert HTTPStatus.NOT_FOUND == self.client.get(path).status_code
         assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
 
     def test___anonymous(self) -> None:
-        path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
         expected_url = f'/auth/login/?next=/questions/{self.question.pk}/answer/'
-        self.assertRedirects(self.client.get(path), expected_url)
-        self.assertRedirects(self.client.post(path), expected_url)
+        self.assertRedirects(self.client.get(self.path), expected_url)
+        self.assertRedirects(self.client.post(self.path), expected_url)
 
     def test_get__authenticated(self) -> None:
         self.client.force_login(self.user)
-        path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
-        response: HttpResponse = self.client.get(path)
+        response: HttpResponse = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         assert self.assertTemplateUsed('buza/question_form.html')
         assert self.question == response.context['question']

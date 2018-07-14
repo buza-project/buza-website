@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import generic
 
 from buza import models
@@ -87,3 +89,15 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         'title',
         'body',
     ]
+
+    def form_valid(self, form: ModelForm) -> HttpResponse:
+        question: models.Question = form.instance
+        author: models.User = self.request.user
+        assert author.is_authenticated, author
+        question.author = author
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        question: models.Question = self.object
+        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
+        return success_url

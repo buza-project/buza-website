@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.forms import ModelForm
 from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
@@ -134,9 +135,45 @@ class TestQuestionCreate(TestCase):
         response = self.client.get(reverse('question-create'))
         self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
 
+    def test_post__anonymous(self) -> None:
+        response = self.client.post(reverse('question-create'))
+        self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
+
     def test_get__authenticated(self) -> None:
         user: models.User = models.User.objects.create()
         self.client.force_login(user)
         response = self.client.get(reverse('question-create'))
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/question_form.html')
+
+    def test_post__empty(self) -> None:
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        response = self.client.post(reverse('question-create'))
+        assert HTTPStatus.OK == response.status_code
+
+        assert 'form' in response.context
+        form: ModelForm = response.context['form']  # noqa: E701
+        assert [] == form.non_field_errors()
+        assert {
+            'title': ['This field is required.'],
+        } == form.errors
+        assert not form.is_valid()
+
+    def test_post__success(self) -> None:
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        response = self.client.post(reverse('question-create'), data=dict(
+            title='This is a title',
+            body='This is a body',
+        ))
+        question: models.Question = models.Question.objects.get()
+        assert {
+            'author_id': user.pk,
+            'body': 'This is a body',
+            'created': question.created,
+            'id': question.pk,
+            'modified': question.modified,
+            'title': 'This is a title',
+        } == models.Question.objects.filter(pk=question.pk).values().get()
+        self.assertRedirects(response, f'/questions/{question.pk}/')

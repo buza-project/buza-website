@@ -5,20 +5,21 @@ from django.shortcuts import render
 from django.views import generic
 
 from buza import models
+from buza.forms import UserEditForm, UserRegistrationForm
 
-from .forms import UserEditForm, UserRegistrationForm
 
-
-# Migrate to class based views
+# TODO: Migrate to class based views
 
 
 def register(request: HttpRequest) -> HttpResponse:
-    """the view for creating user accounts"""
+    """
+    Register a user account.
+    """
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
 
         if user_form.is_valid():
-            # create a new user objec but do not save it as of yet
+            # Create a new user object, but do not save it as of yet.
             new_user = user_form.save(commit=False)
 
             # Set the selected password
@@ -31,7 +32,7 @@ def register(request: HttpRequest) -> HttpResponse:
                 {'new_user': new_user},
             )
     else:
-        # user did not fill in form correctly
+        # User did not fill in form correctly
         user_form = UserRegistrationForm()
     return render(
         request,
@@ -40,9 +41,11 @@ def register(request: HttpRequest) -> HttpResponse:
     )
 
 
-# allowing users to edit their own profiles
 @login_required  # type: ignore
 def edit(request: HttpRequest) -> HttpResponse:
+    """
+    Allow user to edit their own profile.
+    """
     if request.method == 'POST':
         user_form = UserEditForm(
             instance=request.user,
@@ -51,7 +54,6 @@ def edit(request: HttpRequest) -> HttpResponse:
         )
 
         if user_form.is_valid():
-            # get the user's userinfo and their profile details
             user_form.save()
             messages.success(request, 'Profile updated successfully')
         else:

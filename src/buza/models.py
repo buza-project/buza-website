@@ -5,13 +5,14 @@ from django.utils.translation import ugettext_lazy as _
 
 class User(AbstractUser):
 
-    # authentication fields
+    # Authentication fields
     phone = models.CharField(
         _('phone number'),
         blank=True,
         max_length=11,
     )
-    # school fields
+
+    # School fields
     school = models.CharField(_('school name'), blank=True, null=True, max_length=100)
     school_address = models.CharField(
         _('school address'),
@@ -19,7 +20,8 @@ class User(AbstractUser):
         max_length=300,
     )
     grade = models.IntegerField(blank=True, null=True, default=7)
-    # users personal fields
+
+    # Personal fields
     photo = models.ImageField(_('profile photo'),
                               upload_to='users/%Y/%m/%d',
                               blank=True)

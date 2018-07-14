@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% comment %}
+Expected context:
+
+* question: The question being answered
+
+{% endcomment %}
+
+{% block title %}Answer question - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'answer-create' question_pk=question.pk %}">  {# FIXME #}
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Answer">
+    </form>
+{% endblock %}

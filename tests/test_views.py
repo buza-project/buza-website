@@ -179,3 +179,47 @@ class TestQuestionCreate(TestCase):
             'title': 'This is a title',
         } == models.Question.objects.filter(pk=question.pk).values().get()
         self.assertRedirects(response, f'/questions/{question.pk}/')
+
+
+class TestAnswerCreate(TestCase):
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.user = models.User.objects.create()
+        self.question = models.Question.objects.create(
+            author=self.user,
+            title='question',
+        )
+
+    def test__not_found__anonymous(self) -> None:
+        path = reverse('answer-create', kwargs=dict(question_pk=404))
+        assert HTTPStatus.NOT_FOUND == self.client.get(path).status_code
+        assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
+
+    def test__not_found__authenticated(self) -> None:
+        self.client.force_login(self.user)
+        path = reverse('answer-create', kwargs=dict(question_pk=404))
+        assert HTTPStatus.NOT_FOUND == self.client.get(path).status_code
+        assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
+
+    def test___anonymous(self) -> None:
+        path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
+        expected_url = f'/auth/login/?next=/questions/{self.question.pk}/answer/'
+        self.assertRedirects(self.client.get(path), expected_url)
+        self.assertRedirects(self.client.post(path), expected_url)
+
+    def test_get__authenticated(self) -> None:
+        self.client.force_login(self.user)
+        path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
+        response: HttpResponse = self.client.get(path)
+        assert HTTPStatus.OK == response.status_code
+        assert self.assertTemplateUsed('buza/question_form.html')
+        assert self.question == response.context['question']
+
+    def test_post__empty(self) -> None:
+        self.client.force_login(self.user)
+        path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
+        response: HttpResponse = self.client.post(path)
+        assert HTTPStatus.OK == response.status_code
+        assert self.assertTemplateUsed('buza/question_form.html')
+        assert self.question == response.context['question']

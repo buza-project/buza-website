@@ -1,9 +1,11 @@
+from typing import Any, Dict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
@@ -107,3 +109,39 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         question: models.Question = self.object
         success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
         return success_url
+
+
+class AnswerCreate(LoginRequiredMixin, generic.CreateView):
+    """
+    Post a new answer to a question.
+
+    Expects `question_pk` as a view argument.
+    """
+
+    model = models.Answer
+    fields = [
+        'body',
+    ]
+
+    question: models.Question
+
+    def dispatch(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            question_pk: int,
+            **kwargs: Any,
+    ) -> HttpResponse:
+        """
+        Look up the question, and set `self.question`.
+        """
+        self.question = get_object_or_404(models.Question, pk=question_pk)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Add the question to the context.
+        """
+        context_data: Dict[str, Any] = super().get_context_data(**kwargs)
+        context_data.setdefault('question', self.question)
+        return context_data

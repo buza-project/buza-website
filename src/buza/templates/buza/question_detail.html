@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+
+{% block title %}{{ question.title }} - {{ block.super }}{% endblock %}
+
+{% block content %}<div class="question">
+    <h3>{{ question.title }}</h3>
+
+    <div>
+        {{ question.body|linebreaks }}
+    </div>
+
+    <p>Asked on: {{ question.created }}</p>
+    <p>Updated on: {{ question.updated }}</p>
+    <p>Asked by: {{ user }}</p>
+
+    {# TODO: Voting. #}
+
+    {# TODO: Comments, answer. #}
+
+{% endblock %}

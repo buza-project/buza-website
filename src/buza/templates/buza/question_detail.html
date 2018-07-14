@@ -10,9 +10,16 @@
         {{ question.body|linebreaks }}
     </div>
 
-    <p>Asked on: {{ question.created }}</p>
-    <p>Last modified: {{ question.modified }}</p>
-    <p>Asked by: {{ user }}</p>
+    <p style="font-size: smaller">
+        Asked by:
+        <a href="{% url 'user-detail' pk=question.author.pk %}">
+            {{ question.author.get_full_name|default:question.author.username }}
+        </a>
+        <br>
+        Asked on: {{ question.created }}
+        <br>
+        Last modified: {{ question.modified }}
+    </p>
 
     {# TODO: Voting. #}
 

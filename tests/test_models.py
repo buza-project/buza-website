@@ -40,3 +40,19 @@ class TestQuestion(TestCase):
             title='Example question?',
         )
         assert '<Question: By tester: Example question?>' == repr(question)
+
+
+class TestAnswer(TestCase):
+
+    def test_repr(self) -> None:
+        user = models.User.objects.create(username='tester')
+        question: models.Question = models.Question.objects.create(
+            author=user,
+            title='Example question?',
+        )
+        answer: models.Answer = question.answer_set.create(
+            author=user,
+            body='Example Answer.',
+        )
+        expected = f'<Answer: By tester to question {question.pk}: Example question?>'
+        assert expected == repr(answer)

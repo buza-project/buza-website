@@ -59,3 +59,15 @@ class Question(TimestampedModel, models.Model):
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'
+
+
+class Answer(TimestampedModel, models.Model):
+
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    body = models.TextField()
+
+    def __str__(self) -> str:
+        question: Question = self.question
+        return f'By {self.author} to question {question.pk}: {question.title}'

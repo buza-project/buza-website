@@ -17,7 +17,7 @@ def _get_settings(settings_module: object) -> Dict[str, Any]:
     }
 
 
-def test_settings_env():
+def test_settings_env() -> None:
     """
     Verify that `buza.settings_env` renders as expected.
     """

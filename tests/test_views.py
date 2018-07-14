@@ -31,15 +31,15 @@ class TestUserUpdate(TestCase):
         assert {} == form.errors
         assert form.is_valid()
 
-    def test_get__anonymous(self):
+    def test_get__anonymous(self) -> None:
         response = self.client.get(reverse('edit'))
         self.assertRedirects(response, '/auth/login/?next=/edit/')
 
-    def test_post__anonymous(self):
+    def test_post__anonymous(self) -> None:
         response = self.client.post(reverse('edit'))
         self.assertRedirects(response, '/auth/login/?next=/edit/')
 
-    def test_get__authenticated(self):
+    def test_get__authenticated(self) -> None:
         user = self._authenticated_user()
         response = self.client.get(reverse('edit'))
         assert HTTPStatus.OK == response.status_code
@@ -50,12 +50,12 @@ class TestUserUpdate(TestCase):
         assert user == form.instance
         assert not form.is_bound
 
-    def test_post__empty(self):
+    def test_post__empty(self) -> None:
         user = self._authenticated_user()
         response = self.client.post(reverse('edit'))
         self._assert_successful(user, response)
 
-    def test_post__blank(self):
+    def test_post__blank(self) -> None:
         user = self._authenticated_user()
         response = self.client.post(reverse('edit'), data={
             'email': '',

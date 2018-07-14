@@ -5,7 +5,7 @@ from buza import models
 
 class TestUser(TestCase):
 
-    def test_defaults(self):
+    def test_defaults(self) -> None:
         user = models.User.objects.create()
         assert {
             'bio': None,
@@ -27,5 +27,5 @@ class TestUser(TestCase):
             'username': '',
         } == models.User.objects.filter(pk=user.pk).values().get()
 
-    def test_repr(self):
+    def test_repr(self) -> None:
         assert '<User: test>' == repr(models.User(username='test'))

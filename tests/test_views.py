@@ -118,6 +118,8 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, question.title, count=2)
         self.assertContains(response, question.body, count=1)
 
+        # TODO: Answer display.
+
 
 class TestQuestionList(TestCase):
 

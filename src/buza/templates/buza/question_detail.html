@@ -24,4 +24,32 @@
 
         {# TODO: Voting. #}
     </div>
+
+    {% with answers=question.answer_set.all %}  {# TODO: Ordering #}
+        {% if answers %}
+            <h2>Answers</h2>
+
+            {% for answer in question.answer_set.all %}
+                <div style="display: flex; justify-content: space-between; padding: 1em 2em;"
+                     class="question">  {# XXX: Just use question, for now. #}
+
+                    <div>{{ answer.body|linebreaks }}</div>
+
+                    <div style="font-size: smaller">
+                        Answered by:
+                        <a href="{% url 'user-detail' pk=answer.author.pk %}">
+                            {{ answer.author.get_full_name|default:answer.author.username }}
+                        </a>
+                        <br>
+                        Answered on: {{ question.created }}
+                        <br>
+                        Last modified: {{ question.modified }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>No answers yet</h2>
+        {% endif %}
+    {% endwith %}
+
 {% endblock %}

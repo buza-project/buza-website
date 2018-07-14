@@ -3,11 +3,10 @@ from __future__ import unicode_literals
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render
 
-from project.accounts.models import Profile
+from buza.models import User
 
 from .forms import AnswerForm, AskForm, EditQuestionForm
 from .models import Answer, Board, Question
@@ -89,7 +88,7 @@ def ask_question(request):
                 {'question': new_question,
                  'board': new_question.board,
                  'user': new_question.user,
-                 'profile': Profile.objects.get(pk=request.user.pk)})
+                 })
 
     ask_form = AskForm(
         instance=request.user, files=request.FILES, data=request.POST)
@@ -100,7 +99,6 @@ def ask_question(request):
 def edit_question(request, question_id, question_slug):
     question = Question.objects.get(pk=question_id)
     user = User.objects.get(pk=question.user.pk)
-    profile = Profile.objects.get(pk=user.pk)
     if request.method == 'POST' and 'answer-question':
         edit_form = EditQuestionForm(
             files=request.FILES, instance=request.user, data=request.POST)
@@ -118,7 +116,7 @@ def edit_question(request, question_id, question_slug):
             return render(
                 request, 'boards/question_view.html',
                 {'question': question, 'board': question.board,
-                 'user': question.user, 'profile': profile})
+                 'user': question.user})
         else:
             messages.error(request, 'There was an error while editing your question')
     else:
@@ -176,6 +174,6 @@ def view_question(request, question_id, question_slug, board_name=None):
     return render(
         request, 'boards/question_view.html',
         {'question': question, 'board': question.board,
-         'user': question.user, 'profile': profile,
+         'user': question.user,
          'answers': answers,
          'answer_form': answer_form})

@@ -3,13 +3,13 @@ from __future__ import unicode_literals
 
 from functools import partial
 
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 
+from buza.models import User
 from project.vote.models import VoteModel
 
 

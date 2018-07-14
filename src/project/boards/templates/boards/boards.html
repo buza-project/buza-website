@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Subjects</h1>
+    <div>
+               <a href="{% url 'all_boards' %}" style="background-color: silver; padding: 10px;font-weight: bold; border-radius: 10%;">all-subjects</a>
+          <a href="{% url 'my_boards' %}" style="background-color: lightblue; padding: 10px;font-weight: bold; border-radius: 10%;">my-subjects</a>
+    </div>
+    <br>
+    <div class="boards">
+    {% for board in boards %}
+    <a href="{% url 'board_questions' board.slug %}" style="font-weight: bold;color: white;">
+    <div class="board">
+      {{ board.title }}
+      <br>
+      members: {{board.users_count}}
+      questions: {{board.questions_count}}
+    </a>
+      </div>
+    {% endfor %}
+    </div>
+{% endblock %}

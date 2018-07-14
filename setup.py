@@ -27,7 +27,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
 
-    setup_requires=['setuptools_scm'],
+    setup_requires=['setuptools-scm'],
     use_scm_version=True,
 
     install_requires=[
@@ -37,10 +37,11 @@ setup(
         'Pillow',
 
         # Django libraries
+        'django-environ',
         'django-taggit',
-        'social-auth-app-django',
         'django-tinymce',
         'djangorestframework',
+        'social-auth-app-django',
     ],
     entry_points={},
 )

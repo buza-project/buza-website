@@ -1,5 +1,5 @@
 Buza
-=========================
+====
 
 This is the code for Buza mobi site
 
@@ -34,13 +34,14 @@ To run all the static checks and tests, invoke Tox::
 To run the checks and tests individually, see the "commands" section of ``tox.ini``.
 
 
-To deactivate server and virtual environment:
----------------
-	press CTRL R
-	$ deactivate
+Git pre-commit hook
+-------------------
 
-You can now connect access the demo site on http://localhost:8000
+To run our main quick checks before each commit, add the following to ``.git/hooks/pre-commit``::
 
-To get started::
+    #!/bin/sh -e
 
-	* log in to : http://localhost:8000
+    mypy -i src tests
+    flake8
+    isort --check-only
+

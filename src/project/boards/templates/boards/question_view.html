@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load board_tags %}
+{% block content %}
+<div class="question">
+<h3>{{question.title}}
+ <i class="material-icons" style="float: right;">share</i></h3>
+
+{{question.description}}
+<br>
+{{board.title}}
+<br>
+asked on: {{question.created_at}}
+<br>
+updated on: {{question.updated_at}}
+<br>
+
+{% if question.media %}
+media files: <img src="{{question.media.url }}" alt="unable to load image" width="500px">
+<br>
+{% endif %}
+asked by: {{user.username}}
+
+         {% block like %}
+                {% include "boards/question_votes.html" with parent=question%}
+         {% endblock %}
+<br>
+ <div name="question_meta">
+ {% if user.is_authenticated %}
+ <a href=""><p style=" color: grey; float:left;font-style: italic;">Add a comment</p></a>
+ {% else %}
+<a href="{% url "login" %}" > Login</a>to comment
+{% endif %}
+ {% if user.is_authenticated and user == user %}
+        <a href="" > <i class="material-icons" style="color: lightCoral;float:right; padding-left: 5%;">delete</i></a>
+        <a href="{% url 'edit_question' question.id question.slug %}" style="float:right; padding-left: 5%;"><i class="material-icons">edit</i> </a>
+
+     {% endif %}
+ </div>
+ </div>
+     {% block answers %}
+        {% if answers %}
+            {%for answer in answers %}
+                {% include "boards/answer_view.html" with answer=answer user=answer.user%}
+            {% endfor %}
+        {%endif%}
+    {% endblock %}
+    {% already_answered question user as is_answered %}
+    {% if user.is_authenticated and not is_answered %}
+     <form action="/subjects/{{question.board.slug}}/{{question.id}}/{{question.slug}}/" method="post" enctype="multipart/form-data">
+        <h2>Add your answer</h2>
+        {{answer_form}}
+    {% csrf_token %}
+    <input type="submit" value="Post Answer" name= 'answer-button'>
+</form>
+    {% elif not has_answered %}
+    <a href="{% url "login" %}" > log-in here to answer </a>
+     {% endif %}
+
+
+     Not the answer you were looking for? Browse other questions tagged:
+{% endblock %}

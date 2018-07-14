@@ -1,4 +1,4 @@
-# http://coverage.readthedocs.org/en/latest/config.html
+# http://coverage.readthedocs.io/en/latest/config.html
 
 [run]
 branch = True
@@ -6,4 +6,3 @@ branch = True
 source =
     src
     tests
-

@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+{% load staticfiles static %}
+{% block title %}Ask a question{% endblock %}
+{% block content %}
+Are you here to ask a QWESHIN?
+
+<form action="." method="post" enctype="multipart/form-data">
+<div class="form-body" style="border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
+    {%if form.errors %}
+    {{form.errors}}
+{% endif %}
+	<div >
+     <label for="title">Question Summary</label>
+    <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
+    	   {{form.title}}
+</div>
+    </div>
+    <div>
+    <label for="descr">Question Description</label>
+        <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
+            {{form.description}}
+        </div>
+    </div>
+
+     <div>
+        <div>
+    <label for="country">Media</label>
+        {%if form.media.errors %}
+        <h4>Please upload media files</h4>
+          {% endif %}
+            <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
+    {{form.media}}
+    </div>
+     </div>
+
+     <div>
+    <div>
+    <label for="country">Subject</label>
+            <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
+    {{form.board}}
+   </div>
+   </div>
+
+   	<div>
+        <label for="country">Tags</label>
+            <div id="title" style="padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; width:100%;background:yellow;">
+    {{form.tags}}
+    </div>
+</div>
+    {% csrf_token %}
+    <input type="submit" value="Ask">
+    </div>
+</form>
+{% endblock %}

@@ -28,8 +28,7 @@ def test_settings_env() -> None:
         'DJANGO_STATIC_ROOT': '/base/static_root/',
         'DJANGO_MEDIA_ROOT': '/base/media_root/',
     }
-    # Upstream issue: https://github.com/python/typeshed/pull/2173
-    with mock.patch.dict(os.environ, test_environ, clear=True):  # type: ignore
+    with mock.patch.dict(os.environ, test_environ, clear=True):
         from buza import settings_env
         importlib.reload(settings_env)  # Make sure this gets reloaded.
 

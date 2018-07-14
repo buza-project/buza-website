@@ -29,3 +29,14 @@ class TestUser(TestCase):
 
     def test_repr(self) -> None:
         assert '<User: test>' == repr(models.User(username='test'))
+
+
+class TestQuestion(TestCase):
+
+    def test_repr(self) -> None:
+        user = models.User(username='tester')
+        question = models.Question(
+            author=user,
+            title='Example question?',
+        )
+        assert '<Question: By tester: Example question?>' == repr(question)

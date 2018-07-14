@@ -17,11 +17,12 @@ class UserRegistrationForm(forms.ModelForm):
 
     # check if the passwords match
 
-    def clean_ConfirmedPassword(self) -> None:
-        cd = self.cleaned_data
-        if cd['password'] != cd['confirmPassword']:
+    def clean_ConfirmedPassword(self) -> str:
+        password: str = self.cleaned_data['password']
+        confirmPassword: str = self.cleaned_data['confirmPassword']
+        if password != confirmPassword:
             raise forms.ValidationError('Passwords do not match')
-        return cd['confirmPassword']
+        return confirmPassword
 
 
 class UserEditForm(forms.ModelForm):

@@ -216,8 +216,7 @@ class TestAnswerCreate(TestCase):
 
     def test_post__empty(self) -> None:
         self.client.force_login(self.user)
-        path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
-        response: HttpResponse = self.client.post(path)
+        response: HttpResponse = self.client.post(self.path)
         assert HTTPStatus.OK == response.status_code
         assert self.assertTemplateUsed('buza/question_form.html')
         assert self.question == response.context['question']

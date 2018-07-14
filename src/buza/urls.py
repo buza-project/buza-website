@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('questions/', views.QuestionList.as_view(), name='question-list'),
     path('questions/<int:pk>/', views.QuestionDetail.as_view(), name='question-detail'),
+    path('questions/ask/', views.QuestionCreate.as_view(), name='question-create'),
 
     url(r'^register/$', views.register, name='register'),
     url(r'^edit/$', views.edit, name='edit'),

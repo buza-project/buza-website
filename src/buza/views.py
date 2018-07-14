@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views import generic
@@ -78,3 +79,11 @@ class QuestionDetail(generic.DetailView):
 class QuestionList(generic.ListView):
     model = models.Question
     ordering = ['-created']
+
+
+class QuestionCreate(LoginRequiredMixin, generic.CreateView):
+    model = models.Question
+    fields = [
+        'title',
+        'body',
+    ]

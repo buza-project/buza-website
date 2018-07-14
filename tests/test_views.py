@@ -126,3 +126,17 @@ class TestQuestionList(TestCase):
         self.assertTemplateUsed(response, 'buza/question_list.html')
 
         self.assertQuerysetEqual(response.context['question_list'], [])
+
+
+class TestQuestionCreate(TestCase):
+
+    def test_get__anonymous(self) -> None:
+        response = self.client.get(reverse('question-create'))
+        self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
+
+    def test_get__authorised(self) -> None:
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        response = self.client.get(reverse('question-create'))
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/question_form.html')

@@ -3,26 +3,25 @@
 
 {% block title %}{{ question.title }} - {{ block.super }}{% endblock %}
 
-{% block content %}<div class="question">
-    <h3>{{ question.title }}</h3>
+{% block content %}
+    <div class="question">
+        <h3>{{ question.title }}</h3>
 
-    <div>
-        {{ question.body|linebreaks }}
+        <div>
+            {{ question.body|linebreaks }}
+        </div>
+
+        <p style="font-size: smaller">
+            Asked by:
+            <a href="{% url 'user-detail' pk=question.author.pk %}">
+                {{ question.author.get_full_name|default:question.author.username }}
+            </a>
+            <br>
+            Asked on: {{ question.created }}
+            <br>
+            Last modified: {{ question.modified }}
+        </p>
+
+        {# TODO: Voting. #}
     </div>
-
-    <p style="font-size: smaller">
-        Asked by:
-        <a href="{% url 'user-detail' pk=question.author.pk %}">
-            {{ question.author.get_full_name|default:question.author.username }}
-        </a>
-        <br>
-        Asked on: {{ question.created }}
-        <br>
-        Last modified: {{ question.modified }}
-    </p>
-
-    {# TODO: Voting. #}
-
-    {# TODO: Comments, answer. #}
-
 {% endblock %}

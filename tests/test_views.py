@@ -225,3 +225,10 @@ class TestAnswerCreate(TestCase):
         assert [] == form.non_field_errors()
         assert {'body': ['This field is required.']} == form.errors
         assert not form.is_valid()
+
+    def test_post__valid(self) -> None:
+        self.client.force_login(self.user)
+        response: HttpResponse = self.client.post(self.path, data={
+            'body': 'An example answer',
+        })
+        self.assertRedirects(response, 'TODO')

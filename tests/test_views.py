@@ -221,3 +221,8 @@ class TestAnswerCreate(TestCase):
         assert HTTPStatus.OK == response.status_code
         assert self.assertTemplateUsed('buza/question_form.html')
         assert self.question == response.context['question']
+
+        form: ModelForm = response.context['form']  # noqa: E701
+        assert [] == form.non_field_errors()
+        assert {'body': ['This field is required.']} == form.errors
+        assert not form.is_valid()

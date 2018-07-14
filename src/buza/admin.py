@@ -11,7 +11,9 @@ class UserAdmin(DjangoUserAdmin):
     Extend the base Django UserAdmin with support for some Buza fields.
     """
 
-    list_display = list(DjangoUserAdmin.list_display) + ['grade']
+    date_hierarchy = 'date_joined'
+    ordering = ['-date_joined']
+    list_display = list(DjangoUserAdmin.list_display) + ['grade', 'date_joined']
     list_filter = list(DjangoUserAdmin.list_filter) + ['grade']
 
     fieldsets = list(DjangoUserAdmin.fieldsets[:1]) + [

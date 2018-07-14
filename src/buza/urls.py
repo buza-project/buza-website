@@ -8,7 +8,7 @@ from buza import views
 
 
 urlpatterns = [
-    path('', generic.RedirectView.as_view(pattern_name='questions'), name='home'),
+    path('', generic.RedirectView.as_view(pattern_name='question-list'), name='home'),
 
     path('questions/', views.QuestionList.as_view(), name='question-list'),
     path('questions/<int:pk>/', views.QuestionDetail.as_view(), name='question-detail'),

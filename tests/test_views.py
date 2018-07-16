@@ -124,6 +124,9 @@ class TestQuestionDetail(TestCase):
 class TestQuestionList(TestCase):
 
     def test_get__empty(self) -> None:
+        """
+        Test Question list view
+        """
         response = self.client.get(reverse('question-list'))
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/question_list.html')
@@ -163,6 +166,10 @@ class TestQuestionCreate(TestCase):
         assert not form.is_valid()
 
     def test_post__success(self) -> None:
+        """
+        Question post redirects to question view
+
+        """
         user: models.User = models.User.objects.create()
         self.client.force_login(user)
         response = self.client.post(reverse('question-create'), data=dict(
@@ -203,6 +210,10 @@ class TestAnswerCreate(TestCase):
         assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
 
     def test___anonymous(self) -> None:
+        """
+        Test that when an unauthenticated user tries to answer a question
+        they are redirected to the home page
+        """
         expected_url = f'/auth/login/?next=/questions/{self.question.pk}/answer/'
         self.assertRedirects(self.client.get(self.path), expected_url)
         self.assertRedirects(self.client.post(self.path), expected_url)
@@ -215,6 +226,10 @@ class TestAnswerCreate(TestCase):
         assert self.question == response.context['question']
 
     def test_post__empty(self) -> None:
+        """
+        Test that when an authenticated user submits an empty answer
+        the answer is not posted
+        """
         self.client.force_login(self.user)
         response: HttpResponse = self.client.post(self.path)
         assert HTTPStatus.OK == response.status_code
@@ -227,6 +242,10 @@ class TestAnswerCreate(TestCase):
         assert not form.is_valid()
 
     def test_post__valid(self) -> None:
+        """
+        Test that when an authenticated user submits a valid answer
+        the answer is posted
+        """
         self.client.force_login(self.user)
         response: HttpResponse = self.client.post(self.path, data={
             'body': 'An example answer',

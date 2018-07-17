@@ -138,6 +138,17 @@ class AnswerCreate(LoginRequiredMixin, generic.CreateView):
         self.question = get_object_or_404(models.Question, pk=question_pk)
         return super().dispatch(request, *args, **kwargs)
 
+    def form_valid(self, form: ModelForm) -> HttpResponse:
+        """
+        Set the answer's author to the posting user.
+        """
+        answer: models.Answer = form.instance
+        author: models.User = self.request.user
+        assert author.is_authenticated, author
+        answer.author = author
+        answer.question = self.question
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """
         Add the question to the context.
@@ -145,3 +156,12 @@ class AnswerCreate(LoginRequiredMixin, generic.CreateView):
         context_data: Dict[str, Any] = super().get_context_data(**kwargs)
         context_data.setdefault('question', self.question)
         return context_data
+
+    def get_success_url(self) -> str:
+        """
+        Redirect to the question.
+        """
+        answer: models.Answer = self.object
+        question: models.Question = answer.question
+        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
+        return success_url

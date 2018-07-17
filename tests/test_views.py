@@ -250,4 +250,13 @@ class TestAnswerCreate(TestCase):
         response: HttpResponse = self.client.post(self.path, data={
             'body': 'An example answer',
         })
-        self.assertRedirects(response, 'TODO')
+        answer: models.Answer = models.Answer.objects.get()
+        assert {
+            'author_id': self.user.pk,
+            'created': answer.created,
+            'id': answer.pk,
+            'modified': answer.modified,
+            'body': 'An example answer',
+            'question_id': 1,
+        } == models.Answer.objects.filter(pk=answer.pk).values().get()
+        self.assertRedirects(response, f'/questions/{answer.question.pk}/')

@@ -3,8 +3,9 @@ from typing import Any, Dict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import redirect_to_login
 from django.forms import ModelForm
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
@@ -101,6 +102,43 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         assert author.is_authenticated, author
         question.author = author
         return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        """
+        Redirect to the question.
+        """
+        question: models.Question = self.object
+        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
+        return success_url
+
+
+class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
+    model = models.Question
+    fields = [
+        'title',
+        'body',
+    ]
+    question: models.Question
+    template_name_suffix = '_update_form'
+
+    def dispatch(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            pk: int,
+            **kwargs: Any,
+    ) -> HttpResponse:
+        """
+        Look up the question, and set `self.question`.
+        """
+        self.question = get_object_or_404(models.Question, pk=pk)
+        if not request.user.is_authenticated:
+            print("I am logged in")
+            return redirect_to_login(request.get_full_path())
+        if self.question.author != request.user:
+            return HttpResponseRedirect(
+                reverse('question-detail', kwargs=dict(pk=self.question.pk)))
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self) -> str:
         """

@@ -188,6 +188,90 @@ class TestQuestionCreate(TestCase):
         self.assertRedirects(response, f'/questions/{question.pk}/')
 
 
+class TestQuestionUpdate(TestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.author = models.User.objects.create(username='author')
+        self.other_user = models.User.objects.create(username='otheruser')
+        self.question = models.Question.objects.create(
+            author=self.author,
+            title='question',
+        )
+
+    def test_get__anonymous(self) -> None:
+        response = self.client.get(
+            reverse('question-edit',
+                    kwargs=dict(pk=self.question.pk)),
+        )
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/questions/{self.question.pk}/edit/',
+        )
+
+    def test_post__anonymous(self) -> None:
+        response = self.client.get(
+            reverse('question-edit',
+                    kwargs=dict(pk=self.question.pk)),
+        )
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/questions/{self.question.pk}/edit/',
+        )
+
+    def test_get__not_author(self) -> None:
+        """
+        Users can only edit questions they own
+        """
+        self.client.force_login(self.other_user)
+        response = self.client.get(
+            reverse('question-edit',
+                    kwargs=dict(pk=self.question.pk)),
+        )
+        self.assertRedirects(
+            response,
+            '/questions/1/',
+        )
+
+    def test_post__not_author(self) -> None:
+        """
+        Only authors can post questions changes
+        """
+        self.client.force_login(self.other_user)
+        response = self.client.post(reverse(
+            'question-edit',
+            kwargs=dict(pk=self.question.pk)), data=dict(
+            title='This is a title updated',
+            body='This is an updated body',
+        ))
+        self.assertRedirects(
+            response,
+            '/questions/1/',
+        )
+
+    def test_update_author(self)-> None:
+        """
+        Question update allows author to login
+
+        """
+        self.client.force_login(self.author)
+        response = self.client.post(reverse(
+            'question-edit',
+            kwargs=dict(pk=self.question.pk)), data=dict(
+            title='This is a title updated',
+            body='This is an updated body',
+        ))
+        question: models.Question = models.Question.objects.get()
+        assert {
+            'author_id': self.author.pk,
+            'body': 'This is an updated body',
+            'created': question.created,
+            'id': question.pk,
+            'modified': question.modified,
+            'title': 'This is a title updated',
+        } == models.Question.objects.filter(pk=question.pk).values().get()
+        self.assertRedirects(response, f'/questions/{question.pk}/')
+
+
 class TestAnswerCreate(TestCase):
 
     def setUp(self) -> None:

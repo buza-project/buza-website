@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Update {{question.title}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'question-edit' pk=question.pk%}">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Update question">
+    </form>
+{% endblock %}

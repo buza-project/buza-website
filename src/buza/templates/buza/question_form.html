@@ -3,9 +3,11 @@
 {% block title %}Ask a question - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <form method="post" action="{% url 'question-create' %}">
+    <form method="post"
+          action="{% if question.pk %}{% url 'question-edit' pk=question.pk%}{% else %}{% url 'question-create' %}{% endif %}">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Ask">
+
+        <input type="submit" Value ="{% if question.pk %}Update question{% else %}Ask question{% endif %}">
     </form>
 {% endblock %}

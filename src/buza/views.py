@@ -119,7 +119,6 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         'body',
     ]
     question: models.Question
-    template_name_suffix = '_update_form'
 
     def dispatch(
             self,

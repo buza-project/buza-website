@@ -9,7 +9,7 @@
         <div class="question">
             <div class=user-format>
                 <button type="submit" class="material-icons icon" name='view_user'>account_circle </button>
-                {{ question.author.username }}
+                {{ question.author.get_full_name|default:question.author.username }}
                 <a class="date"> {{ question.created }}</a> {# TODO #}
             </div>
 

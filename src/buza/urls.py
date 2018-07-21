@@ -25,6 +25,12 @@ urlpatterns = [
         name='answer-create',
     ),
 
+    path(
+        'questions/<int:question_pk>/answer/<int:answer_pk>/edit/',
+        views.AnswerCreate.as_view(),
+        name='answer-edit',
+    ),
+
     url(r'^register/$', views.register, name='register'),
     url(r'^edit/$', views.edit, name='edit'),
     path(r'users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),

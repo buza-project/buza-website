@@ -132,7 +132,6 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         """
         self.question = get_object_or_404(models.Question, pk=pk)
         if not request.user.is_authenticated:
-            print("I am logged in")
             return redirect_to_login(request.get_full_path())
         if self.question.author != request.user:
             return HttpResponseRedirect(

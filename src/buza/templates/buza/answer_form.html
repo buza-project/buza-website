@@ -9,9 +9,13 @@ Expected context:
 {% block title %}Answer question - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <form method="post" action="{% url 'answer-create' question_pk=question.pk %}">  {# FIXME #}
+    <form method="post" action=
+            "{% if answer.pk %} {% url 'answer-edit' question_pk=answer.question.pk pk=answer.pk %}
+            {% else %}
+            {% url 'answer-create' question_pk=question.pk %}
+            {% endif %}">  {# FIXME #}
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Answer">
+        <input type="submit" value="{% if answer.pk %}Update answer {% else %} Answer{% endif %}">
     </form>
 {% endblock %}

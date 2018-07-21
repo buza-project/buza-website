@@ -6,7 +6,9 @@
 {% block content %}
     <div class="question">
         <h3>{{ question.title }}</h3>
-
+        {% if user == question.author %}
+                    <a href="{% url 'question-edit' pk=question.pk%}"> Edit </a>
+                    {% endif %}
         <div>
             {{ question.body|linebreaks }}
         </div>
@@ -45,6 +47,9 @@
                         <br>
                         Last modified: {{ question.modified }}
                     </div>
+                    {% if user == answer.author %}
+                    <a href="{% url 'answer-edit' question_pk=question.pk pk=answer.pk %}"> Edit this</a>
+                    {% endif %}
                 </div>
             {% endfor %}
         {% else %}

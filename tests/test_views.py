@@ -344,3 +344,60 @@ class TestAnswerCreate(TestCase):
             'question_id': 1,
         } == models.Answer.objects.filter(pk=answer.pk).values().get()
         self.assertRedirects(response, f'/questions/{answer.question.pk}/')
+
+
+class TestAnswerUpdate(TestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.author: models.User = models.User.objects.create()
+        self.answer_author: models.User = \
+            models.User.objects.create(username='answer_author')
+        self.question: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='question',
+        )
+        self.answer: models.Answer = models.Answer.objects.create(
+            author=self.answer_author,
+            body='This is an answer',
+            question=self.question,
+        )
+        self.path = reverse(
+            'answer-edit',
+            kwargs=dict(pk=self.answer.pk, question_pk=self.question.pk))
+
+    def test_get_anonymous(self) -> None:
+        response = self.client.get(self.path)
+        self.assertRedirects(response, '/auth/login/?next=/questions/1/answer/1/edit')
+
+    def test_post_anonymous(self) -> None:
+        response = self.client.post(self.path)
+        self.assertRedirects(response, '/auth/login/?next=/questions/1/answer/1/edit')
+
+    def test_post__authenticated(self) -> None:
+        self.client.force_login(self.answer_author)
+        response = self.client.post(
+            self.path,
+            data=dict(
+                body='This is an updated answer',
+            ),
+        )
+        assert \
+            'This is an updated answer' == \
+            models.Answer.objects.filter(pk=self.answer.pk).get().body
+        self.assertRedirects(response, f'/questions/{self.question.pk}/')
+
+    def test_post__authenticated__not_owner(self) -> None:
+        """
+        Only the question authors are allowed to edit the question
+        """
+        self.client.force_login(self.author)
+        response = self.client.post(
+            self.path,
+            data=dict(
+                body='This is an updated answer',
+            ),
+        )
+        assert \
+            'This is an answer' == \
+            models.Answer.objects.filter(pk=self.answer.pk).get().body
+        self.assertRedirects(response, f'/questions/{self.question.pk}/')

@@ -20,16 +20,17 @@ urlpatterns = [
     ),
 
     path(
+        'questions/<int:question_pk>/answer/<int:pk>/edit',
+        views.AnswerUpdate.as_view(),
+        name='answer-edit',
+    ),
+
+    path(
         'questions/<int:question_pk>/answer/',
         views.AnswerCreate.as_view(),
         name='answer-create',
     ),
 
-    path(
-        'questions/<int:question_pk>/answer/<int:answer_pk>/edit/',
-        views.AnswerCreate.as_view(),
-        name='answer-edit',
-    ),
 
     url(r'^register/$', views.register, name='register'),
     url(r'^edit/$', views.edit, name='edit'),

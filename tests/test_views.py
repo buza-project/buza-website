@@ -111,6 +111,11 @@ class TestQuestionDetail(TestCase):
             body='A question.',
             subject=subject,
         )
+        answer: models.Answer = models.Answer.objects.create(
+            body='An answer',
+            question=question,
+            author=user,
+        )
         path = reverse('question-detail', kwargs=dict(pk=question.pk))
         response = self.client.get(path)
         assert HTTPStatus.OK == response.status_code
@@ -120,8 +125,7 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, question.title, count=2)
         self.assertContains(response, question.body, count=1)
         self.assertContains(response, subject.title, count=1)
-
-        # TODO: Answer display.
+        self.assertContains(response, answer.body, count=1)
 
 
 class TestQuestionList(TestCase):
@@ -417,3 +421,44 @@ class TestAnswerUpdate(TestCase):
             'This is an answer' == \
             models.Answer.objects.filter(pk=self.answer.pk).get().body
         self.assertRedirects(response, f'/questions/{self.question.pk}/')
+
+
+class TestSubjectList(TestCase):
+
+    def test_get__empty(self) -> None:
+        """
+        Test Subject list view
+        """
+        response = self.client.get(reverse('subject-list'))
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/subject_list.html')
+
+        self.assertQuerysetEqual(response.context['subject_list'], [])
+
+
+class TestSubjectDetails(TestCase):
+
+    def test_not_found(self) -> None:
+        response = self.client.get(reverse('subject-detail', kwargs=dict(pk=404)))
+        assert HTTPStatus.NOT_FOUND == response.status_code
+
+    def test_get(self) -> None:
+        user = models.User.objects.create()
+        subject: models.Subject = models.Subject.objects.create(
+            title="maths",
+            description="the studyof numbers",
+        )
+        question = models.Question.objects.create(
+            author=user,
+            title='Example question?',
+            body='A question.',
+            subject=subject,
+        )
+        path = reverse('subject-detail', kwargs=dict(pk=subject.pk))
+        response = self.client.get(path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/subject_detail.html')
+
+        self.assertContains(response, subject.title)
+        self.assertContains(response, subject.description, count=1)
+        self.assertContains(response, question.title, count=1)

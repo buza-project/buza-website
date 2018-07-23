@@ -9,6 +9,11 @@ from django.utils.translation import ugettext_lazy as _
 _CharField = partial(models.CharField, max_length=1024)
 
 
+class Subject(models.Model):
+    title = models.CharField(_('subject title'), max_length=100)
+    description = models.CharField(_('subject description'), max_length=100)
+
+
 class TimestampedModel(models.Model):
     """
     Base class with `created` and `modified` fields.

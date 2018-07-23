@@ -64,6 +64,7 @@ class Question(TimestampedModel, models.Model):
 
     title = _CharField()
     body = models.TextField(blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'

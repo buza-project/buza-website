@@ -13,6 +13,9 @@ class Subject(models.Model):
     title = models.CharField(_('subject title'), max_length=100)
     description = models.CharField(_('subject description'), max_length=100)
 
+    def __str__(self) -> str:
+        return str(self.title)
+
 
 class TimestampedModel(models.Model):
     """

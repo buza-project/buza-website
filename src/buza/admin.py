@@ -20,8 +20,8 @@ class AnswerInline(admin.TabularInline):
 class QuestionAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
     ordering = ['-created']
-    list_display = ['title', 'author', 'created']
-    search_fields = ['title', 'author__username']
+    list_display = ['title', 'author', 'created', 'subject']
+    search_fields = ['title', 'author__username', 'subject__title']
 
     raw_id_fields = ['author']
     readonly_fields = ['created', 'modified']
@@ -43,3 +43,10 @@ class AnswerAdmin(admin.ModelAdmin):
 
     raw_id_fields = ['author', 'question']
     readonly_fields = ['created', 'modified']
+
+
+@admin.register(models.Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    ordering = ['-title']
+    list_display = ['title', 'description']
+    search_fields = ['title', 'description']

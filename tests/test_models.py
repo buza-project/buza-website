@@ -31,6 +31,16 @@ class TestUser(TestCase):
         assert '<User: test>' == repr(models.User(username='test'))
 
 
+class TestSubject(TestCase):
+
+    def test_repr(self) -> None:
+        subject = models.Subject(
+            title='Biology',
+            description='The study of life',
+        )
+        assert '<Subject: Biology>' == repr(subject)
+
+
 class TestQuestion(TestCase):
 
     def test_repr(self) -> None:

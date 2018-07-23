@@ -46,9 +46,11 @@ class TestAnswer(TestCase):
 
     def test_repr(self) -> None:
         user = models.User.objects.create(username='tester')
+        self.subject: models.Subject = models.Subject.objects.create(title="maths")
         question: models.Question = models.Question.objects.create(
             author=user,
             title='Example question?',
+            subject=self.subject,
         )
         answer: models.Answer = question.answer_set.create(
             author=user,

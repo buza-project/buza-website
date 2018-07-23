@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Subjects - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1>Subjects</h1>
+
+    {% for subject in subject_list %}
+        <div class="question">
+
+            <a href="{% url 'subject-detail' subject.pk %}" class="question-title">
+                {{ subject.title }}
+            </a>
+        <div style="clear: both"></div>
+    {% endfor %}
+{% endblock %}
+

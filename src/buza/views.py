@@ -73,6 +73,14 @@ def edit(request: HttpRequest) -> HttpResponse:
     )
 
 
+class SubjectDetail(generic.DetailView):
+    model = models.Subject
+
+
+class SubjectList(generic.ListView):
+    model = models.Subject
+
+
 class UserDetail(generic.DetailView):
     model = models.User
 
@@ -91,6 +99,7 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
     fields = [
         'title',
         'body',
+        'subject',
     ]
 
     def form_valid(self, form: ModelForm) -> HttpResponse:
@@ -117,6 +126,7 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
     fields = [
         'title',
         'body',
+        'subject',
     ]
     question: models.Question
 

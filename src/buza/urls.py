@@ -30,7 +30,8 @@ urlpatterns = [
         views.AnswerCreate.as_view(),
         name='answer-create',
     ),
-
+    path('subjects/<int:pk>/', views.SubjectDetail.as_view(), name='subject-detail'),
+    path('subjects/', views.SubjectList.as_view(), name='subject-list'),
 
     url(r'^register/$', views.register, name='register'),
     url(r'^edit/$', views.edit, name='edit'),

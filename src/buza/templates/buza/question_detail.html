@@ -7,10 +7,13 @@
     <div class="question">
         <h3>{{ question.title }}</h3>
         {% if user == question.author %}
-                    <a href="{% url 'question-edit' pk=question.pk%}"> Edit </a>
+                    <a href="{% url 'question-edit' pk=question.pk%}" style="color:yellow;font-weight:bold;"> Edit </a>
                     {% endif %}
         <div>
             {{ question.body|linebreaks }}
+             <p style="font-size: smaller">
+            {{question.subject.title}}
+             </p>
         </div>
 
         <p style="font-size: smaller">
@@ -48,7 +51,7 @@
                         Last modified: {{ question.modified }}
                     </div>
                     {% if user == answer.author %}
-                    <a href="{% url 'answer-edit' question_pk=question.pk pk=answer.pk %}"> Edit this</a>
+                    <a href="{% url 'answer-edit' question_pk=question.pk pk=answer.pk %}" style="color:yellow;font-weight:bold;"> Edit</a>
                     {% endif %}
                 </div>
             {% endfor %}

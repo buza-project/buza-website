@@ -52,7 +52,7 @@ class User(AbstractUser):
                               blank=True)
     bio = models.CharField(blank=True, null=True, max_length=250)
 
-    # FIXME: subjects = models.ManyToManyField(Board, related_name="my_boards")
+    subjects = models.ManyToManyField(Subject)
 
     def __str__(self) -> str:
         return str(self.username)

@@ -10,8 +10,8 @@ _CharField = partial(models.CharField, max_length=1024)
 
 
 class Subject(models.Model):
-    title = models.CharField(_('subject title'), max_length=100)
-    description = models.CharField(_('subject description'), max_length=100)
+    title = _CharField()
+    description = models.TextField()
 
     def __str__(self) -> str:
         return str(self.title)

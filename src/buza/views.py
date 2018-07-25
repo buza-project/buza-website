@@ -80,6 +80,23 @@ class SubjectDetail(generic.DetailView):
 class SubjectList(generic.ListView):
     model = models.Subject
 
+    def post(self, request, *args, **kwargs):
+        if 'follow-subject' in request.POST:
+            subject: models.Subject = models.Subject.objects.get(
+                pk=request.POST['follow-subject'],
+            )
+            request.user.subjects.add(subject)
+            return HttpResponseRedirect(reverse('subject-list'))
+        elif 'unfollow-subject' in request.POST:
+            subject = models.Subject.objects.get(
+                pk=request.POST['unfollow-subject'],
+            )
+            request.user.subjects.remove(subject)
+            return HttpResponseRedirect(reverse('subject-list'))
+        return HttpResponseRedirect(
+            reverse('subject-list'))
+
+
 class UserSubjectDetail(generic.DetailView):
     model = models.User
     template_name = 'buza/my_subjects_view.html'

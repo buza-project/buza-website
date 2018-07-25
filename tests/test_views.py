@@ -486,7 +486,6 @@ class TestSubjectDetails(TestCase):
         user = models.User.objects.create()
         subject: models.Subject = models.Subject.objects.create(
             title="maths",
-            description="the studyof numbers",
             description="the study of numbers",
         )
         question = models.Question.objects.create(

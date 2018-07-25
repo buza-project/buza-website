@@ -424,16 +424,56 @@ class TestAnswerUpdate(TestCase):
 
 
 class TestSubjectList(TestCase):
-
-    def test_get__empty(self) -> None:
-        """
+    """
         Test Subject list view
-        """
-        response = self.client.get(reverse('subject-list'))
-        assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed(response, 'buza/subject_list.html')
+    """
 
-        self.assertQuerysetEqual(response.context['subject_list'], [])
+    def setUp(self) -> None:
+        self.user: models.User = models.User.objects.create()
+        self.first_subject: models.Subject = \
+            models.Subject.objects.create(title="maths")
+        self.second_subject: models.Subject = \
+            models.Subject.objects.create(title="bio")
+        self.path = reverse('subject-list')
+
+    def test_get__unauthenticated(self) -> None:
+        """
+        Unauthenticated users can view but not follow questions
+        :return:
+        """
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertNotContains(response, "Follow")
+        self.assertNotContains(response, "Unfollow")
+        self.assertContains(response, self.first_subject.title, count=1)
+        self.assertContains(response, self.second_subject.title, count=1)
+
+    def test_get__no_followed_subjects(self) -> None:
+        """
+        Logged in users can view the list of questions and follow them
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertContains(response, "Follow", count=models.Subject.objects.count())
+        self.assertContains(response, "Unfollow", 0)
+        self.assertContains(response, self.first_subject.title, count=1)
+        self.assertContains(response, self.second_subject.title, count=1)
+
+    def test_get__followed_subjects(self) -> None:
+        """
+        When follow a question, the UI updates
+        :return:
+        """
+        self.client.force_login(self.user)
+        self.user.subjects.add(self.first_subject)
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertContains(response, "Unfollow", count=self.user.subjects.count())
+        self.assertContains(
+            response,
+            "Follow",
+            count=models.Subject.objects.count() - self.user.subjects.count())
 
 
 class TestSubjectDetails(TestCase):

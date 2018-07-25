@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Subjects - {{ block.super }}{% endblock %}
+{% block title %}Followed Subjects - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1>Joined Subjects</h1>
+    <h1>Followed Subjects</h1>
         <div style="padding-bottom: 2%; position: center;box-sizing: border-box;">
         {% if user.is_authenticated %}
         <a href="{% url 'my-subject-list' pk=user.pk%}" style="background-color: silver; padding: 1%;font-weight: bold; border-radius: 10%;">

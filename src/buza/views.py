@@ -80,6 +80,10 @@ class SubjectDetail(generic.DetailView):
 class SubjectList(generic.ListView):
     model = models.Subject
 
+class UserSubjectDetail(generic.DetailView):
+    model = models.User
+    template_name = 'buza/my_subjects_view.html'
+
 
 class UserDetail(generic.DetailView):
     model = models.User

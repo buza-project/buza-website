@@ -31,6 +31,11 @@ urlpatterns = [
         name='answer-create',
     ),
     path('subjects/<int:pk>/', views.SubjectDetail.as_view(), name='subject-detail'),
+    path(
+        'subjects/my-subjects/<int:pk>/',
+        views.UserSubjectDetail.as_view(),
+        name='my-subject-list',
+    ),
     path('subjects/', views.SubjectList.as_view(), name='subject-list'),
 
     url(r'^register/$', views.register, name='register'),

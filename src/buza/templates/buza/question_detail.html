@@ -56,9 +56,12 @@
                 </div>
             {% endfor %}
         {% else %}
-<h2>No answers yet <a href="{% url 'answer-create' question_pk=question.pk %}"> Add your answer here</a>
+<h2>No answers yet
 </h2>
         {% endif %}
     {% endwith %}
+        <br>
 
+         <a href="{% url 'answer-create' question_pk=question.pk %}" style="color: green;"> Add your answer here</a>
 {% endblock %}
+

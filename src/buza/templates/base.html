@@ -11,7 +11,6 @@
      <script src="{% static 'tiny_mce/tiny_mce.js' %}"></script>
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-  <script type="text/javascript" src="{% static 'js/tinymce_custom_init.js' %}" ></script>
 </head>
 
 <body>
@@ -30,13 +29,13 @@
                      </div>
                  </div>
      <div style="float:right;">
-        <a href="{% url "ask_question" %}">
+        <a href="{% url "question-create" %}">
             <i class="material-icons"style="font-size: 40px;">contact_support</i></a>
      </div>
      </div>
 		<ul class="menu">
-         <li {% if section == 'resources' %}class="selected"{% endif %}><a href="{% url 'questions' %}"> <i class="material-icons" style="font-size: 40px;">home</i></a></li>
-        <li {% if section == 'all_boards' %}class="selected"{% endif %}><a href="{% url 'all_boards' %}"> <i class="material-icons" style="font-size: 40px;">subject</i></a></li>
+         <li {% if section == 'resources' %}class="selected"{% endif %}><a href="{% url 'question-list' %}"> <i class="material-icons" style="font-size: 40px;">home</i></a></li>
+        <li {% if section == 'all_boards' %}class="selected"{% endif %}><a href="{% url 'subject-list' %}"> <i class="material-icons" style="font-size: 40px;">subject</i></a></li>
          <li {% if section == 'users' %}class="selected"{% endif %}><a href="{% url 'users' %}"> <i class="material-icons" style="font-size: 40px;">search</i></a></li>
          <li {% if section == 'users' %}class="selected"{% endif %}><a href="{% url 'users' %}"> <i class="material-icons" style="font-size: 40px;">notifications</i></a></li>
      </ul>

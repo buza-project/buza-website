@@ -17,9 +17,6 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
-
-from project.boards import views
 
 
 urlpatterns = [
@@ -29,12 +26,7 @@ urlpatterns = [
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     # boards
-    # url(r'^$', views.home, name='home'),
-    url(r'^home/', views.all_questions, name='questions'),
-    # url(r'^buza/', include('boards.urls')),
     url(r'^subjects/', include('project.boards.urls'), name="boards"),
-    # REACT JS
-    url(r'^react/', TemplateView.as_view(template_name='index.html')),
 ]
 
 if settings.DEBUG:

@@ -24,3 +24,47 @@ class UserAdmin(DjangoUserAdmin):
             'bio',
         ]}),
     ] + list(DjangoUserAdmin.fieldsets[1:])
+
+    
+class AnswerInline(admin.TabularInline):
+    extra = 0
+    model = models.Answer
+
+    fields = ['author', 'body']
+    raw_id_fields = ['author']
+
+
+@admin.register(models.Question)
+class QuestionAdmin(admin.ModelAdmin):
+    date_hierarchy = 'created'
+    ordering = ['-created']
+    list_display = ['title', 'author', 'created', 'subject']
+    search_fields = ['title', 'author__username', 'subject__title']
+
+    raw_id_fields = ['author']
+    readonly_fields = ['created', 'modified']
+
+    inlines = [AnswerInline]
+
+
+@admin.register(models.Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    date_hierarchy = 'created'
+    ordering = ['-created']
+    list_display = ['body', 'author', 'question', 'created']
+    search_fields = [
+        'body',
+        'author__username',
+        'question__author__username',
+        'question__title',
+    ]
+
+    raw_id_fields = ['author', 'question']
+    readonly_fields = ['created', 'modified']
+
+
+@admin.register(models.Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    ordering = ['-title']
+    list_display = ['title', 'description']
+    search_fields = ['title', 'description']

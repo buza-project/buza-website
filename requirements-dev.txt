@@ -8,3 +8,9 @@ social-auth-app-django==2.1.0
 Pillow==5.1.0
 psycopg2==2.7.4
 djangorestframework==3.8.2
+flake8
+isort
+mypy
+tox
+pytest
+pytest-django

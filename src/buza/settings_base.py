@@ -9,7 +9,6 @@ ROOT_URLCONF = 'buza.urls'
 INSTALLED_APPS = [
     # Buza
     'buza',
-    'project.boards',
 
     # Third-party apps
     'taggit',

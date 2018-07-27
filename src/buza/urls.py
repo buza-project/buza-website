@@ -1,9 +1,9 @@
 import django.contrib.auth.urls
 from django.conf.urls import url
+from django.contrib import admin
 from django.urls import include, path
 from django.views import generic
 
-import project.urls
 from buza import views
 
 
@@ -45,5 +45,12 @@ urlpatterns = [
     path('auth/', include(django.contrib.auth.urls)),
 
     # Fall back to older project urls.
-    path('', include(project.urls)),  # TODO: Migrate
+    url(r'^admin/', admin.site.urls),
+
+    # users
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^users/$', views.all_users, name='users'),
+
+    # boards
+    # url(r'^subjects/', include('project.boards.urls'), name="boards"),
 ]

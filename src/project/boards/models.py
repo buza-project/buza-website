@@ -10,7 +10,6 @@ from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 
 from buza.models import User
-from project.vote.models import VoteModel
 
 
 # Shortcuts:
@@ -41,7 +40,7 @@ class Board(models.Model):
         ordering = ('created_at',)
 
 
-class Question(VoteModel, models.Model):
+class Question(models.Model):
     '''each class has list of questions'''
 
     title = models.CharField(max_length=100, blank=False)
@@ -79,7 +78,7 @@ class Question(VoteModel, models.Model):
         ordering = ('created_at',)
 
 
-class Answer(VoteModel, models.Model):
+class Answer(models.Model):
     '''users can post questions that will display on the classroom'''
 
     answer = HTMLField()

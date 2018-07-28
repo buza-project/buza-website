@@ -185,7 +185,6 @@ class TestQuestionCreate(TestCase):
             body='This is a body',
             subject=subject.pk,
         ))
-        print(models.Question.objects.all())
         question: models.Question = models.Question.objects.get()
         assert {
             'author_id': user.pk,

@@ -44,12 +44,10 @@ urlpatterns = [
 
     path('auth/', include(django.contrib.auth.urls)),
 
-    # Fall back to older project urls.
+    # Use admin urls
     url(r'^admin/', admin.site.urls),
 
-    # users
+    # social log
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
-    # boards
-    # url(r'^subjects/', include('project.boards.urls'), name="boards"),
 ]

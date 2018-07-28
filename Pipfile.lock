@@ -313,19 +313,19 @@
         },
         "pytest-django": {
             "hashes": [
-                "sha256:088b66211c57972e7bd072ba73ccec1c3b6f6185f894b3b8eb966d2f3b7d46cb",
-                "sha256:3fea4d0a84bf3af1f1e82448b9a91b3ddb22b659d802e026ae843040da0c3220"
+                "sha256:434abfd2afe61b69a58af41e7339617f3aa33dc9a05e3b77fa5955204a61b865",
+                "sha256:a73e355138675db8f535777ddf34bde28580b688be17dc21d0efa65e5c16927c"
             ],
             "index": "pypi",
-            "version": "==3.3.2"
+            "version": "==3.3.3"
         },
         "setuptools-scm": {
             "hashes": [
-                "sha256:1261fb48def5ac5e4d04cb6196886cb8c2de5dc066ed2bfee99d4bb21aecb781",
-                "sha256:a767141fecdab1c0b3c8e4c788ac912d7c94a0d6c452d40777ba84f918316379"
+                "sha256:113cea38b2edba8538b7e608b58cbd7e09bb71b16d968a9b97e36b4805e06d59",
+                "sha256:f0ebea8e819c7a78631a6e0b29605922a1cf4645a464c9e9d0e5ce0d1ecdaaea"
             ],
             "index": "pypi",
-            "version": "==2.1.0"
+            "version": "==3.0.2"
         },
         "six": {
             "hashes": [

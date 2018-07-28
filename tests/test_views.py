@@ -176,7 +176,6 @@ class TestQuestionCreate(TestCase):
     def test_post__success(self) -> None:
         """
         Question post redirects to question view
-
         """
         user: models.User = models.User.objects.create()
         self.client.force_login(user)

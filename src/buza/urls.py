@@ -49,7 +49,6 @@ urlpatterns = [
 
     # users
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^users/$', views.all_users, name='users'),
 
     # boards
     # url(r'^subjects/', include('project.boards.urls'), name="boards"),

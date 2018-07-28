@@ -16,14 +16,6 @@ from buza.forms import UserEditForm, UserRegistrationForm
 
 # TODO: Migrate to class based views
 
-
-@login_required
-def all_users(request):
-    users = models.User.objects.all()
-    return render(
-        request, 'buza/users.html', {'section': 'all_users', 'users': users})
-
-
 def register(request: HttpRequest) -> HttpResponse:
     """
     Register a user account.

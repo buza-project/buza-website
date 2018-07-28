@@ -25,7 +25,7 @@ class UserAdmin(DjangoUserAdmin):
         ]}),
     ] + list(DjangoUserAdmin.fieldsets[1:])
 
-    
+
 class AnswerInline(admin.TabularInline):
     extra = 0
     model = models.Answer

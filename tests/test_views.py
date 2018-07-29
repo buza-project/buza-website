@@ -241,7 +241,7 @@ class TestQuestionUpdate(TestCase):
         )
         self.assertRedirects(
             response,
-            '/questions/1/',
+            f'/questions/{self.question.pk}/',
         )
 
     def test_post__not_author(self) -> None:
@@ -257,7 +257,7 @@ class TestQuestionUpdate(TestCase):
         ))
         self.assertRedirects(
             response,
-            '/questions/1/',
+            f'/questions/{self.question.pk}/',
         )
 
     def test_update_author(self)-> None:
@@ -522,7 +522,10 @@ class TestUserSubjectsView(TestCase):
         Anonymous users are redirected
         """
         response = self.client.get(self.path)
-        self.assertRedirects(response, '/auth/login/?next=/subjects/my-subjects/1/')
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/subjects/my-subjects/{self.user.pk}/',
+        )
 
     def test_get__with_no_followed_subjects(self) -> None:
         """

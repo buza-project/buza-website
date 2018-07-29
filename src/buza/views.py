@@ -46,6 +46,32 @@ def register(request: HttpRequest) -> HttpResponse:
     )
 
 
+class UserCreate(generic.CreateView):
+    model = models.User
+    fields = [
+        'username', 'email', 'phone',
+    ]
+
+    def dispatch(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            **kwargs: Any,
+    ) -> HttpResponse:
+        """
+        Look up the question, and set `self.question`.
+        """
+        assert not request.user.is_authenticated, request.user
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self) -> str:
+        """
+        Redirect to the question.
+        """
+        success_url: str = reverse('question-list')
+        return success_url
+
+
 @login_required  # type: ignore
 def edit(request: HttpRequest) -> HttpResponse:
     """

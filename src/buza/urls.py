@@ -38,7 +38,7 @@ urlpatterns = [
     ),
     path('subjects/', views.SubjectList.as_view(), name='subject-list'),
 
-    url(r'^register/$', views.register, name='register'),
+    url(r'^register/$', views.UserCreate.as_view(), name='register'),
     url(r'^edit/$', views.edit, name='edit'),
     path(r'users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
 

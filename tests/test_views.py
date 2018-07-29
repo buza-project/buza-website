@@ -8,6 +8,67 @@ from django.urls import reverse
 from buza import models, views
 
 
+class TestUserCreate(TestCase):
+    """
+    User create view should create users and log them in
+    """
+    def setUp(self) -> None:
+        self.path = reverse('register')
+
+    def test_get__user_create(self) ->None:
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/user_form.html')
+
+    def test_get__authenticated(self)-> None:
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        with self.assertRaises(AssertionError):
+            self.client.get(self.path)
+
+    def test_post__empty(self) -> None:
+        """
+        Test that when  user submits an empty register from, the from is not created
+        """
+        response: HttpResponse = self.client.post(self.path)
+        assert HTTPStatus.OK == response.status_code
+        assert self.assertTemplateUsed('buza/user_form.html')
+
+        form: ModelForm = response.context['form']  # noqa: E701
+        assert [] == form.non_field_errors()
+        assert {'username': ['This field is required.']} == form.errors
+        assert not form.is_valid()
+
+    def test_post__valid_form(self) -> None:
+        response = self.client.post(self.path, data=dict(
+            username='buza-user-12',
+            password='password',
+        ))
+        print(models.Question.objects.all())
+        assert HTTPStatus.FOUND == response.status_code
+        new_user: models.User = models.User.objects.get()
+        assert {
+            'bio': new_user.bio,
+            'date_joined': new_user.date_joined,
+            'email': new_user.email,
+            'first_name': new_user.first_name,
+            'grade': new_user.grade,
+            'id': new_user.pk,
+            'is_active': new_user.is_active,
+            'is_staff': new_user.is_staff,
+            'is_superuser': new_user.is_superuser,
+            'last_login': new_user.last_login,
+            'last_name': new_user.last_name,
+            'password': new_user.password,
+            'phone': new_user.phone,
+            'photo': new_user.photo,
+            'school': new_user.school,
+            'school_address': new_user.school_address,
+            'username': 'buza-user-12',
+        } == models.User.objects.filter(pk=new_user.pk).values().get()
+        self.assertRedirects(response, '/questions/')
+
+
 class TestUserUpdate(TestCase):
 
     def _authenticated_user(self) -> models.User:

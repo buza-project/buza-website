@@ -20,7 +20,7 @@ urlpatterns = [
     ),
 
     path(
-        'questions/<int:question_pk>/answer/<int:pk>/edit',
+        'questions/answer/<int:pk>/edit',
         views.AnswerUpdate.as_view(),
         name='answer-edit',
     ),

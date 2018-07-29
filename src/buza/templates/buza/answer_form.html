@@ -33,7 +33,7 @@ Expected context:
         </p>
 </div>
     <form method="post" action=
-            "{% if answer.pk %} {% url 'answer-edit' question_pk=answer.question.pk pk=answer.pk %}
+            "{% if answer.pk %} {% url 'answer-edit' pk=answer.pk %}
             {% else %}
             {% url 'answer-create' question_pk=question.pk %}
             {% endif %}">  {# FIXME #}

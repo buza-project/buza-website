@@ -381,15 +381,21 @@ class TestAnswerUpdate(TestCase):
         )
         self.path = reverse(
             'answer-edit',
-            kwargs=dict(pk=self.answer.pk, question_pk=self.question.pk))
+            kwargs=dict(pk=self.answer.pk))
 
     def test_get_anonymous(self) -> None:
         response = self.client.get(self.path)
-        self.assertRedirects(response, '/auth/login/?next=/questions/1/answer/1/edit')
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/questions/answer/{self.answer.pk}/edit',
+        )
 
     def test_post_anonymous(self) -> None:
         response = self.client.post(self.path)
-        self.assertRedirects(response, '/auth/login/?next=/questions/1/answer/1/edit')
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/questions/answer/{self.answer.pk}/edit',
+        )
 
     def test_post__authenticated(self) -> None:
         self.client.force_login(self.answer_author)

@@ -51,7 +51,7 @@
                         Last modified: {{ question.modified }}
                     </div>
                     {% if user == answer.author %}
-                    <a href="{% url 'answer-edit' question_pk=question.pk pk=answer.pk %}" style="color:yellow;font-weight:bold;"> Edit</a>
+                    <a href="{% url 'answer-edit' pk=answer.pk %}" style="color:yellow;font-weight:bold;"> Edit</a>
                     {% endif %}
                 </div>
             {% endfor %}

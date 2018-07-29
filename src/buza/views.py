@@ -162,8 +162,6 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         Look up the question, and set `self.question`.
         """
         self.question = get_object_or_404(models.Question, pk=pk)
-        if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path())
         if self.question.author != request.user:
             return HttpResponseRedirect(
                 reverse('question-detail', kwargs=dict(pk=self.question.pk)))

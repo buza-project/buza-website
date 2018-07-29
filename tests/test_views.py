@@ -217,7 +217,7 @@ class TestQuestionUpdate(TestCase):
         )
         self.assertRedirects(
             response,
-            f'/auth/login/?next=/questions/{self.question.pk}/edit/',
+            f'/questions/{self.question.pk}/',
         )
 
     def test_post__anonymous(self) -> None:
@@ -227,7 +227,7 @@ class TestQuestionUpdate(TestCase):
         )
         self.assertRedirects(
             response,
-            f'/auth/login/?next=/questions/{self.question.pk}/edit/',
+            f'/questions/{self.question.pk}/',
         )
 
     def test_get__not_author(self) -> None:

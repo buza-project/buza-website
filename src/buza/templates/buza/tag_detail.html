@@ -1,7 +1,7 @@
 
 {% extends 'base.html' %}
 
-{% block title %}{{ subject.title }} - {{ block.super }}{% endblock %}
+{% block title %}{{ tag.name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="question">
@@ -15,7 +15,7 @@
             <br>
         </p>
 
-        {# TODO: Watch. #}
+        {# TODO: follow. #}
     </div>
 
     {% with questions=tag.question_set.all %}  {# TODO: Ordering #}

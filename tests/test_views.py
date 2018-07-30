@@ -520,7 +520,6 @@ class TestUserSubjectsView(TestCase):
     def test_get__with_no_followed_subjects(self) -> None:
         """
         My subject view is empty before users follow any subjects
-        :return:
         """
         self.client.force_login(self.user)
         response = self.client.get(self.path)
@@ -533,7 +532,6 @@ class TestUserSubjectsView(TestCase):
     def test_get__with_followed_subjects(self) -> None:
         """
         My subject view is empty before users follow any subjects
-        :return:
         """
         self.client.force_login(self.user)
         self.user.subjects.add(self.first_subject)

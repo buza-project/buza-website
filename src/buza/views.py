@@ -129,6 +129,7 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         'title',
         'body',
         'subject',
+        'tags',
     ]
 
     def form_valid(self, form: ModelForm) -> HttpResponse:

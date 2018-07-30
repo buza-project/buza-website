@@ -383,14 +383,14 @@ class TestAnswerUpdate(TestCase):
             'answer-edit',
             kwargs=dict(pk=self.answer.pk))
 
-    def test_get_anonymous(self) -> None:
+    def test_get__anonymous(self) -> None:
         response = self.client.get(self.path)
         self.assertRedirects(
             response,
             f'/auth/login/?next=/questions/answer/{self.answer.pk}/edit',
         )
 
-    def test_post_anonymous(self) -> None:
+    def test_post__anonymous(self) -> None:
         response = self.client.post(self.path)
         self.assertRedirects(
             response,

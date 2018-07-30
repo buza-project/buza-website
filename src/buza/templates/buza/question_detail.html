@@ -18,7 +18,7 @@
             {% with tags=question.tags.all %}
                 {% if tags %}
                     {% for tag in tags %}
-                        <a href="{% url 'tag-detail' pk=tag.pk %}" style="color:blue"> {{tag.name}}</a>
+                        <a href="{% url 'tag-detail' pk=tag.pk %}" style="color:blue"> #{{tag.name}}</a>
                     {% endfor %}
                 {% endif %}
             {% endwith %}

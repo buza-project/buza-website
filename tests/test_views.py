@@ -212,8 +212,7 @@ class TestQuestionUpdate(TestCase):
 
     def test_get__anonymous(self) -> None:
         response = self.client.get(
-            reverse('question-edit',
-                    kwargs=dict(pk=self.question.pk)),
+            reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
         self.assertRedirects(
             response,
@@ -222,8 +221,7 @@ class TestQuestionUpdate(TestCase):
 
     def test_post__anonymous(self) -> None:
         response = self.client.get(
-            reverse('question-edit',
-                    kwargs=dict(pk=self.question.pk)),
+            reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
         self.assertRedirects(
             response,
@@ -236,8 +234,7 @@ class TestQuestionUpdate(TestCase):
         """
         self.client.force_login(self.other_user)
         response = self.client.get(
-            reverse('question-edit',
-                    kwargs=dict(pk=self.question.pk)),
+            reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
         self.assertRedirects(
             response,
@@ -250,7 +247,7 @@ class TestQuestionUpdate(TestCase):
         """
         self.client.force_login(self.other_user)
         response = self.client.post(reverse(
-            'question-edit',
+            'question-update',
             kwargs=dict(pk=self.question.pk)), data=dict(
             title='This is a title updated',
             body='This is an updated body',
@@ -267,7 +264,7 @@ class TestQuestionUpdate(TestCase):
         """
         self.client.force_login(self.author)
         response = self.client.post(reverse(
-            'question-edit',
+            'question-update',
             kwargs=dict(pk=self.question.pk)), data=dict(
             title='This is a title updated',
             body='This is an updated body',
@@ -379,15 +376,13 @@ class TestAnswerUpdate(TestCase):
             body='This is an answer',
             question=self.question,
         )
-        self.path = reverse(
-            'answer-edit',
-            kwargs=dict(pk=self.answer.pk))
+        self.path = reverse('answer-update', kwargs=dict(pk=self.answer.pk))
 
     def test_get__anonymous(self) -> None:
         response = self.client.get(self.path)
         self.assertRedirects(
             response,
-            f'/auth/login/?next=/questions/answer/{self.answer.pk}/edit',
+            f'/auth/login/?next=/answers/{self.answer.pk}/edit/',
         )
 
     def test_get__authenticated(self) -> None:
@@ -401,7 +396,7 @@ class TestAnswerUpdate(TestCase):
         response = self.client.post(self.path)
         self.assertRedirects(
             response,
-            f'/auth/login/?next=/questions/answer/{self.answer.pk}/edit',
+            f'/auth/login/?next=/answers/{self.answer.pk}/edit/',
         )
 
     def test_post__authenticated(self) -> None:

@@ -16,15 +16,14 @@ urlpatterns = [
     path(
         'questions/<int:pk>/edit/',
         views.QuestionUpdate.as_view(),
-        name='question-edit',
+        name='question-update',
     ),
 
     path(
-        'questions/answer/<int:pk>/edit',
+        'answers/<int:pk>/edit/',
         views.AnswerUpdate.as_view(),
-        name='answer-edit',
+        name='answer-update',
     ),
-
     path(
         'questions/<int:question_pk>/answer/',
         views.AnswerCreate.as_view(),

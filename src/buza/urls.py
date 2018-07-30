@@ -32,7 +32,7 @@ urlpatterns = [
     path('subjects/<int:pk>/', views.SubjectDetail.as_view(), name='subject-detail'),
     path(
         'subjects/my-subjects/<int:pk>/',
-        views.UserSubjectList.as_view(),
+        views.UserSubjectsView.as_view(),
         name='my-subject-list',
     ),
     path('subjects/', views.SubjectList.as_view(), name='subject-list'),

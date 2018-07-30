@@ -3,7 +3,8 @@ from typing import Any, Dict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
+from django.db.models import QuerySet
 from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -240,29 +241,20 @@ class AnswerUpdate(LoginRequiredMixin, generic.UpdateView):
     """
 
     model = models.Answer
-    answer: models.Answer
     fields = [
         'body',
     ]
 
-    def dispatch(
-            self,
-            request: HttpRequest,
-            *args: Any,
-            pk: int,
-            **kwargs: Any,
-    ) -> HttpResponse:
+    def get_object(self, queryset: QuerySet = None) -> models.Answer:
         """
-        Look up the question, and set `self.question`.
+        Permission check: Users can only edit their own answers.
+
+        TODO (Pi): Use django-auth-utils for this?
         """
-        self.answer = get_object_or_404(models.Answer, pk=pk)
-        self.question = self.answer.question
-        if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path())
-        if self.answer.author != request.user:
-            return HttpResponseRedirect(
-                reverse('question-detail', kwargs=dict(pk=self.question.pk)))
-        return super().dispatch(request, *args, **kwargs)
+        answer: models.Answer = super().get_object(queryset)
+        if answer.author != self.request.user:
+            raise PermissionDenied('You can only edit your own answers.')
+        return answer
 
     def get_success_url(self) -> str:
         """

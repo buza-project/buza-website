@@ -415,16 +415,10 @@ class TestAnswerUpdate(TestCase):
         Only the question authors are allowed to edit the question
         """
         self.client.force_login(self.author)
-        response = self.client.post(
-            self.path,
-            data=dict(
-                body='This is an updated answer',
-            ),
-        )
-        assert \
-            'This is an answer' == \
-            models.Answer.objects.filter(pk=self.answer.pk).get().body
-        self.assertRedirects(response, f'/questions/{self.question.pk}/')
+        response = self.client.post(self.path, data=dict(
+            body='This is an updated answer',
+        ))
+        assert HTTPStatus.FORBIDDEN == response.status_code
 
 
 class TestSubjectList(TestCase):

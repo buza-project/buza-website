@@ -41,6 +41,16 @@ class TestSubject(TestCase):
         assert '<Subject: Biology>' == repr(subject)
 
 
+class TestTags(TestCase):
+
+    def test_repr(self) -> None:
+        tag: models.Tag = models.Tag(
+            name='genetics',
+            description='The genetic makeup of biology',
+        )
+        assert '<Tag: genetics>' == repr(tag)
+
+
 class TestQuestion(TestCase):
 
     def test_repr(self) -> None:

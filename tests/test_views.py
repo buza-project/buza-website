@@ -216,7 +216,7 @@ class TestQuestionUpdate(TestCase):
         )
         self.assertRedirects(
             response,
-            f'/questions/{self.question.pk}/',
+            f'/auth/login/?next=/questions/{self.question.pk}/edit/',
         )
 
     def test_post__anonymous(self) -> None:
@@ -225,7 +225,7 @@ class TestQuestionUpdate(TestCase):
         )
         self.assertRedirects(
             response,
-            f'/questions/{self.question.pk}/',
+            f'/auth/login/?next=/questions/{self.question.pk}/edit/',
         )
 
     def test_get__not_author(self) -> None:
@@ -236,10 +236,7 @@ class TestQuestionUpdate(TestCase):
         response = self.client.get(
             reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
-        self.assertRedirects(
-            response,
-            f'/questions/{self.question.pk}/',
-        )
+        assert HTTPStatus.FORBIDDEN == response.status_code
 
     def test_post__not_author(self) -> None:
         """
@@ -252,10 +249,7 @@ class TestQuestionUpdate(TestCase):
             title='This is a title updated',
             body='This is an updated body',
         ))
-        self.assertRedirects(
-            response,
-            f'/questions/{self.question.pk}/',
-        )
+        assert HTTPStatus.FORBIDDEN == response.status_code
 
     def test_update_author(self)-> None:
         """

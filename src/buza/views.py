@@ -150,23 +150,17 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         'body',
         'subject',
     ]
-    question: models.Question
 
-    def dispatch(
-            self,
-            request: HttpRequest,
-            *args: Any,
-            pk: int,
-            **kwargs: Any,
-    ) -> HttpResponse:
+    def get_object(self, queryset=None):
         """
-        Look up the question, and set `self.question`.
+        Permission check: Users can only edit their own questions.
+
+        TODO (Pi): Use django-auth-utils for this?
         """
-        self.question = get_object_or_404(models.Question, pk=pk)
-        if self.question.author != request.user:
-            return HttpResponseRedirect(
-                reverse('question-detail', kwargs=dict(pk=self.question.pk)))
-        return super().dispatch(request, *args, **kwargs)
+        question: models.Question = super().get_object(queryset)
+        if question.author != self.request.user:
+            raise PermissionDenied('You can only edit your own questions.')
+        return question
 
     def get_success_url(self) -> str:
         """

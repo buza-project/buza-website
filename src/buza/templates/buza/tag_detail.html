@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}
+
+{% block title %}{{ subject.title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="question">
+        <h3>{{ tag.name }}</h3>
+        <div>
+            {{ tag.description|linebreaks }}
+        </div>
+
+        <p style="font-size: smaller">
+            Questions: {{ tag.question_set.count}}
+            <br>
+        </p>
+
+        {# TODO: Watch. #}
+    </div>
+
+    {% with questions=tag.question_set.all %}  {# TODO: Ordering #}
+        {% if questions %}
+            <h2>{{tag.title}} Questions</h2>
+
+            {% for question in questions %}
+             <div class="question">
+            <div class=user-format>
+                <button type="submit" class="material-icons icon" name='view_user'>account_circle </button>
+                {{ question.author.get_full_name|default:question.author.username }}
+                <a class="date"> {{ question.created }}</a> {# TODO #}
+            </div>
+
+            <a href="{% url 'question-detail' question.pk %}" class="question-title">
+                {{ question.title }}
+            </a>
+        <div style="clear: both"></div>
+
+            {% endfor %}
+
+        {% endif %}
+    {% endwith %}
+
+{% endblock %}

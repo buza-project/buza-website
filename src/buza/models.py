@@ -28,6 +28,14 @@ class Subject(models.Model):
         return str(self.title)
 
 
+class Tag(models.Model):
+    name = _CharField()
+    description = models.TextField()
+
+    def __str__(self) -> str:
+        return str(self.name)
+
+
 class User(AbstractUser):
 
     # Authentication fields
@@ -65,6 +73,7 @@ class Question(TimestampedModel, models.Model):
     title = _CharField()
     body = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'

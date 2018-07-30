@@ -73,6 +73,14 @@ def edit(request: HttpRequest) -> HttpResponse:
     )
 
 
+class TagDetail(generic.DetailView):
+    model = models.Tag
+
+
+class TagList(generic.ListView):
+    model = models.Tag
+
+
 class SubjectDetail(generic.DetailView):
     model = models.Subject
 

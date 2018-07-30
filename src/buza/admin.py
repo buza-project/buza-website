@@ -68,3 +68,10 @@ class SubjectAdmin(admin.ModelAdmin):
     ordering = ['-title']
     list_display = ['title', 'description']
     search_fields = ['title', 'description']
+
+
+@admin.register(models.Tag)
+class TagAdmin(admin.ModelAdmin):
+    ordering = ['-name']
+    list_display = ['name', 'description']
+    search_fields = ['name', 'description']

@@ -10,6 +10,10 @@ from buza import views
 urlpatterns = [
     path('', generic.RedirectView.as_view(pattern_name='question-list'), name='home'),
 
+    # tag related questions
+    path('tags/<int:pk>/', views.TagDetail.as_view(), name='tag-detail'),
+    path('tags/', views.TagList.as_view(), name='tag-list'),
+
     path('questions/', views.QuestionList.as_view(), name='question-list'),
     path('questions/<int:pk>/', views.QuestionDetail.as_view(), name='question-detail'),
     path('questions/ask/', views.QuestionCreate.as_view(), name='question-create'),

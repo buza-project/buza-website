@@ -22,7 +22,7 @@ urlpatterns = [
     path('subjects/<int:pk>/', views.SubjectDetail.as_view(), name='subject-detail'),
     path(
         'subjects/my-subjects/<int:pk>/',
-        views.UserSubjectList.as_view(),
+        views.UserSubjectsView.as_view(),
         name='my-subject-list',
     ),
     path('subjects/', views.SubjectList.as_view(), name='subject-list'),
@@ -34,16 +34,15 @@ urlpatterns = [
     path(
         'questions/<int:pk>/edit/',
         views.QuestionUpdate.as_view(),
-        name='question-edit',
+        name='question-update',
     ),
 
     # answer related paths
     path(
-        'questions/<int:question_pk>/answer/<int:pk>/edit',
+        'answers/<int:pk>/edit/',
         views.AnswerUpdate.as_view(),
-        name='answer-edit',
+        name='answer-update',
     ),
-
     path(
         'questions/<int:question_pk>/answer/',
         views.AnswerCreate.as_view(),

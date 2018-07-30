@@ -40,8 +40,9 @@ class QuestionAdmin(admin.ModelAdmin):
     ordering = ['-created']
     list_display = ['title', 'author', 'created', 'subject']
     search_fields = ['title', 'author__username', 'subject__title']
+    list_filter = ['subject']
 
-    raw_id_fields = ['author']
+    raw_id_fields = ['author', 'subject']
     readonly_fields = ['created', 'modified']
 
     inlines = [AnswerInline]

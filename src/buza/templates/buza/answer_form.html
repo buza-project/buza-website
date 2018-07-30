@@ -9,16 +9,19 @@ Expected context:
 {% block title %}Answer question - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="question">
+
+    {% with question=answer.question %}
+    {% if question %}
+    <div class="question">
         <h3>{{ question.title }}</h3>
         {% if user == question.author %}
-                    <a href="{% url 'question-edit' pk=question.pk%}" style="color:yellow;font-weight:bold;"> Edit </a>
-                    {% endif %}
+            <a href="{% url 'question-update' pk=question.pk %}" style="color:yellow;font-weight:bold;"> Edit </a>
+        {% endif %}
         <div>
             {{ question.body|linebreaks }}
-             <p style="font-size: smaller">
-            {{question.subject.title}}
-             </p>
+            <p style="font-size: smaller">
+                {{question.subject.title}}
+            </p>
         </div>
 
         <p style="font-size: smaller">
@@ -31,9 +34,12 @@ Expected context:
             <br>
             Last modified: {{ question.modified }}
         </p>
-</div>
+    </div>
+    {% endif %}
+    {% endwith %}
+
     <form method="post" action=
-            "{% if answer.pk %} {% url 'answer-edit' question_pk=answer.question.pk pk=answer.pk %}
+            "{% if answer.pk %} {% url 'answer-update' pk=answer.pk %}
             {% else %}
             {% url 'answer-create' question_pk=question.pk %}
             {% endif %}">  {# FIXME #}
@@ -41,4 +47,5 @@ Expected context:
         {{ form }}
         <input type="submit" value="{% if answer.pk %}Update answer {% else %} Answer{% endif %}">
     </form>
+
 {% endblock %}

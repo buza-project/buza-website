@@ -7,7 +7,7 @@
     <div class="question">
         <h3>{{ question.title }}</h3>
         {% if user == question.author %}
-                    <a href="{% url 'question-edit' pk=question.pk%}" style="color:yellow;font-weight:bold;"> Edit </a>
+                    <a href="{% url 'question-update' pk=question.pk %}" style="color:yellow;font-weight:bold;"> Edit </a>
                     {% endif %}
         <div>
             {{ question.body|linebreaks }}
@@ -51,13 +51,12 @@
                         Last modified: {{ question.modified }}
                     </div>
                     {% if user == answer.author %}
-                    <a href="{% url 'answer-edit' question_pk=question.pk pk=answer.pk %}" style="color:yellow;font-weight:bold;"> Edit</a>
+                    <a href="{% url 'answer-update' pk=answer.pk %}" style="color:yellow;font-weight:bold;"> Edit</a>
                     {% endif %}
                 </div>
             {% endfor %}
         {% else %}
-<h2>No answers yet
-</h2>
+            <h2>No answers yet</h2>
         {% endif %}
     {% endwith %}
         <br>

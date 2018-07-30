@@ -4,7 +4,7 @@
 
 {% block content %}
     <form method="post"
-          action="{% if question.pk %}{% url 'question-edit' pk=question.pk%}{% else %}{% url 'question-create' %}{% endif %}">
+          action="{% if question.pk %}{% url 'question-update' pk=question.pk %}{% else %}{% url 'question-create' %}{% endif %}">
         {% csrf_token %}
         {{ form }}
 

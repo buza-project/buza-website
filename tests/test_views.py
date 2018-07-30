@@ -176,7 +176,6 @@ class TestQuestionCreate(TestCase):
     def test_post__success(self) -> None:
         """
         Question post redirects to question view
-
         """
         user: models.User = models.User.objects.create()
         self.client.force_login(user)
@@ -186,7 +185,6 @@ class TestQuestionCreate(TestCase):
             body='This is a body',
             subject=subject.pk,
         ))
-        print(models.Question.objects.all())
         question: models.Question = models.Question.objects.get()
         assert {
             'author_id': user.pk,
@@ -214,8 +212,7 @@ class TestQuestionUpdate(TestCase):
 
     def test_get__anonymous(self) -> None:
         response = self.client.get(
-            reverse('question-edit',
-                    kwargs=dict(pk=self.question.pk)),
+            reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
         self.assertRedirects(
             response,
@@ -224,8 +221,7 @@ class TestQuestionUpdate(TestCase):
 
     def test_post__anonymous(self) -> None:
         response = self.client.get(
-            reverse('question-edit',
-                    kwargs=dict(pk=self.question.pk)),
+            reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
         self.assertRedirects(
             response,
@@ -238,13 +234,9 @@ class TestQuestionUpdate(TestCase):
         """
         self.client.force_login(self.other_user)
         response = self.client.get(
-            reverse('question-edit',
-                    kwargs=dict(pk=self.question.pk)),
+            reverse('question-update', kwargs=dict(pk=self.question.pk)),
         )
-        self.assertRedirects(
-            response,
-            '/questions/1/',
-        )
+        assert HTTPStatus.FORBIDDEN == response.status_code
 
     def test_post__not_author(self) -> None:
         """
@@ -252,15 +244,12 @@ class TestQuestionUpdate(TestCase):
         """
         self.client.force_login(self.other_user)
         response = self.client.post(reverse(
-            'question-edit',
+            'question-update',
             kwargs=dict(pk=self.question.pk)), data=dict(
             title='This is a title updated',
             body='This is an updated body',
         ))
-        self.assertRedirects(
-            response,
-            '/questions/1/',
-        )
+        assert HTTPStatus.FORBIDDEN == response.status_code
 
     def test_update_author(self)-> None:
         """
@@ -269,7 +258,7 @@ class TestQuestionUpdate(TestCase):
         """
         self.client.force_login(self.author)
         response = self.client.post(reverse(
-            'question-edit',
+            'question-update',
             kwargs=dict(pk=self.question.pk)), data=dict(
             title='This is a title updated',
             body='This is an updated body',
@@ -381,17 +370,28 @@ class TestAnswerUpdate(TestCase):
             body='This is an answer',
             question=self.question,
         )
-        self.path = reverse(
-            'answer-edit',
-            kwargs=dict(pk=self.answer.pk, question_pk=self.question.pk))
+        self.path = reverse('answer-update', kwargs=dict(pk=self.answer.pk))
 
-    def test_get_anonymous(self) -> None:
+    def test_get__anonymous(self) -> None:
         response = self.client.get(self.path)
-        self.assertRedirects(response, '/auth/login/?next=/questions/1/answer/1/edit')
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/answers/{self.answer.pk}/edit/',
+        )
 
-    def test_post_anonymous(self) -> None:
+    def test_get__authenticated(self) -> None:
+        response = self.client.get(self.path)
+        self.client.force_login(self.answer_author)
+        response = self.client.get(self.path)
+        self.assertTemplateUsed(response, 'buza/answer_form.html')
+        self.answer == response.context['answer']
+
+    def test_post__anonymous(self) -> None:
         response = self.client.post(self.path)
-        self.assertRedirects(response, '/auth/login/?next=/questions/1/answer/1/edit')
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/answers/{self.answer.pk}/edit/',
+        )
 
     def test_post__authenticated(self) -> None:
         self.client.force_login(self.answer_author)
@@ -411,16 +411,10 @@ class TestAnswerUpdate(TestCase):
         Only the question authors are allowed to edit the question
         """
         self.client.force_login(self.author)
-        response = self.client.post(
-            self.path,
-            data=dict(
-                body='This is an updated answer',
-            ),
-        )
-        assert \
-            'This is an answer' == \
-            models.Answer.objects.filter(pk=self.answer.pk).get().body
-        self.assertRedirects(response, f'/questions/{self.question.pk}/')
+        response = self.client.post(self.path, data=dict(
+            body='This is an updated answer',
+        ))
+        assert HTTPStatus.FORBIDDEN == response.status_code
 
 
 class TestSubjectList(TestCase):
@@ -518,12 +512,14 @@ class TestUserSubjectsView(TestCase):
         Anonymous users are redirected
         """
         response = self.client.get(self.path)
-        self.assertRedirects(response, '/auth/login/?next=/subjects/my-subjects/1/')
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/subjects/my-subjects/{self.user.pk}/',
+        )
 
     def test_get__with_no_followed_subjects(self) -> None:
         """
         My subject view is empty before users follow any subjects
-        :return:
         """
         self.client.force_login(self.user)
         response = self.client.get(self.path)
@@ -536,7 +532,6 @@ class TestUserSubjectsView(TestCase):
     def test_get__with_followed_subjects(self) -> None:
         """
         My subject view is empty before users follow any subjects
-        :return:
         """
         self.client.force_login(self.user)
         self.user.subjects.add(self.first_subject)

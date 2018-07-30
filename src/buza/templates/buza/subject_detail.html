@@ -6,9 +6,6 @@
 {% block content %}
     <div class="question">
         <h3>{{ subject.title }}</h3>
-        {% if user == question.author %}
-                    <a href="{% url 'question-edit' pk=question.pk%}" style="color:yellow;font-weight:bold;"> Edit </a>
-                    {% endif %}
         <div>
             {{ subject.description|linebreaks }}
              <p style="font-size: smaller">

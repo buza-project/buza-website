@@ -14,10 +14,14 @@ Make sure you have the following tools installed:
 .. _Pipenv: https://docs.pipenv.org/install/#installing-pipenv
 .. _Yarn: https://yarnpkg.com/lang/en/docs/install/
 
-Copy the example ``.env`` file,
-and edit the example paths to point to your working directory::
+Django requires the ``DJANGO_SETTINGS_MODULE`` environment variable to run.
+To set this and get started, copy the ``env.example`` file to ``.env``::
 
     $ cp .env.example .env
+
+(Pipenv will `automatically load`_ the environment variables defined in this ``.env`` file.)
+
+.. _`automatically load`: https://docs.pipenv.org/advanced/#automatic-loading-of-env
 
 Fetch the Yarn dependencies::
 

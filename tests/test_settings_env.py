@@ -49,5 +49,7 @@ def test_settings_env() -> None:
         'STATIC_URL': '/static/',
         'MEDIA_ROOT': '/base/media_root',
         'MEDIA_URL': '/media/',
+        'LANGUAGE_CODE': 'en-ZA',
+        'TIME_ZONE': 'Africa/Johannesburg',
     }
     assert expected_settings == _get_settings(settings_env)

@@ -27,3 +27,7 @@ STATIC_URL = env('DJANGO_STATIC_URL', default='/static/')
 
 MEDIA_ROOT = env('DJANGO_MEDIA_ROOT', default=base_dir('media_root'))
 MEDIA_URL = env('DJANGO_MEDIA_URL', default='/media/')
+
+# Internationalization
+LANGUAGE_CODE = env('DJANGO_LANGUAGE_CODE', default='en-ZA')
+TIME_ZONE = env('DJANGO_TIME_ZONE', default='Africa/Johannesburg')

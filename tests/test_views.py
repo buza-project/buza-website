@@ -8,6 +8,92 @@ from django.urls import reverse
 from buza import models, views
 
 
+class TestRegister(TestCase):
+    """
+    The `register` view should create users and log them in.
+    """
+    def setUp(self) -> None:
+        self.path = reverse('register')
+
+    def test_get(self) -> None:
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'accounts/register.html')
+        assert 'user_form' in response.context
+
+    def test_get__authenticated(self)-> None:
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'accounts/register.html')
+        assert 'user_form' in response.context
+
+    def test_post__empty(self) -> None:
+        """
+        Test that when user submits an empty register from, the user is not created.
+        """
+        response: HttpResponse = self.client.post(self.path)
+        assert HTTPStatus.OK == response.status_code
+        assert self.assertTemplateUsed('accounts/register.html')
+
+        form: ModelForm = response.context['user_form']  # noqa: E701
+        assert [] == form.non_field_errors()
+        assert {
+            'username': ['This field is required.'],
+            'password1': ['This field is required.'],
+            'password2': ['This field is required.'],
+        } == form.errors
+        assert not form.is_valid()
+
+    def test_post__passwords_mismatch(self) -> None:
+        response: HttpResponse = self.client.post(self.path, data=dict(
+            username='buza-user-12',
+            password1='password',
+            password2='mismatch',
+        ))
+        assert HTTPStatus.OK == response.status_code
+        assert self.assertTemplateUsed('accounts/register.html')
+
+        form: ModelForm = response.context['user_form']  # noqa: E701
+        assert [] == form.non_field_errors()
+        assert {
+            'password2': ["The two password fields didn't match."],
+        } == form.errors
+        assert not form.is_valid()
+
+    def test_post__valid_form(self) -> None:
+        response = self.client.post(self.path, data=dict(
+            username='buza-user-12',
+            password1='secret',
+            password2='secret',
+        ))
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed('accounts/register_done.html')
+        new_user: models.User = models.User.objects.get()
+        assert new_user == response.context['new_user']
+
+        assert {
+            'bio': None,
+            'date_joined': new_user.date_joined,
+            'email': '',
+            'first_name': '',
+            'grade': 7,
+            'id': new_user.pk,
+            'is_active': True,
+            'is_staff': False,
+            'is_superuser': False,
+            'last_login': None,
+            'last_name': '',
+            'password': new_user.password,
+            'phone': '',
+            'photo': '',
+            'school': None,
+            'school_address': None,
+            'username': 'buza-user-12',
+        } == models.User.objects.filter(pk=new_user.pk).values().get()
+
+
 class TestUserUpdate(TestCase):
 
     def _authenticated_user(self) -> models.User:

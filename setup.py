@@ -39,7 +39,6 @@ setup(
         # Django libraries
         'django-environ',
         'django-taggit',
-        'django-tinymce',
         'djangorestframework',
         'social-auth-app-django',
     ],

@@ -13,5 +13,4 @@ DATABASES = {
     },
 }
 
-# XXX: For django-tinymce:
 STATIC_URL = '/static/'

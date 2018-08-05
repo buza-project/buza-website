@@ -12,7 +12,6 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'taggit',
-    'tinymce',
     # 'social_django',
 
     # Django apps

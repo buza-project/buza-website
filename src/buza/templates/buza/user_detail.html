@@ -5,6 +5,15 @@
 {% block content %}
     <h1>{{ user_object.get_full_name }}</h1>
 
+    {# Viewing the signed-in user? #}
+    {% if user_object == user %}
+    <ul>
+        <li><a href="{% url 'edit' %}">Edit Account</a></li>
+        <li><a href="{% url 'password_change' %}">Change Password</a></li>
+        <li><a href="{% url 'logout' %}">Sign out</a></li>
+    </ul>
+    {% endif %}
+
     {% if user_object.photo %}
         <div style="float:right">
             <img src="{{ user_object.photo.url }}">

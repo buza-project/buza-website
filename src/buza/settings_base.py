@@ -44,6 +44,12 @@ TEMPLATES = [{
     },
 }]
 
+# Internationalization
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+
 # django.contrib.auth
 AUTH_USER_MODEL = 'buza.User'
 LOGIN_URL = reverse_lazy('login')

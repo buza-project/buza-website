@@ -1,0 +1,23 @@
+/* Site-wide Buza styles. */
+
+.bg-buza-site {
+    background-color: #F2F2F2;
+}
+
+/* Block: Navigation bar. */
+.buza-nav {
+    background: linear-gradient(to bottom right, #17EAD9, #6078EA), #5689E8;
+    color: white;
+    /* A bit of space before the content. */
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+}
+/* Element: Navigation bar links. */
+.buza-nav__link {
+    display: block;
+    text-align: center;
+}
+.buza-nav__link, .buza-nav__link:hover {
+    color: white;
+}

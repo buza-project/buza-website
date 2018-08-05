@@ -1,0 +1,20 @@
+/* Styles for questions. */
+
+/* Block: Question */
+.question {
+    background-color: white;
+    padding: 1em 2em;
+    /* Spacing between questions: */
+    margin-top: 1em;
+    margin-bottom: 1em;
+    /* Shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.25em;
+}
+.question__title {
+    font-weight: bold;
+}
+.question__attribution {
+    opacity: 0.5;
+    font-size: smaller;
+}

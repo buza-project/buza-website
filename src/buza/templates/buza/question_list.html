@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/questions.css' %}">
+{% endblock %}
 
 {% block title %}Questions - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1>Questions</h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-baseline">
+        <h2>Questions</h2>
+        <a href="{% url 'question-create' %}" class="d-block">
+            <h2>Ask New Question</h2>
+        </a>
+    </div>
 
     {% for question in question_list %}
         <div class="question">
-            <div class=user-format>
-                <button type="submit" class="material-icons icon" name='view_user'>account_circle </button>
-                {{ question.author.get_full_name|default:question.author.username }}
-                <a class="date"> {{ question.created }}</a> {# TODO #}
-            </div>
-
-            <a href="{% url 'question-detail' question.pk %}" class="question-title">
-                {{ question.title }}
+            <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
+                <p>{{ question.title }}</p>
             </a>
-        <div style="clear: both"></div>
+            <div class="question__body">
+                {{ question.body|linebreaks|truncatewords:20 }}
+            </div>
+            <div class="question__attribution">
+                {{ question.author.get_full_name|default:question.author.username }}
+                <a class="date"> {{ question.created }}</a>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

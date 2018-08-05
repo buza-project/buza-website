@@ -10,9 +10,6 @@ from buza import views
 urlpatterns = [
     path('', generic.RedirectView.as_view(pattern_name='question-list'), name='home'),
 
-    # Admin paths
-    url(r'^admin/', admin.site.urls),
-
     # user related paths
     url(r'^register/$', views.UserCreate.as_view(), name='register'),
     url(r'^edit/$', views.edit, name='edit'),
@@ -49,9 +46,13 @@ urlpatterns = [
         name='answer-create',
     ),
 
+    # social-auth-app-django
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+
+    # Django auth
     path('auth/', include(django.contrib.auth.urls)),
 
-    # social log
-    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    # Django admin
+    url(r'^admin/', admin.site.urls),
 
 ]

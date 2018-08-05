@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ user.get_full_name }} - {{ block.super }}{% endblock %}
+{% block title %}{{ user_object.get_full_name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1>{{ user.get_full_name }}</h1>
+    <h1>{{ user_object.get_full_name }}</h1>
 
-    {% if user.photo %}
+    {% if user_object.photo %}
         <div style="float:right">
-            <img src="{{ user.photo.url }}">
+            <img src="{{ user_object.photo.url }}">
         </div>
     {% endif %}
 
-    <p>Email: {{ user.email }}</p>  {# XXX: Privacy? #}
-    <p>Bio: {{ user.bio }}</p>
+    <p>Email: {{ user_object.email }}</p>  {# XXX: Privacy? #}
+    <p>Bio: {{ user_object.bio }}</p>
 {% endblock %}

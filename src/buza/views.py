@@ -110,6 +110,9 @@ class UserSubjectsView(LoginRequiredMixin, generic.TemplateView):
 class UserDetail(generic.DetailView):
     model = models.User
 
+    # Avoid conflicting with 'user' (the logged-in user)
+    context_object_name = 'user_object'
+
 
 class QuestionDetail(generic.DetailView):
     model = models.Question

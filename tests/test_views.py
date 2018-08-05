@@ -466,11 +466,11 @@ class TestAnswerUpdate(TestCase):
         )
 
     def test_get__authenticated(self) -> None:
-        response = self.client.get(self.path)
         self.client.force_login(self.answer_author)
         response = self.client.get(self.path)
         self.assertTemplateUsed(response, 'buza/answer_form.html')
-        self.answer == response.context['answer']
+        assert self.question == response.context['question']
+        assert self.answer == response.context['answer']
 
     def test_post__anonymous(self) -> None:
         response = self.client.post(self.path)

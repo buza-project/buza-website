@@ -257,6 +257,15 @@ class AnswerUpdate(LoginRequiredMixin, generic.UpdateView):
             raise PermissionDenied('You can only edit your own answers.')
         return answer
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Add the question to the context.
+        """
+        answer: models.Answer = self.object
+        context_data: Dict[str, Any] = super().get_context_data(**kwargs)
+        context_data.setdefault('question', answer.question)
+        return context_data
+
     def get_success_url(self) -> str:
         """
         Redirect to the question.

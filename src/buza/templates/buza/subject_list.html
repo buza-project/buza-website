@@ -30,16 +30,14 @@
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit"
-                                    class="icon" value="{{subject.pk}}" name= 'follow-subject'>
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject">
                                 Follow
                             </button>
                         </form>
                     {% else %}
                         <form action="" method="post">
                             {% csrf_token %}
-                            <button type="submit"
-                                    class="icon" value="{{subject.pk}}" name= 'unfollow-subject'>
+                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject">
                                 Unfollow
                             </button>
                         </form>

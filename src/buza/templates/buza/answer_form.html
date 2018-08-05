@@ -5,38 +5,18 @@ Expected context:
 * question: The question being answered
 
 {% endcomment %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/questions.css' %}">
+{% endblock %}
 
 {% block title %}Answer question - {{ block.super }}{% endblock %}
 
 {% block content %}
 
-    {% with question=answer.question %}
-    {% if question %}
-    <div class="question">
-        <h3>{{ question.title }}</h3>
-        {% if user == question.author %}
-            <a href="{% url 'question-update' pk=question.pk %}" style="color:yellow;font-weight:bold;"> Edit </a>
-        {% endif %}
-        <div>
-            {{ question.body|linebreaks }}
-            <p style="font-size: smaller">
-                {{question.subject.title}}
-            </p>
-        </div>
-
-        <p style="font-size: smaller">
-            Asked by:
-            <a href="{% url 'user-detail' pk=question.author.pk %}">
-                {{ question.author.get_full_name|default:question.author.username }}
-            </a>
-            <br>
-            Asked on: {{ question.created }}
-            <br>
-            Last modified: {{ question.modified }}
-        </p>
-    </div>
-    {% endif %}
-    {% endwith %}
+    {% include 'includes/question_card_full.html' with question=question only %}
 
     <form method="post" action=
             "{% if answer.pk %} {% url 'answer-update' pk=answer.pk %}
@@ -44,8 +24,10 @@ Expected context:
             {% url 'answer-create' question_pk=question.pk %}
             {% endif %}">  {# FIXME #}
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="{% if answer.pk %}Update answer {% else %} Answer{% endif %}">
+        {{ form.as_p }}
+        <p>
+            <input type="submit" value="{% if answer.pk %}Update answer {% else %} Answer{% endif %}">
+        </p>
     </form>
 
 {% endblock %}

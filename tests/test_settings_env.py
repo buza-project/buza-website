@@ -23,10 +23,8 @@ def test_settings_env() -> None:
     """
     # Patch the environment with test variables.
     test_environ = {
+        'BASE_DIR': '/base',
         'DJANGO_SECRET_KEY': 'secret key',
-        'DJANGO_DATABASE_URL': 'sqlite:////base/buza.sqlite',
-        'DJANGO_STATIC_ROOT': '/base/static_root/',
-        'DJANGO_MEDIA_ROOT': '/base/media_root/',
     }
     with mock.patch.dict(os.environ, test_environ, clear=True):
         from buza import settings_env
@@ -41,15 +39,15 @@ def test_settings_env() -> None:
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'HOST': '',
-                'NAME': '/base/buza.sqlite',
+                'NAME': '/base/buza.sqlite3',
                 'PASSWORD': '',
                 'PORT': '',
                 'USER': '',
             },
         },
-        'STATIC_ROOT': '/base/static_root/',
+        'STATIC_ROOT': '/base/static_root',
         'STATIC_URL': '/static/',
-        'MEDIA_ROOT': '/base/media_root/',
+        'MEDIA_ROOT': '/base/media_root',
         'MEDIA_URL': '/media/',
     }
     assert expected_settings == _get_settings(settings_env)

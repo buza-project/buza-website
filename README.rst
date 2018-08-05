@@ -5,20 +5,31 @@ This is the code for Buza mobi site
 
 Getting started
 ---------------
-To set up environment::
 
-    $ virtualenv ve
-    $ source ve/bin/activate
-    $ pip install -e .
-    $ ./manage.py migrate
-    $ ./manage.py createsuperuser
-    $ ./manage.py runserver
+Make sure you have the following tools installed:
 
-Or, using ``pipenv``::
+* Pipenv_
+* Yarn_
+
+.. _Pipenv: https://docs.pipenv.org/install/#installing-pipenv
+.. _Yarn: https://yarnpkg.com/lang/en/docs/install/
+
+Copy the example ``.env`` file,
+and edit the example paths to point to your working directory::
 
     $ cp .env.example .env
+
+Fetch the Yarn dependencies::
+
+    $ yarn
+
+Install the Pipenv dependencies, and activate the environment::
+
     $ pipenv install --dev
     $ pipenv shell
+
+Initialise the database, and run the Django development server::
+
     $ django-admin migrate
     $ django-admin createsuperuser
     $ django-admin runserver

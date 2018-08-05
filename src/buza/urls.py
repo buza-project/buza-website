@@ -11,7 +11,7 @@ urlpatterns = [
     path('', generic.RedirectView.as_view(pattern_name='question-list'), name='home'),
 
     # user related paths
-    url(r'^register/$', views.UserCreate.as_view(), name='register'),
+    url(r'^register/$', views.register, name='register'),
     url(r'^edit/$', views.edit, name='edit'),
     path(r'users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
 

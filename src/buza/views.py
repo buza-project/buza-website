@@ -2,6 +2,7 @@ from typing import Any, Dict
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
@@ -12,26 +13,31 @@ from django.urls import reverse
 from django.views import generic
 
 from buza import models
-from buza.forms import UserEditForm, UserRegistrationForm
+from buza.forms import UserEditForm
 
 
 # TODO: Migrate to class based views
+
+
+class BuzaUserCreationForm(UserCreationForm):
+    """
+    Like Django's `UserCreationForm`, but point at Buza's `User` model.
+    """
+
+    class Meta(UserCreationForm.Meta):
+        model = models.User
+
 
 def register(request: HttpRequest) -> HttpResponse:
     """
     Register a user account.
     """
     if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
+        user_form = BuzaUserCreationForm(request.POST)
 
         if user_form.is_valid():
-            # Create a new user object, but do not save it as of yet.
-            new_user = user_form.save(commit=False)
-
-            # Set the selected password
-            new_user.set_password(user_form.cleaned_data['password'])
-            # now we can save the user
-            new_user.save()
+            # Save the new user.
+            new_user = user_form.save()
             return render(
                 request,
                 'accounts/register_done.html',
@@ -39,38 +45,12 @@ def register(request: HttpRequest) -> HttpResponse:
             )
     else:
         # User did not fill in form correctly
-        user_form = UserRegistrationForm()
+        user_form = BuzaUserCreationForm()
     return render(
         request,
         'accounts/register.html',
         {'user_form': user_form},
     )
-
-
-class UserCreate(generic.CreateView):
-    model = models.User
-    fields = [
-        'username', 'email', 'phone',
-    ]
-
-    def dispatch(
-            self,
-            request: HttpRequest,
-            *args: Any,
-            **kwargs: Any,
-    ) -> HttpResponse:
-        """
-        Look up the question, and set `self.question`.
-        """
-        assert not request.user.is_authenticated, request.user
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_success_url(self) -> str:
-        """
-        Redirect to the question.
-        """
-        success_url: str = reverse('question-list')
-        return success_url
 
 
 @login_required  # type: ignore

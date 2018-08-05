@@ -17,17 +17,6 @@
     </div>
 
     {% for question in question_list %}
-        <div class="question">
-            <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
-                <p>{{ question.title }}</p>
-            </a>
-            <div class="question__body">
-                {{ question.body|linebreaks|truncatewords:20 }}
-            </div>
-            <div class="question__attribution">
-                {{ question.author.get_full_name|default:question.author.username }}
-                <a class="date"> {{ question.created }}</a>
-            </div>
-        </div>
+        {% include 'includes/question_card_brief.html' with question=question only %}
     {% endfor %}
 {% endblock %}

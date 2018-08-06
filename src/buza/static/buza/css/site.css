@@ -24,8 +24,11 @@
 
 .buza-question-nav_link{
     background: red;
-    text-align: center;
 
+}
+.buza-question-button {
+    text-align: left;
+    font-size: smaller;
 }
 
 .buza-profile-nav_link, .buza-profile-nav_link:hover{
@@ -35,9 +38,4 @@
 .buza-profile-nav_link{
     display: block;
     text-align: left;
-}
-
-.buza-question-nav_link, .buza-question-nav_link:hover{
-    color:white;
-
 }

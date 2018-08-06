@@ -21,3 +21,14 @@
 .buza-nav__link, .buza-nav__link:hover {
     color: white;
 }
+
+.buza-question-nav_link{
+    background: red;
+    text-align: center;
+
+}
+
+.buza-profile-nav_link, .buza-profile-nav_link:hover{
+    color:white;
+}
+

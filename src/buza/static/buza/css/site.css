@@ -32,3 +32,12 @@
     color:white;
 }
 
+.buza-profile-nav_link{
+    display: block;
+    text-align: left;
+}
+
+.buza-question-nav_link, .buza-question-nav_link:hover{
+    color:white;
+
+}

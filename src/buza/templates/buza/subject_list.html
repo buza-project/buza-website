@@ -3,7 +3,7 @@
 
 {% block head_extra %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+    <link rel="stylesheet" href="{% static 'buza/css/subjects.css' %}">
 {% endblock %}
 
 {% block title %}Subjects - {{ block.super }}{% endblock %}
@@ -20,18 +20,18 @@
         {% endif %}
     </div>
 
-    <table>
-    {% for subject in subject_list %}
-        <tr>
 
-            <td>
-                <a href="{% url 'subject-detail' subject.pk %}">
+    {% for subject in subject_list %}
+        <div class="subject">
+
+                <a href="{% url 'subject-detail' subject.pk %}" class="d-block subject__title">
                     {{ subject.title }}
                 </a>
-            </td>
+                    <div class="subject__body">
+        {{ subject.description|linebreaks|truncatewords:20 }}
+        </div>
 
             {% if user.is_authenticated %}
-                <td>
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
@@ -47,12 +47,13 @@
                             </button>
                         </form>
                     {% endif %}
-                </td>
             {% endif %}
-
-        </tr>
+            <div class="subject__attribution">
+        {{ subject.question_set.count}} questions,  {{subject.user_set.count}} users
+        <a class="date"> {{ question.created }}</a>
+    </div>
+        </div>
     {% endfor %}
-    </table>
 
 {% endblock %}
 

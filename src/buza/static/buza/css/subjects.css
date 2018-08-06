@@ -10,6 +10,7 @@
     /* Shadow */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0.25em;
+    text-align: center;
 }
 
 subject-nav_bar{
@@ -25,4 +26,14 @@ subject-nav_bar{
 .subject__attribution {
     opacity: 0.5;
     font-size: smaller;
+}
+
+.subject__follow-button{
+    background: lightgreen;
+}
+
+.subject__unfollow-button{
+    background: green;
+    border: None;
+
 }

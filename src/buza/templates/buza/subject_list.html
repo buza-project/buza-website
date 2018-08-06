@@ -25,7 +25,7 @@
             </td>
 
             {% if user.is_authenticated %}
-                <td style="font-size: smaller">
+                <td>
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}

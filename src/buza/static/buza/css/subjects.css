@@ -42,3 +42,31 @@ subject-nav_bar{
     border-radius: 25%;
 
 }
+
+.subject__all_subjects-button{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 1% 4%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.subject__my_subjects-button{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 1% 4%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+}
+
+.subject__btn_container{
+text-align:center;
+}
+

@@ -11,11 +11,11 @@
 {% block content %}
     <h1>Subjects</h1>
 
-    <div >
+    <div class="subject__btn_container">
         {% if user.is_authenticated %}
-            <a href="{% url 'my-subject-list' pk=user.pk%}" >
+            <a href="{% url 'my-subject-list' pk=user.pk%}" class="subject__my_subjects-button">
                 My Subjects </a>
-            <a href="{% url 'subject-list' %}" >
+            <a href="{% url 'subject-list' %}" class="subject__all_subjects-button">
                 All Subjects </a>
         {% endif %}
     </div>

@@ -43,30 +43,33 @@ subject-nav_bar{
     font-weight: bold;
 }
 
-.subject__all_subjects-button{
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
+.subject__subjects-nav{
     padding: 1% 4%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    border: 2px solid #7FFF00; /* Green */
 }
 
-.subject__my_subjects-button{
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 1% 4%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+.subject__subjects-nav-view{
+    background: #7FFF00; /* Green */
+}
 
+.subject__subjects-nav-view, .subject__subjects-nav-view:hover{
+    color: white;
+}
+
+.subject__subjects-nav-hidden{
+    background-color:white;
+}
+
+.subject__subjects-nav-hidden, .subject__subjects-nav-hidden:hover{
+   color:   #7FFF00; /* Green */
 }
 
 .subject__btn_container{
 text-align:center;
+font-size: 16px;
 }
 

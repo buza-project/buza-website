@@ -4,20 +4,25 @@
 
 {% block content %}
     <h1>Followed Subjects</h1>
-        <div style="padding-bottom: 2%; position: center;box-sizing: border-box;">
-        {% if user.is_authenticated %}
+    <div style="padding-bottom: 2%; position: center;box-sizing: border-box;">
         <a href="{% url 'my-subject-list' pk=user.pk%}" style="background-color: silver; padding: 1%;font-weight: bold; border-radius: 10%;">
-        My Subjects </a>
+            My Subjects
+        </a>
         <a href="{% url 'subject-list' %}" style="background-color: lightyellow; padding: 1%;font-weight: bold; border-radius: 10%;">
-        All Subjects </a>
-            {% endif %}
+            All Subjects
+        </a>
     </div>
-    {% for subject in user.subjects.all %}
-        <div class="question">
 
-            <a href="{% url 'subject-detail' subject.pk %}" class="question-title">
-                {{ subject.title }}
-            </a>
-        <div style="clear: both"></div>
+    <table>
+    {% for subject in user.subjects.all %}
+        <tr>
+            <td>
+                <a href="{% url 'subject-detail' subject.pk %}">
+                    {{ subject.title }}
+                </a>
+            </td>
+        </tr>
     {% endfor %}
+    </table>
+
 {% endblock %}

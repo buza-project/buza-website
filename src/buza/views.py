@@ -2,8 +2,10 @@ from typing import Any, Dict
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
+from django.db.models import QuerySet
 from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -11,10 +13,19 @@ from django.urls import reverse
 from django.views import generic
 
 from buza import models
-from buza.forms import UserEditForm, UserRegistrationForm
+from buza.forms import UserEditForm
 
 
 # TODO: Migrate to class based views
+
+
+class BuzaUserCreationForm(UserCreationForm):
+    """
+    Like Django's `UserCreationForm`, but point at Buza's `User` model.
+    """
+
+    class Meta(UserCreationForm.Meta):
+        model = models.User
 
 
 def register(request: HttpRequest) -> HttpResponse:
@@ -22,16 +33,11 @@ def register(request: HttpRequest) -> HttpResponse:
     Register a user account.
     """
     if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
+        user_form = BuzaUserCreationForm(request.POST)
 
         if user_form.is_valid():
-            # Create a new user object, but do not save it as of yet.
-            new_user = user_form.save(commit=False)
-
-            # Set the selected password
-            new_user.set_password(user_form.cleaned_data['password'])
-            # now we can save the user
-            new_user.save()
+            # Save the new user.
+            new_user = user_form.save()
             return render(
                 request,
                 'accounts/register_done.html',
@@ -39,7 +45,7 @@ def register(request: HttpRequest) -> HttpResponse:
             )
     else:
         # User did not fill in form correctly
-        user_form = UserRegistrationForm()
+        user_form = BuzaUserCreationForm()
     return render(
         request,
         'accounts/register.html',
@@ -105,13 +111,15 @@ class SubjectList(generic.ListView):
             reverse('subject-list'))
 
 
-class UserSubjectList(LoginRequiredMixin, generic.ListView):
-    model = models.User
+class UserSubjectsView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'buza/my_subjects_list.html'
 
 
 class UserDetail(generic.DetailView):
     model = models.User
+
+    # Avoid conflicting with 'user' (the logged-in user)
+    context_object_name = 'user_object'
 
 
 class QuestionDetail(generic.DetailView):
@@ -160,25 +168,17 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         'subject',
         'tags',
     ]
-    question: models.Question
 
-    def dispatch(
-            self,
-            request: HttpRequest,
-            *args: Any,
-            pk: int,
-            **kwargs: Any,
-    ) -> HttpResponse:
+    def get_object(self, queryset=None):
         """
-        Look up the question, and set `self.question`.
+        Permission check: Users can only edit their own questions.
+
+        TODO (Pi): Use django-auth-utils for this?
         """
-        self.question = get_object_or_404(models.Question, pk=pk)
-        if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path())
-        if self.question.author != request.user:
-            return HttpResponseRedirect(
-                reverse('question-detail', kwargs=dict(pk=self.question.pk)))
-        return super().dispatch(request, *args, **kwargs)
+        question: models.Question = super().get_object(queryset)
+        if question.author != self.request.user:
+            raise PermissionDenied('You can only edit your own questions.')
+        return question
 
     def get_success_url(self) -> str:
         """
@@ -253,29 +253,29 @@ class AnswerUpdate(LoginRequiredMixin, generic.UpdateView):
     """
 
     model = models.Answer
-    answer: models.Answer
     fields = [
         'body',
     ]
 
-    def dispatch(
-            self,
-            request: HttpRequest,
-            *args: Any,
-            pk: int,
-            **kwargs: Any,
-    ) -> HttpResponse:
+    def get_object(self, queryset: QuerySet = None) -> models.Answer:
         """
-        Look up the question, and set `self.question`.
+        Permission check: Users can only edit their own answers.
+
+        TODO (Pi): Use django-auth-utils for this?
         """
-        self.answer = get_object_or_404(models.Answer, pk=pk)
-        self.question = self.answer.question
-        if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path())
-        if self.answer.author != request.user:
-            return HttpResponseRedirect(
-                reverse('question-detail', kwargs=dict(pk=self.question.pk)))
-        return super().dispatch(request, *args, **kwargs)
+        answer: models.Answer = super().get_object(queryset)
+        if answer.author != self.request.user:
+            raise PermissionDenied('You can only edit your own answers.')
+        return answer
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Add the question to the context.
+        """
+        answer: models.Answer = self.object
+        context_data: Dict[str, Any] = super().get_context_data(**kwargs)
+        context_data.setdefault('question', answer.question)
+        return context_data
 
     def get_success_url(self) -> str:
         """

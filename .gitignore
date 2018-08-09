@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# Default Django instance directory for development.
+/buza-instance/
+
 # dependencies
 /node_modules
 

@@ -4,42 +4,50 @@
 
 {% block content %}
     <h1>Subjects</h1>
+
     <div style="padding-bottom: 2%; position: center;box-sizing: border-box;">
         {% if user.is_authenticated %}
-        <a href="{% url 'my-subject-list' pk=user.pk%}" style="background-color: silver; padding: 1%;font-weight: bold; border-radius: 10%;">
-        My Subjects </a>
-        <a href="{% url 'subject-list' %}" style="background-color: lightyellow; padding: 1%;font-weight: bold; border-radius: 10%;">
-        All Subjects </a>
+            <a href="{% url 'my-subject-list' pk=user.pk%}" style="background-color: silver; padding: 1%;font-weight: bold; border-radius: 10%;">
+                My Subjects </a>
+            <a href="{% url 'subject-list' %}" style="background-color: lightyellow; padding: 1%;font-weight: bold; border-radius: 10%;">
+                All Subjects </a>
+            <div style="clear: both"></div>
+        {% endif %}
     </div>
-<div style="clear: both"></div>
-    {% endif %}
+
+    <table>
     {% for subject in subject_list %}
-        <div class="question">
+        <tr>
 
-            <a href="{% url 'subject-detail' subject.pk %}" class="question-title">
-                {{ subject.title }}
-            </a>
-            <br>
+            <td>
+                <a href="{% url 'subject-detail' subject.pk %}">
+                    {{ subject.title }}
+                </a>
+            </td>
+
             {% if user.is_authenticated %}
-            {% if not subject in user.subjects.all %}
-              <form action="" method="post">
-         {% csrf_token %}
-          <button type="submit"
-        class="icon" value="{{subject.pk}}" name= 'follow-subject' style="color: lightgreen;">
-         Follow </button>
-       </form>
-            {% else %}
-                          <form action="" method="post">
-         {% csrf_token %}
-          <button type="submit"
-        class="icon" value="{{subject.pk}}" name= 'unfollow-subject' style="color: lightgreen;">
-         Unfollow </button>
-
+                <td style="font-size: smaller">
+                    {% if not subject in user.subjects.all %}
+                        <form action="" method="post" class="d-inline-block">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject">
+                                Follow
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject">
+                                Unfollow
+                            </button>
+                        </form>
+                    {% endif %}
+                </td>
             {% endif %}
-      </div>
-        <div style="clear: both"></div>
-    {% endif %}
 
+        </tr>
     {% endfor %}
+    </table>
+
 {% endblock %}
 

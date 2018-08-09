@@ -1,0 +1,49 @@
+{% comment %}
+    A question card with full details.
+
+    Expected context:
+
+    * question: The question being viewed
+    * user (Optional): The viewing user
+{% endcomment %}
+<div class="question">
+
+    <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
+        <h2>{{ question.title }}</h2>
+    </a>
+
+    <div class="question__body">
+        {{ question.body|linebreaks}}
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-end">
+
+        {% if user == question.author %}
+            <p class="flex-grow-1">
+                <a href="{% url 'question-update' pk=question.pk %}" class="d-inline-block">
+                    <button>Edit question</button>
+                </a>
+            </p>
+        {% endif %}
+
+        <div class="question__attribution">
+            <div>
+                Subject: {{ question.subject.title }}
+            </div>
+            <div>
+                Asked by:
+                <a href="{% url 'user-detail' pk=question.author.pk %}">
+                    {{ question.author.get_full_name|default:question.author.username }}
+                </a>
+            </div>
+            <div>
+                Asked on: {{ question.created }}
+            </div>
+            <div>
+                Last modified: {{ question.modified }}
+            </div>
+        </div>
+
+        </div>
+
+</div>

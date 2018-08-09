@@ -12,7 +12,6 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'taggit',
-    'tinymce',
     # 'social_django',
 
     # Django apps
@@ -44,6 +43,12 @@ TEMPLATES = [{
         ],
     },
 }]
+
+# Internationalization
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
 
 # django.contrib.auth
 AUTH_USER_MODEL = 'buza.User'

@@ -1,47 +1,37 @@
-
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+{% endblock %}
 
 {% block title %}{{ subject.title }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="question">
-        <h3>{{ subject.title }}</h3>
-        <div>
-            {{ subject.description|linebreaks }}
-             <p style="font-size: smaller">
-            Tags???
-             </p>
-        </div>
+    <h3>{{ subject.title }}</h3>
 
+    <div>
+        {{ subject.description|linebreaks }}
         <p style="font-size: smaller">
-            Questions: {{ subject.question_set.count}}
-            <br>
-            Users: To do
-            <br>
+            Tags???
         </p>
-
-        {# TODO: Voting. #}
     </div>
+
+    <p style="font-size: smaller">
+        Questions: {{ subject.question_set.count}}
+        <br>
+        Users: To do
+        <br>
+    </p>
 
     {% with questions=subject.question_set.all %}  {# TODO: Ordering #}
         {% if questions %}
             <h2>{{subject.title}} Questions</h2>
 
             {% for question in questions %}
-             <div class="question">
-            <div class=user-format>
-                <button type="submit" class="material-icons icon" name='view_user'>account_circle </button>
-                {{ question.author.get_full_name|default:question.author.username }}
-                <a class="date"> {{ question.created }}</a> {# TODO #}
-            </div>
-
-            <a href="{% url 'question-detail' question.pk %}" class="question-title">
-                {{ question.title }}
-            </a>
-        <div style="clear: both"></div>
-
+                {% include 'includes/question_card_brief.html' with question=question only %}
             {% endfor %}
-
         {% endif %}
     {% endwith %}
 

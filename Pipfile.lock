@@ -63,13 +63,6 @@
             ],
             "version": "==0.22.2"
         },
-        "django-tinymce": {
-            "hashes": [
-                "sha256:a7594f342786834e4f6585334652c6a37f1e11ccbc3ea83ae76b9ff9b3cf590c",
-                "sha256:ed1425aa370e20e8b84809feebc2cd42573790cfb74ad19a942affe8f13b9296"
-            ],
-            "version": "==2.7.0"
-        },
         "djangorestframework": {
             "hashes": [
                 "sha256:b6714c3e4b0f8d524f193c91ecf5f5450092c2145439ac2769711f7eba89a9d9",

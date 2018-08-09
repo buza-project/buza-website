@@ -12,12 +12,17 @@
             All Subjects
         </a>
     </div>
-    {% for subject in user.subjects.all %}
-        <div class="question">
 
-            <a href="{% url 'subject-detail' subject.pk %}" class="question-title">
-                {{ subject.title }}
-            </a>
-        <div style="clear: both"></div>
+    <table>
+    {% for subject in user.subjects.all %}
+        <tr>
+            <td>
+                <a href="{% url 'subject-detail' subject.pk %}">
+                    {{ subject.title }}
+                </a>
+            </td>
+        </tr>
     {% endfor %}
+    </table>
+
 {% endblock %}

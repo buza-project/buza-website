@@ -15,34 +15,39 @@
         {% endif %}
     </div>
 
+    <table>
     {% for subject in subject_list %}
-        <div class="question">
-            <a href="{% url 'subject-detail' subject.pk %}" class="question-title">
-                {{ subject.title }}
-            </a>
-            <br>
+        <tr>
+
+            <td>
+                <a href="{% url 'subject-detail' subject.pk %}">
+                    {{ subject.title }}
+                </a>
+            </td>
+
             {% if user.is_authenticated %}
-                {% if not subject in user.subjects.all %}
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit"
-                                class="icon" value="{{subject.pk}}" name= 'follow-subject' style="color: lightgreen;">
-                            Follow
-                        </button>
-                    </form>
-                {% else %}
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit"
-                                class="icon" value="{{subject.pk}}" name= 'unfollow-subject' style="color: lightgreen;">
-                            Unfollow
-                        </button>
-                    </form>
-                {% endif %}
+                <td style="font-size: smaller">
+                    {% if not subject in user.subjects.all %}
+                        <form action="" method="post" class="d-inline-block">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject">
+                                Follow
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject">
+                                Unfollow
+                            </button>
+                        </form>
+                    {% endif %}
+                </td>
             {% endif %}
-        </div>
-        <div style="clear: both"></div>
+
+        </tr>
     {% endfor %}
+    </table>
 
 {% endblock %}
 

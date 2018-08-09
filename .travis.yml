@@ -12,10 +12,6 @@ matrix:
   allow_failures:
     - python: '3.7'  # Travis doesn't support Python 3.7 yet.
 
-    # We're still working on Django 2.1 compatibility:
-    - env: TOXENV=py36-dj2.1
-    - env: TOXENV=py37-dj2.1
-
 install:
   - pip install tox
 

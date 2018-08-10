@@ -6,3 +6,7 @@ branch = True
 source =
     src
     tests
+
+omit =
+    # TODO: Not covering this right now.
+    src/buza/settings_env_dev.py

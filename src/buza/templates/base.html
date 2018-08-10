@@ -1,70 +1,69 @@
-{% load staticfiles static %}
-
-<!DOCTYPE html>
-<html>
+{% load static %}
+<!doctype html>
+<html lang="en">
 <head>
-	<title>{%block title %}Buza{%endblock%}</title>
-	<link rel="stylesheet" href="{% static "css/base_style.css" %}" >
-    <link href="{% static "css/boards.css" %}" rel="stylesheet">
-    <link rel="icon" href="{% static 'images/buza-logo.png' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <script src="{% static 'tiny_mce/tiny_mce.js' %}"></script>
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <!-- Bootstrap meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap-grid.min.css' %}">
+
+    <link rel="icon" href="{% static 'buza/images/buza-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'buza/css/site.css' %}">
+
+    {% block head_extra %}{% endblock %}
+
+    <title>{% block title %}Buza{% endblock %}</title>
 </head>
 
-<body>
-	<div id="header">
-		<div><span class="logo">Buza <br></span></div>
-         {% if user.is_authenticated %}
-        <div>
-      <div class="dropdown" style="float:left;">
-             <button class="dropbtn"><i class="material-icons" style="font-size: 40px;">account_circle</i><br>{{user.username}}
-      <i class="fa fa-caret-down"></i> </button>
-            <div class="dropdown-content">
-                <a href="{% url 'user-detail' pk=user.pk %}">View Account</a>
-                 <a href="{% url 'edit' %}"> Edit Account</a>
-                   <a href="{% url 'password_change' %}"> Change Password</a>
-                    <a href="{% url 'logout' %}"> Logout</a>
-                     </div>
-                 </div>
-     <div style="float:right;">
-        <a href="{% url "question-create" %}">
-            <i class="material-icons"style="font-size: 40px;">add_circle</i></a>
-     </div>
-     </div>
-		<ul class="menu">
-         <li {% if section == 'resources' %}class="selected"{% endif %}><a href="{% url 'question-list' %}"> <i class="material-icons" style="font-size: 40px;">home</i></a></li>
-        <li {% if section == 'all_boards' %}class="selected"{% endif %}><a href="{% url 'subject-list' %}"> <i class="material-icons" style="font-size: 40px;">subject</i></a></li>
-         <li {% if section == 'users' %}class="selected"{% endif %}><a href="{% url 'users' %}"> <i class="material-icons" style="font-size: 40px;">search</i></a></li>
-         <li {% if section == 'users' %}class="selected"{% endif %}><a href="{% url 'users' %}"> <i class="material-icons" style="font-size: 40px;">notifications</i></a></li>
-     </ul>
+<nav class="buza-nav">
+    <div class="container">
 
-     	{% else %}
-     		 <a href="{% url 'login' %}" style="background-color: silver; padding: 10px;font-weight: bold; border-radius: 10%;">Log-In</a>
-     		  <a href="{% url 'register' %}" style="background-color: lightblue; padding: 0px;font-weight: bold; border-radius: 10%;">Sign-Up</a>
-     	{% endif %}
-	</div>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'home' %}" class="buza-nav__link">
+                    <h1>Buza</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'subject-list' %}" class="buza-nav__link">Subjects</a>
+            </div>
+            <div class="col">
+                <a href="{% url 'question-list' %}" class="buza-nav__link">Questions</a>
+            </div>
+            <div class="col">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user-detail' pk=user.pk %}" class="buza-nav__link">Account</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="buza-nav__link">Sign in</a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</nav>
 
 {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
+<ul class="messages">
+    {% for message in messages %}
         <li class="{{ message.tags }}">
-            {{message|safe}}
-            <a href="#" class="close">x</a>
+            {{ message }}
         </li>
-        {%endfor%}
-    </ul>
-    {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}
 
-	<div id="content">
-            {% block content %}
-            {% endblock %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% block content %}{% endblock %}
+        </div>
     </div>
-    <div id=footer>
-        {% block footer %}
-        {% endblock %}
-    </div>
+</div>
 
 </body>
 

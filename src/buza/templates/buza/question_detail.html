@@ -1,76 +1,65 @@
-
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+{% endblock %}
 
 {% block title %}{{ question.title }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="question">
-        <h3>{{ question.title }}</h3>
-        {% if user == question.author %}
-                    <a href="{% url 'question-edit' pk=question.pk%}" style="color:yellow;font-weight:bold;"> Edit </a>
-                    {% endif %}
-        <div>
-            {{ question.body|linebreaks }}
-             <p style="font-size: smaller">
-            {{question.subject.title}}
-             </p>
-            <p>
-            {% with tags=question.tags.all %}
-                {% if tags %}
-                    {% for tag in tags %}
-                        <a href="{% url 'tag-detail' pk=tag.pk %}" style="color:blue"> #{{tag.name}}</a>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            </p>
-        </div>
-
-        <p style="font-size: smaller">
-            Asked by:
-            <a href="{% url 'user-detail' pk=question.author.pk %}">
-                {{ question.author.get_full_name|default:question.author.username }}
-            </a>
-            <br>
-            Asked on: {{ question.created }}
-            <br>
-            Last modified: {{ question.modified }}
-        </p>
-
-        {# TODO: Voting. #}
-    </div>
+    {% include 'includes/question_card_full.html' with question=question user=user only %}
 
     {% with answers=question.answer_set.all %}  {# TODO: Ordering #}
         {% if answers %}
             <h2>Answers</h2>
 
             {% for answer in question.answer_set.all %}
-                <div style="display: flex; justify-content: space-between; padding: 1em 2em;"
-                     class="question">  {# XXX: Just use question, for now. #}
+                {# XXX: Just base on question styling, for now. #}
+                <div class="question">
 
-                    <div>{{ answer.body|linebreaks }}</div>
-
-                    <div style="font-size: smaller">
-                        Answered by:
-                        <a href="{% url 'user-detail' pk=answer.author.pk %}">
-                            {{ answer.author.get_full_name|default:answer.author.username }}
-                        </a>
-                        <br>
-                        Answered on: {{ question.created }}
-                        <br>
-                        Last modified: {{ question.modified }}
+                    <div class="question__body">
+                        {{ answer.body|linebreaks }}
                     </div>
-                    {% if user == answer.author %}
-                    <a href="{% url 'answer-edit' question_pk=question.pk pk=answer.pk %}" style="color:yellow;font-weight:bold;"> Edit</a>
-                    {% endif %}
+
+                    <div class="d-flex flex-wrap justify-content-end">
+
+                        {% if user == answer.author %}
+                            <p class="flex-grow-1">
+                                <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block">
+                                    <button>Edit answer</button>
+                                </a>
+                            </p>
+                        {% endif %}
+
+                        <div class="question__attribution">
+                            <div>
+                                Answered by:
+                                <a href="{% url 'user-detail' pk=answer.author.pk %}">
+                                    {{ answer.author.get_full_name|default:answer.author.username }}
+                                </a>
+                            </div>
+                            <div>
+                                Answered on: {{ answer.created }}
+                            </div>
+                            <div>
+                                Last modified: {{ answer.modified }}
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             {% endfor %}
         {% else %}
-<h2>No answers yet
-</h2>
+            <h2>No answers yet</h2>
         {% endif %}
     {% endwith %}
-        <br>
 
-         <a href="{% url 'answer-create' question_pk=question.pk %}" style="color: green;"> Add your answer here</a>
+    <p>
+        <a href="{% url 'answer-create' question_pk=question.pk %}" class="d-inline-block">
+            <button>Add your answer</button>
+        </a>
+    </p>
 {% endblock %}
-

@@ -13,8 +13,6 @@ matrix:
 
     # Codecov reporting:
     - { python: '3.6', env: TOXENV=py36-dj2.1-codecov }
-  allow_failures:
-    - python: '3.7'  # Travis doesn't support Python 3.7 yet.
 
 install:
   - pip install tox

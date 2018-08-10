@@ -641,21 +641,33 @@ class TestUserSubjectsView(TestCase):
 
 
 class TestTagDetails(TestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.author: models.User = models.User.objects.create()
+        self.answer_author: models.User = \
+            models.User.objects.create(username='answer_author')
+        self.subject: models.Subject = models.Subject.objects.create(title="maths")
+        self.question: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='title of a question',
+            subject=self.subject,
+        )
+        self.tag: models.Tag = models.Tag.objects.create(
+            name="trig",
+            description="something to do with maths",
+        )
+        self.question.tags.add(self.tag)
+        self.path = reverse('tag-detail', kwargs=dict(pk=self.tag.pk))
 
     def test_not_found(self) -> None:
         response = self.client.get(reverse('tag-detail', kwargs=dict(pk=404)))
         assert HTTPStatus.NOT_FOUND == response.status_code
 
     def test_get(self) -> None:
-
-        tag: models.Tag = models.Tag.objects.create(
-            name="trig",
-            description="something to do with maths",
-        )
-        path = reverse('tag-detail', kwargs=dict(pk=tag.pk))
-        response = self.client.get(path)
+        response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/tag_detail.html')
 
-        self.assertContains(response, tag.name)
-        self.assertContains(response, tag.description, count=1)
+        self.assertContains(response, self.tag.name)
+        self.assertContains(response, self.tag.description, count=1)
+        self.assertContains(response, self.question.title, count=1)

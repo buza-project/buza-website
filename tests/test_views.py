@@ -304,6 +304,7 @@ class TestQuestionUpdate(TestCase):
             title='question',
             subject=self.subject,
         )
+        self.tag: models.Tag = models.Tag.objects.create(name="tag")
 
     def test_get__anonymous(self) -> None:
         response = self.client.get(
@@ -346,19 +347,20 @@ class TestQuestionUpdate(TestCase):
         ))
         assert HTTPStatus.FORBIDDEN == response.status_code
 
-    def test_update_author(self)-> None:
+    def test_post__author_update(self)-> None:
         """
-        Question update allows author to login
+        Question update allows author to update the question
 
         """
         self.client.force_login(self.author)
-        response = self.client.post(reverse(
-            'question-update',
-            kwargs=dict(pk=self.question.pk)), data=dict(
+        path = reverse('question-update', kwargs=dict(pk=self.question.pk))
+        response = self.client.post(path, data=dict(
             title='This is a title updated',
             body='This is an updated body',
-            subject=self.question.pk,
+            subject=self.subject.pk,
+            tags=self.tag.pk,
         ))
+
         question: models.Question = models.Question.objects.get()
         assert {
             'author_id': self.author.pk,
@@ -367,9 +369,9 @@ class TestQuestionUpdate(TestCase):
             'id': question.pk,
             'modified': question.modified,
             'title': 'This is a title updated',
-            'subject_id': self.subject.pk,
+            'subject_id': question.subject.pk,
         } == models.Question.objects.filter(pk=question.pk).values().get()
-        self.assertRedirects(response, f'/questions/{question.pk}/')
+        self.assertRedirects(response, f'/questions/{self.question.pk}/')
 
 
 class TestAnswerCreate(TestCase):

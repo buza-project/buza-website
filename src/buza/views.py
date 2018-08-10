@@ -133,7 +133,6 @@ class QuestionList(generic.ListView):
 
 class QuestionCreate(LoginRequiredMixin, generic.CreateView):
     model = models.Question
-    # TODO: remove tags and add it at a text field in the template
     fields = [
         'title',
         'body',

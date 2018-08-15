@@ -3,6 +3,8 @@ from functools import partial
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 
 
 # Shortcuts:
@@ -28,9 +30,10 @@ class Subject(models.Model):
         return str(self.title)
 
 
-class Tag(models.Model):
+class Tag(TaggedItemBase):
     name = _CharField()
     description = models.TextField()
+    content_object = models.ForeignKey('Question', on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return str(self.name)
@@ -73,7 +76,7 @@ class Question(TimestampedModel, models.Model):
     title = _CharField()
     body = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    tags = models.ManyToManyField(Tag)
+    tags = TaggableManager(through=Tag)
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'

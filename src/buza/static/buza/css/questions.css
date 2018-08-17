@@ -23,3 +23,12 @@
 textarea[name=body] {
     max-width: 100%;
 }
+
+.questiontopic__box {
+    padding: 4px 4px;
+
+}
+
+.questiontopics__container{
+    display: flex;
+}

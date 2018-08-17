@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+{% load buza_tags %}
+
+{% block title %}{{ topic }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="question">
+        <h3>{{ questiontopic.tag.name}}</h3>
+        <div>
+            {{ questiontopic.description|linebreaks }}
+        </div>
+
+        <p style="font-size: smaller">
+            Questions: {{ questiontopic.tag.questions}}
+            <br>
+        </p>
+
+        {# TODO: follow. #}
+    </div>
+
+    {% topic_question_list questiontopic.tag.name as questions%}  {# TODO: Ordering #}
+        {% if questions %}
+            <h2>{{topic.title}} Questions</h2>
+
+            {% for question in questions %}
+             <div class="question">
+            <div class=user-format>
+                <button type="submit" class="material-icons icon" name='view_user'>account_circle </button>
+                {{ question.author.get_full_name|default:question.author.username }}
+                <a class="date"> {{ question.created }}</a> {# TODO #}
+            </div>
+
+            <a href="{% url 'question-detail' question.pk %}" class="question-title">
+                {{ question.title }}
+            </a>
+        <div style="clear: both"></div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+{% endblock %}

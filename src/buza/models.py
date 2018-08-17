@@ -3,8 +3,8 @@ from functools import partial
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from taggit import models as tags
 from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
 
 
 # Shortcuts:
@@ -30,13 +30,14 @@ class Subject(models.Model):
         return str(self.title)
 
 
-class Tag(TaggedItemBase):
-    name = _CharField()
-    description = models.TextField()
+class QuestionTopic(tags.TaggedItemBase):
     content_object = models.ForeignKey('Question', on_delete=models.PROTECT)
+    description = models.TextField()
+    slug = models.SlugField()
 
-    def __str__(self) -> str:
-        return str(self.name)
+    def save(self, *args, **kwargs):
+        self.slug = self.tag.slug
+        super(QuestionTopic, self).save(*args, **kwargs)
 
 
 class User(AbstractUser):
@@ -76,7 +77,10 @@ class Question(TimestampedModel, models.Model):
     title = _CharField()
     body = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    tags = TaggableManager(through=Tag)
+    topics = TaggableManager(
+        through=QuestionTopic,
+        help_text="List all the relevant topics for this question. \n" +
+                  "Example: Triangles, Equations, Photosynthesis.")
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'

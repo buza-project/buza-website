@@ -25,8 +25,7 @@ urlpatterns = [
     path('subjects/', views.SubjectList.as_view(), name='subject-list'),
 
     # tag related questions
-    path('tags/<int:pk>/', views.TagDetail.as_view(), name='tag-detail'),
-    path('tags/', views.TagList.as_view(), name='tag-list'),
+    path('topics/<str:slug>/', views.TopicDetail.as_view(), name='topic-detail'),
 
     # question related paths
     path('questions/', views.QuestionList.as_view(), name='question-list'),

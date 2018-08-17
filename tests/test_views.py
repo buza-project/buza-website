@@ -197,16 +197,12 @@ class TestQuestionDetail(TestCase):
             body='A question.',
             subject=subject,
         )
+        question.topics.add("trigonometry")
         answer: models.Answer = models.Answer.objects.create(
             body='An answer',
             question=question,
             author=user,
         )
-        tag: models.Tag = models.Tag.objects.create(
-            name="trig",
-            description="something to do with maths",
-        )
-        question.tags.add(tag)
         path = reverse('question-detail', kwargs=dict(pk=question.pk))
         response = self.client.get(path)
         assert HTTPStatus.OK == response.status_code
@@ -217,7 +213,8 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, question.body, count=1)
         self.assertContains(response, subject.title, count=1)
         self.assertContains(response, answer.body, count=1)
-        self.assertContains(response, tag.name, count=1)
+        # occurs twice: the link to the tag and the tag
+        self.assertContains(response, question.questiontopic_set.all()[0].tag, count=2)
 
 
 class TestQuestionList(TestCase):
@@ -262,7 +259,7 @@ class TestQuestionCreate(TestCase):
         assert {
             'subject': ['This field is required.'],
             'title': ['This field is required.'],
-            'tags': ['This field is required.'],
+            'topics': ['This field is required.'],
         } == form.errors
         assert not form.is_valid()
 
@@ -273,12 +270,11 @@ class TestQuestionCreate(TestCase):
         user: models.User = models.User.objects.create()
         self.client.force_login(user)
         subject: models.Subject = models.Subject.objects.create(title="maths")
-        tag: models.Tag = models.Tag.objects.create()
         response = self.client.post(reverse('question-create'), data=dict(
             title='This is a title',
             body='This is a body',
             subject=subject.pk,
-            tags=tag.pk,
+            topics="trig",
         ))
         question: models.Question = models.Question.objects.get()
         assert {
@@ -303,8 +299,8 @@ class TestQuestionUpdate(TestCase):
             author=self.author,
             title='question',
             subject=self.subject,
+            topics="topic",
         )
-        self.tag: models.Tag = models.Tag.objects.create(name="tag")
 
     def test_get__anonymous(self) -> None:
         response = self.client.get(
@@ -358,7 +354,7 @@ class TestQuestionUpdate(TestCase):
             title='This is a title updated',
             body='This is an updated body',
             subject=self.subject.pk,
-            tags=self.tag.pk,
+            topics="topic",
         ))
 
         question: models.Question = models.Question.objects.get()
@@ -640,7 +636,7 @@ class TestUserSubjectsView(TestCase):
         self.assertNotContains(response, self.second_subject.title)
 
 
-class TestTagDetails(TestCase):
+class TestQuestionTopicDetails(TestCase):
     def setUp(self) -> None:
         super().setUp()
         self.author: models.User = models.User.objects.create()
@@ -652,22 +648,25 @@ class TestTagDetails(TestCase):
             title='title of a question',
             subject=self.subject,
         )
-        self.tag: models.Tag = models.Tag.objects.create(
-            name="trig",
-            description="something to do with maths",
-        )
-        self.question.tags.add(self.tag)
-        self.path = reverse('tag-detail', kwargs=dict(pk=self.tag.pk))
+        self.question.topics.add("trig")
 
     def test_not_found(self) -> None:
-        response = self.client.get(reverse('tag-detail', kwargs=dict(pk=404)))
+        response = self.client.get(reverse
+                                   ('topic-detail',
+                                    kwargs=dict(slug='not-found')))
         assert HTTPStatus.NOT_FOUND == response.status_code
 
     def test_get(self) -> None:
+        '''
+        users can navigate to a topic and view all the questions for that topic
+        '''
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.questiontopic_set.all()[0].tag.slug))
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed(response, 'buza/tag_detail.html')
-
-        self.assertContains(response, self.tag.name)
-        self.assertContains(response, self.tag.description, count=1)
+        self.assertTemplateUsed(response, 'buza/questiontopic_detail.html')
+        self.assertContains(response, self.question.questiontopic_set.all()[0].tag.name)
+        self.assertContains(response, 'Questions:', count=1)
+        self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
         self.assertContains(response, self.question.title, count=1)

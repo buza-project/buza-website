@@ -670,3 +670,47 @@ class TestQuestionTopicDetails(TestCase):
         self.assertContains(response, 'Questions:', count=1)
         self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
         self.assertContains(response, self.question.title, count=1)
+
+    def test_get__repeated_topics_in_questions(self) -> None:
+        '''
+        If the same tag value is entered, multiple tags should not be created
+        '''
+        self.question.topics.add("trig, trig")
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.questiontopic_set.all()[0].tag.slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        # occurs twice in the response because of the url
+        assert 2 == self.question.questiontopic_set.all().count()
+        self.assertTemplateUsed(response, 'buza/questiontopic_detail.html')
+        self.assertContains(
+            response,
+            self.question.questiontopic_set.all()[0].tag.name,
+            count=1,
+        )
+        self.assertContains(response, 'Questions:', count=1)
+        self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
+        self.assertContains(response, self.question.title, count=1)
+
+    def test_get__repeated_topics_in_different_questions(self) -> None:
+        '''
+        Questions with the same topic should both be listed in
+        the topic view
+        '''
+        second_questions: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='title of a question',
+            subject=self.subject,
+        )
+        second_questions.topics.add("trig")
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.questiontopic_set.all()[0].tag.slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/questiontopic_detail.html')
+        self.assertContains(response, self.question.questiontopic_set.all()[0].tag.name)
+        self.assertContains(response, 'Questions:', count=1)
+        self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
+        self.assertContains(response, self.question.title, count=1)

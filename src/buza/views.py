@@ -79,12 +79,8 @@ def edit(request: HttpRequest) -> HttpResponse:
     )
 
 
-class TagDetail(generic.DetailView):
-    model = models.Tag
-
-
-class TagList(generic.ListView):
-    model = models.Tag
+class TopicDetail(generic.DetailView):
+    model = models.QuestionTopic
 
 
 class SubjectDetail(generic.DetailView):
@@ -137,7 +133,7 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         'title',
         'body',
         'subject',
-        'tags',
+        'topics',
     ]
 
     def form_valid(self, form: ModelForm) -> HttpResponse:
@@ -165,7 +161,7 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         'title',
         'body',
         'subject',
-        'tags',
+        'topics',
     ]
 
     def get_object(self, queryset=None):
@@ -177,6 +173,7 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         question: models.Question = super().get_object(queryset)
         if question.author != self.request.user:
             raise PermissionDenied('You can only edit your own questions.')
+        question.content_object_id = question.pk
         return question
 
     def get_success_url(self) -> str:

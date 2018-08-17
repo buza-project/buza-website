@@ -71,8 +71,6 @@ class SubjectAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description']
 
 
-@admin.register(models.Tag)
-class TagAdmin(admin.ModelAdmin):
-    ordering = ['-name']
-    list_display = ['name', 'description']
-    search_fields = ['name', 'description']
+@admin.register(models.QuestionTopic)
+class TopicsAdmin(admin.ModelAdmin):
+    search_fields = ['content_object', 'tag']

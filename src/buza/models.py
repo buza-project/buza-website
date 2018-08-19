@@ -30,14 +30,23 @@ class Subject(models.Model):
         return str(self.title)
 
 
-class QuestionTopic(tags.TaggedItemBase):
-    content_object = models.ForeignKey('Question', on_delete=models.PROTECT)
+class Topic(tags.TagBase):
     description = models.TextField()
-    slug = models.SlugField()
 
-    def save(self, *args, **kwargs):
-        self.slug = self.tag.slug
-        super(QuestionTopic, self).save(*args, **kwargs)
+    class Meta:
+        verbose_name = _("Topic")
+        verbose_name_plural = _("Topics")
+
+    def __str__(self) -> str:
+        return f'By {self.name}'
+
+
+class QuestionTopic(tags.GenericTaggedItemBase):
+    tag = models.ForeignKey(
+        Topic,
+        on_delete=models.PROTECT,
+        related_name="question_topics",
+    )
 
 
 class User(AbstractUser):

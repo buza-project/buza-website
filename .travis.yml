@@ -4,17 +4,15 @@ cache: pip
 matrix:
   include:
     - { python: '3.6', env: TOXENV=py36-dj2.0 }
-    - { python: '3.6', env: TOXENV=py36-dj2.1dev }
-    - { python: '3.7', env: TOXENV=py37-dj2.0 }
-    - { python: '3.7', env: TOXENV=py37-dj2.1dev }
-    # Codecov reporting:
-    - { python: '3.6', env: TOXENV=py36-dj2.0-codecov }
-  allow_failures:
-    - python: '3.7'  # Travis doesn't support Python 3.7 yet.
+    - { python: '3.6', env: TOXENV=py36-dj2.1 }
 
-    # We're still working on Django 2.1 compatibility:
-    - env: TOXENV=py36-dj2.1dev
-    - env: TOXENV=py37-dj2.1dev
+    # XXX (2018-08-10): Work around Travis shenanigans for Python 3.7:
+    # https://github.com/travis-ci/travis-ci/issues/9815
+    - { python: '3.7', env: TOXENV=py37-dj2.0, dist: xenial, sudo: true }
+    - { python: '3.7', env: TOXENV=py37-dj2.1, dist: xenial, sudo: true }
+
+    # Codecov reporting:
+    - { python: '3.6', env: TOXENV=py36-dj2.1-codecov }
 
 install:
   - pip install tox

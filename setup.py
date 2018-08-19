@@ -39,7 +39,6 @@ setup(
         # Django libraries
         'django-environ',
         'django-taggit',
-        'djangorestframework',
         'social-auth-app-django',
     ],
     entry_points={},

@@ -197,6 +197,7 @@ class TestQuestionDetail(TestCase):
             body='A question.',
             subject=subject,
         )
+        question.topics.add("trigonometry")
         answer: models.Answer = models.Answer.objects.create(
             body='An answer',
             question=question,
@@ -212,6 +213,8 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, question.body, count=1)
         self.assertContains(response, subject.title, count=1)
         self.assertContains(response, answer.body, count=1)
+        # occurs twice: the link to the tag and the tag
+        self.assertContains(response, question.topics.all()[0].name, count=2)
 
 
 class TestQuestionList(TestCase):
@@ -256,6 +259,7 @@ class TestQuestionCreate(TestCase):
         assert {
             'subject': ['This field is required.'],
             'title': ['This field is required.'],
+            'topics': ['This field is required.'],
         } == form.errors
         assert not form.is_valid()
 
@@ -270,6 +274,7 @@ class TestQuestionCreate(TestCase):
             title='This is a title',
             body='This is a body',
             subject=subject.pk,
+            topics="trig",
         ))
         question: models.Question = models.Question.objects.get()
         assert {
@@ -294,6 +299,7 @@ class TestQuestionUpdate(TestCase):
             author=self.author,
             title='question',
             subject=self.subject,
+            topics="topic",
         )
 
     def test_get__anonymous(self) -> None:
@@ -337,19 +343,20 @@ class TestQuestionUpdate(TestCase):
         ))
         assert HTTPStatus.FORBIDDEN == response.status_code
 
-    def test_update_author(self)-> None:
+    def test_post__author_update(self)-> None:
         """
-        Question update allows author to login
+        Question update allows author to update the question
 
         """
         self.client.force_login(self.author)
-        response = self.client.post(reverse(
-            'question-update',
-            kwargs=dict(pk=self.question.pk)), data=dict(
+        path = reverse('question-update', kwargs=dict(pk=self.question.pk))
+        response = self.client.post(path, data=dict(
             title='This is a title updated',
             body='This is an updated body',
-            subject=self.question.pk,
+            subject=self.subject.pk,
+            topics="topic",
         ))
+
         question: models.Question = models.Question.objects.get()
         assert {
             'author_id': self.author.pk,
@@ -358,9 +365,9 @@ class TestQuestionUpdate(TestCase):
             'id': question.pk,
             'modified': question.modified,
             'title': 'This is a title updated',
-            'subject_id': self.subject.pk,
+            'subject_id': question.subject.pk,
         } == models.Question.objects.filter(pk=question.pk).values().get()
-        self.assertRedirects(response, f'/questions/{question.pk}/')
+        self.assertRedirects(response, f'/questions/{self.question.pk}/')
 
 
 class TestAnswerCreate(TestCase):
@@ -627,3 +634,79 @@ class TestUserSubjectsView(TestCase):
         self.assertContains(response, 'Followed Subjects')
         self.assertContains(response, self.first_subject.title, count=1)
         self.assertNotContains(response, self.second_subject.title)
+
+
+class TestQuestionTopicDetails(TestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.author: models.User = models.User.objects.create()
+        self.answer_author: models.User = \
+            models.User.objects.create(username='answer_author')
+        self.subject: models.Subject = models.Subject.objects.create(title="maths")
+        self.question: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='title of a question',
+            subject=self.subject,
+        )
+        self.question.topics.add("trig")
+
+    def test_not_found(self) -> None:
+        response = self.client.get(reverse
+                                   ('topic-detail',
+                                    kwargs=dict(slug='not-found')))
+        assert HTTPStatus.NOT_FOUND == response.status_code
+
+    def test_get(self) -> None:
+        '''
+        users can navigate to a topic and view all the questions for that topic
+        '''
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.topics.all()[0].slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, self.question.topics.all()[0].name)
+        self.assertContains(
+            response,
+            self.question.topics.all()[0].name + ' questions',
+            count=1,
+        )
+        self.assertContains(response, self.question.topics.all()[0])
+        self.assertContains(response, self.question.title, count=1)
+
+    def test_get__repeated_topics_in_different_questions(self) -> None:
+        '''
+        Questions with the same topic should both be listed in
+        the topic view
+        '''
+        second_question: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='title of the second question',
+            subject=self.subject,
+        )
+        second_question.topics.add("trig")
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.topics.all()[0].slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, self.question.title, count=1)
+        self.assertContains(response, second_question.title, count=1)
+
+    def test_get__topic_description(self) -> None:
+        '''
+        Topic Description is displayed
+        '''
+        topic: models.QuestionTopic = self.question.topics.get(pk=1)
+        topic.description = "This is the description of a question"
+        topic.save()
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=topic.slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, topic.name)
+        self.assertContains(response, topic.description, count=1)

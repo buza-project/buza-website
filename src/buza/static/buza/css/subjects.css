@@ -1,0 +1,75 @@
+/* Styles for Subjects. */
+
+/* Block: Subjects */
+.subject {
+    background-color: white;
+    padding: 1em 2em;
+    /* Spacing between questions: */
+    margin-top: 1em;
+    margin-bottom: 1em;
+    /* Shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.25em;
+    text-align: center;
+}
+
+subject-nav_bar{
+    background-color: silver;
+    padding: 1%;
+    font-weight: bold;
+    border-radius: 10%;
+}
+
+.subject__title {
+    font-weight: bold;
+}
+.subject__attribution {
+    opacity: 0.5;
+    font-size: smaller;
+}
+
+.subject__follow-button{
+    background-color: white;
+    color: rgb(64,64,64);
+    border: 2px solid #5689E8;; /* Nav bar color */
+    border-radius: 30%;
+}
+
+.subject__following-button{
+    background: linear-gradient(to bottom right, #17EAD9, #6078EA), #5689E8;
+    color: white;
+    border: 2px solid #5689E8;; /* Nav bar color */
+    border-radius: 30%;
+    font-weight: bold;
+}
+
+.subject__subjects-nav{
+    padding: 1% 4%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: 2px solid #7FFF00; /* Green */
+}
+
+.subject__subjects-nav-view{
+    background: #7FFF00; /* Green */
+}
+
+.subject__subjects-nav-view, .subject__subjects-nav-view:hover{
+    color: white;
+}
+
+.subject__subjects-nav-hidden{
+    background-color:white;
+}
+
+.subject__subjects-nav-hidden, .subject__subjects-nav-hidden:hover{
+   color:   #7FFF00; /* Green */
+}
+
+.subject__btn_container{
+text-align:center;
+font-size: 16px;
+}
+

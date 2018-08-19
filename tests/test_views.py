@@ -542,8 +542,8 @@ class TestSubjectList(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
-        self.assertContains(response, "Follow", count=models.Subject.objects.count())
-        self.assertContains(response, "Unfollow", 0)
+        self.assertContains(response, "follow")
+        self.assertContains(response, "following", 0)
         self.assertContains(response, self.first_subject.title, count=1)
         self.assertContains(response, self.second_subject.title, count=1)
 
@@ -555,12 +555,12 @@ class TestSubjectList(TestCase):
         self.client.force_login(self.user)
         self.user.subjects.add(self.first_subject)
         response = self.client.get(self.path)
+        self.assertTemplateUsed(response, 'buza/subject_list.html')
         assert HTTPStatus.OK == response.status_code
-        self.assertContains(response, "Unfollow", count=self.user.subjects.count())
+        self.assertContains(response, "following")
         self.assertContains(
             response,
-            "Follow",
-            count=models.Subject.objects.count() - self.user.subjects.count())
+            "follow")
 
 
 class TestSubjectDetails(TestCase):

@@ -1,53 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/subjects.css' %}">
+{% endblock %}
 
 {% block title %}Subjects - {{ block.super }}{% endblock %}
 
 {% block content %}
     <h1>Subjects</h1>
 
-    <div style="padding-bottom: 2%; position: center;box-sizing: border-box;">
+    <div class="subject__btn_container">
         {% if user.is_authenticated %}
-            <a href="{% url 'my-subject-list' pk=user.pk%}" style="background-color: silver; padding: 1%;font-weight: bold; border-radius: 10%;">
+            <a href="{% url 'my-subject-list' pk=user.pk%}" class="subject__subjects-nav subject__subjects-nav-hidden">
                 My Subjects </a>
-            <a href="{% url 'subject-list' %}" style="background-color: lightyellow; padding: 1%;font-weight: bold; border-radius: 10%;">
+            <a href="{% url 'subject-list' %}" class="subject__subjects-nav subject__subjects-nav-view">
                 All Subjects </a>
-            <div style="clear: both"></div>
         {% endif %}
     </div>
 
-    <table>
-    {% for subject in subject_list %}
-        <tr>
 
-            <td>
-                <a href="{% url 'subject-detail' subject.pk %}">
+    {% for subject in subject_list %}
+        <div class="subject">
+
+                <a href="{% url 'subject-detail' subject.pk %}" class="d-block subject__title">
                     {{ subject.title }}
                 </a>
-            </td>
+                    <div class="subject__body">
+        {{ subject.description|linebreaks|truncatewords:20 }}
+        </div>
 
             {% if user.is_authenticated %}
-                <td style="font-size: smaller">
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="follow-subject">
-                                Follow
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="subject__follow-button">
+                                follow
                             </button>
                         </form>
                     {% else %}
                         <form action="" method="post">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject">
-                                Unfollow
+                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="subject__following-button">
+                                following
                             </button>
                         </form>
                     {% endif %}
-                </td>
             {% endif %}
-
-        </tr>
+            <div class="subject__attribution">
+        {{ subject.question_set.count}} questions,  {{subject.user_set.count}} users
+        <a class="date"> {{ question.created }}</a>
+    </div>
+        </div>
     {% endfor %}
-    </table>
 
 {% endblock %}
 

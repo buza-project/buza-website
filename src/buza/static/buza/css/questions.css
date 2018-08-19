@@ -25,10 +25,15 @@ textarea[name=body] {
 }
 
 .questiontopic__box {
-    padding: 4px 4px;
+    padding: 1% 1%;
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+    border-radius: 12px;
+    margin:1%;
 
 }
 
 .questiontopics__container{
-    display: flex;
+
 }

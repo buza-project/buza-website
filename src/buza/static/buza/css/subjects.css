@@ -38,14 +38,14 @@ subject-nav_bar{
     background-color: white;
     color: rgb(64,64,64);
     border: 2px solid #5689E8;; /* Nav bar color */
-    border-radius: 30%;
+    border-radius: 12px;
 }
 
 .subject__following-button{
-    background: linear-gradient(to bottom right, #17EAD9, #6078EA), #5689E8;
+    background:  #5689E8;
     color: white;
-    border: 2px solid #5689E8;; /* Nav bar color */
-    border-radius: 30%;
+    border: 2px solid #5689E8; /* Nav bar color */
+    border-radius: 12px;
     font-weight: bold;
 }
 
@@ -55,11 +55,11 @@ subject-nav_bar{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    border: 2px solid #7FFF00; /* Green */
+    border: 2px solid #32CD32; /* Green */
 }
 
 .subject__subjects-nav-view{
-    background: #7FFF00; /* Green */
+    background: #32CD32; /* Green */
 }
 
 .subject__subjects-nav-view, .subject__subjects-nav-view:hover{
@@ -71,7 +71,7 @@ subject-nav_bar{
 }
 
 .subject__subjects-nav-hidden, .subject__subjects-nav-hidden:hover{
-   color:   #7FFF00; /* Green */
+   color:   #32CD32; /* Green */
 }
 
 .subject__btn_container{

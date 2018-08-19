@@ -43,12 +43,12 @@
             <div>
                 Last modified: {{ question.modified }}
             </div>
-            <div class="questiontopics__container">
+            <div class="questiontopics_set__container">
             {% with topics=question.topics.all %}
                 {% if topics %}
                     {% for topic in topics %}
                         <div>
-                            <a href="{% url 'topic-detail' slug=topic.slug %}" class="questiontopic__box"> {{topic}} </a>
+                            <a href="{% url 'topic-detail' slug=topic.slug %}" class="questiontopic__box"> {{topic.name}} </a>
                         </div>
                     {% endfor %}
                 {% endif %}

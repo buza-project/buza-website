@@ -7,8 +7,9 @@
     * user (Optional): The viewing user
 {% endcomment %}
 <div class="question">
-
+    <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
         <h2>{{ question.title }}</h2>
+    </a>
 
     <div class="question__body">
         {{ question.body|linebreaks}}

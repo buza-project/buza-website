@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+{% load buza_tags static%}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+{% endblock %}
+
+{% block title %}{{ topic }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div>
+        <h3>{{ topic.name}} questions</h3>
+        <div>
+
+            {{ topic.description|linebreaks }}
+        </div>
+        {% topic_question_list topic.name as questions%}  {# TODO: Ordering #}
+
+        {# TODO: follow. #}
+         </div>
+        {% if questions %}
+            <h2>{{topic.title}} Questions</h2>
+
+            {% for question in questions %}
+                {% include 'includes/question_card_brief.html' with question=question only %}
+            {% endfor %}
+        {% endif %}
+
+{% endblock %}

@@ -3,18 +3,12 @@ from functools import partial
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from taggit import models as tags
+from taggit.managers import TaggableManager
 
 
 # Shortcuts:
 _CharField = partial(models.CharField, max_length=1024)
-
-
-class Subject(models.Model):
-    title = _CharField()
-    description = models.TextField()
-
-    def __str__(self) -> str:
-        return str(self.title)
 
 
 class TimestampedModel(models.Model):
@@ -26,6 +20,33 @@ class TimestampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Subject(models.Model):
+    title = _CharField()
+    description = models.TextField()
+
+    def __str__(self) -> str:
+        return str(self.title)
+
+
+class Topic(tags.TagBase):
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = _("Topic")
+        verbose_name_plural = _("Topics")
+
+    def __str__(self) -> str:
+        return f'By {self.name}'
+
+
+class QuestionTopic(tags.GenericTaggedItemBase):
+    tag = models.ForeignKey(
+        Topic,
+        on_delete=models.PROTECT,
+        related_name="question_topics",
+    )
 
 
 class User(AbstractUser):
@@ -65,6 +86,10 @@ class Question(TimestampedModel, models.Model):
     title = _CharField()
     body = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    topics = TaggableManager(
+        through=QuestionTopic,
+        help_text="List all the relevant topics for this question. \n" +
+                  "Example: Triangles, Equations, Photosynthesis.")
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'

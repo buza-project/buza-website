@@ -19,6 +19,14 @@
     font-size: smaller;
 }
 
+.question__ask_question {
+    background-color:#32CD32;
+    color: white;
+    border-radius: 12px;
+    padding: 1px 3px;
+    text-align: center;
+}
+
 /* XXX (Pi): Temporarily hack around these textareas being too wide on small views. */
 textarea[name=body] {
     max-width: 100%;

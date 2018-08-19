@@ -33,6 +33,17 @@
     text-align: center;
 }
 
+.question__edit_question {
+    background-color:#32CD32;
+    border-radius: 12px;
+    padding: 1px 4%;
+    text-align: center;
+    color: white;
+}
+
+.question__edit_question:hover{
+    color: white;
+}
 /* XXX (Pi): Temporarily hack around these textareas being too wide on small views. */
 textarea[name=body] {
     max-width: 100%;

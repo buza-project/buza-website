@@ -19,8 +19,8 @@
 
         {% if user == question.author %}
             <p class="flex-grow-1">
-                <a href="{% url 'question-update' pk=question.pk %}" class="d-inline-block">
-                    <button>Edit question</button>
+                <a href="{% url 'question-update' pk=question.pk %}" class="d-inline-block question__edit_question">
+                    Edit question
                 </a>
             </p>
         {% endif %}

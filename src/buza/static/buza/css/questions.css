@@ -19,6 +19,12 @@
     font-size: smaller;
 }
 
+.question__answers_heading {
+    font-weight: bold;
+    text-align: center;
+    color: DarkOrchid;
+}
+
 .question__ask_question {
     background-color:#32CD32;
     color: white;

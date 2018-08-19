@@ -13,7 +13,7 @@
 
     {% with answers=question.answer_set.all %}  {# TODO: Ordering #}
         {% if answers %}
-            <h2>Answers</h2>
+            <h2 class="question__answers_heading">Answers</h2>
 
             {% for answer in question.answer_set.all %}
                 {# XXX: Just base on question styling, for now. #}

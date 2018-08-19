@@ -80,7 +80,7 @@ def edit(request: HttpRequest) -> HttpResponse:
 
 
 class TopicDetail(generic.DetailView):
-    model = models.QuestionTopic
+    model = models.Topic
 
 
 class SubjectDetail(generic.DetailView):

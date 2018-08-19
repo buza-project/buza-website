@@ -20,6 +20,12 @@ subject-nav_bar{
     border-radius: 10%;
 }
 
+.question__answers_heading {
+    font-weight: bold;
+    text-align: center;
+    color:  #5689E8;
+}
+
 .subject__title {
     font-weight: bold;
 }

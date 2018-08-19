@@ -173,7 +173,6 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         question: models.Question = super().get_object(queryset)
         if question.author != self.request.user:
             raise PermissionDenied('You can only edit your own questions.')
-        question.content_object_id = question.pk
         return question
 
     def get_success_url(self) -> str:

@@ -45,6 +45,22 @@
     color: white;
 }
 
+.question__add_answer {
+    background-color:MediumOrchid ;
+    border-radius: 12px;
+    padding: 1px 4%;
+    text-align: center;
+    color: white;
+}
+
+.question__edit_answer {
+    background-color:Orchid ;
+    border-radius: 12px;
+    padding: 1px 2%;
+    text-align: center;
+    color: white;
+}
+
 /* XXX (Pi): Temporarily hack around these textareas being too wide on small views. */
 textarea[name=body] {
     max-width: 100%;

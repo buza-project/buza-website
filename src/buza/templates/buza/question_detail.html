@@ -27,8 +27,8 @@
 
                         {% if user == answer.author %}
                             <p class="flex-grow-1">
-                                <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block">
-                                    <button>Edit answer</button>
+                                <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block question__edit_answer">
+                                    Edit answer
                                 </a>
                             </p>
                         {% endif %}
@@ -58,8 +58,8 @@
     {% endwith %}
 
     <p>
-        <a href="{% url 'answer-create' question_pk=question.pk %}" class="d-inline-block">
-            <button>Add your answer</button>
+        <a href="{% url 'answer-create' question_pk=question.pk %}" class="d-inline-block question__add_answer">
+           Add your answer
         </a>
     </p>
 {% endblock %}

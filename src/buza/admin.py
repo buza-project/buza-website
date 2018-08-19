@@ -71,6 +71,15 @@ class SubjectAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description']
 
 
-@admin.register(models.QuestionTopic)
+class QuestionTopicsInline(admin.TabularInline):
+    extra = 0
+    model = models.QuestionTopic
+    fields = ['content_type']
+
+
+@admin.register(models.Topic)
 class TopicsAdmin(admin.ModelAdmin):
-    search_fields = ['content_object', 'tag']
+    search_fields = ['tag']
+    fields = ['name', 'description']
+
+    inlines = [QuestionTopicsInline]

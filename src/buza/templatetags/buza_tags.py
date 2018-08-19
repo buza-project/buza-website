@@ -8,5 +8,4 @@ register = template.Library()
 
 @register.simple_tag
 def topic_question_list(topic_name: str):
-    return models.Question.objects.filter(
-        questiontopic__tag__name__in=[topic_name])
+    return models.Question.objects.filter(topics__name__in=[topic_name])

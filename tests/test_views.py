@@ -214,7 +214,7 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, subject.title, count=1)
         self.assertContains(response, answer.body, count=1)
         # occurs twice: the link to the tag and the tag
-        self.assertContains(response, question.questiontopic_set.all()[0].tag, count=2)
+        self.assertContains(response, question.topics.all()[0].name, count=2)
 
 
 class TestQuestionList(TestCase):
@@ -662,35 +662,17 @@ class TestQuestionTopicDetails(TestCase):
         '''
         self.path = reverse('topic-detail',
                             kwargs=dict(
-                                slug=self.question.questiontopic_set.all()[0].tag.slug))
+                                slug=self.question.topics.all()[0].slug))
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed(response, 'buza/questiontopic_detail.html')
-        self.assertContains(response, self.question.questiontopic_set.all()[0].tag.name)
-        self.assertContains(response, 'Questions:', count=1)
-        self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
-        self.assertContains(response, self.question.title, count=1)
-
-    def test_get__repeated_topics_in_questions(self) -> None:
-        '''
-        If the same tag value is entered, multiple tags should not be created
-        '''
-        self.question.topics.add("trig, trig")
-        self.path = reverse('topic-detail',
-                            kwargs=dict(
-                                slug=self.question.questiontopic_set.all()[0].tag.slug))
-        response = self.client.get(self.path)
-        assert HTTPStatus.OK == response.status_code
-        # occurs twice in the response because of the url
-        assert 2 == self.question.questiontopic_set.all().count()
-        self.assertTemplateUsed(response, 'buza/questiontopic_detail.html')
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, self.question.topics.all()[0].name)
         self.assertContains(
             response,
-            self.question.questiontopic_set.all()[0].tag.name,
+            self.question.topics.all()[0].name + ' questions',
             count=1,
         )
-        self.assertContains(response, 'Questions:', count=1)
-        self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
+        self.assertContains(response, self.question.topics.all()[0])
         self.assertContains(response, self.question.title, count=1)
 
     def test_get__repeated_topics_in_different_questions(self) -> None:
@@ -698,19 +680,33 @@ class TestQuestionTopicDetails(TestCase):
         Questions with the same topic should both be listed in
         the topic view
         '''
-        second_questions: models.Question = models.Question.objects.create(
+        second_question: models.Question = models.Question.objects.create(
             author=self.author,
-            title='title of a question',
+            title='title of the second question',
             subject=self.subject,
         )
-        second_questions.topics.add("trig")
+        second_question.topics.add("trig")
         self.path = reverse('topic-detail',
                             kwargs=dict(
-                                slug=self.question.questiontopic_set.all()[0].tag.slug))
+                                slug=self.question.topics.all()[0].slug))
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed(response, 'buza/questiontopic_detail.html')
-        self.assertContains(response, self.question.questiontopic_set.all()[0].tag.name)
-        self.assertContains(response, 'Questions:', count=1)
-        self.assertContains(response, self.question.questiontopic_set.all()[0].tag)
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
         self.assertContains(response, self.question.title, count=1)
+        self.assertContains(response, second_question.title, count=1)
+
+    def test_get__topic_description(self) -> None:
+        '''
+        Topic Description is displayed
+        '''
+        topic: models.QuestionTopic = self.question.topics.get(pk=1)
+        topic.description = "This is the description of a question"
+        topic.save()
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=topic.slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, topic.name)
+        self.assertContains(response, topic.description, count=1)

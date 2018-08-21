@@ -84,17 +84,24 @@ class Question(TimestampedModel, models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
 
-    title = _CharField()
-    body = models.TextField(blank=True)
+    title = _CharField(
+        verbose_name='Question Summary',
+        help_text='Write a short sentence summarising your question',
+    )
+    body = models.TextField(
+        blank=True,
+        verbose_name='Question Description',
+        help_text='Give a detailed description of your question')
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     topics = TaggableManager(
         through=QuestionTopic,
-        help_text="List all the relevant topics for this question. \n" +
-                  "Example: Triangles, Equations, Photosynthesis.")
+        help_text="List all the relevant topics for this question. " +
+                  "Example: Triangles, Equations, Photosynthesis.",
+        verbose_name='Topics')
     grade = models.IntegerField(
         validators=[MinValueValidator(7), MaxValueValidator(12)],
-        help_text="Which grade it this question most relevant for? \n" +
-                  "By default this should be the grade that you are in.",
+        help_text="Which grade it this question most relevant for? " +
+                  "By default this will be the grade that you are in.",
     )
 
     def __str__(self) -> str:

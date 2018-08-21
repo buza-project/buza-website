@@ -247,6 +247,23 @@ class TestQuestionCreate(TestCase):
         response = self.client.get(reverse('question-create'))
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/question_form.html')
+        self.assertContains(response, 'Question Summary', count=1)
+        self.assertContains(
+            response,
+            'List all the relevant topics for this question. ' +
+            'Example: Triangles, Equations, Photosynthesis.',
+            count=1,
+        )
+        self.assertContains(
+            response,
+            'Which grade it this question most relevant for?',
+            count=1,
+        )
+        self.assertContains(
+            response,
+            'Give a detailed description of your question',
+            count=1,
+        )
 
     def test_post__empty(self) -> None:
         user: models.User = models.User.objects.create()

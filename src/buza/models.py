@@ -96,7 +96,8 @@ class Question(TimestampedModel, models.Model):
     topics = TaggableManager(
         through=QuestionTopic,
         help_text="List all the relevant topics for this question. \n" +
-                  "Example: Triangles, Equations, Photosynthesis.")
+                  "Example: Triangles, Equations, Photosynthesis.",
+        verbose_name='Topics')
     grade = models.IntegerField(
         validators=[MinValueValidator(7), MaxValueValidator(12)],
         help_text="Which grade it this question most relevant for? \n" +

@@ -134,6 +134,7 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         'body',
         'subject',
         'topics',
+        'grade',
     ]
 
     def form_valid(self, form: ModelForm) -> HttpResponse:
@@ -162,6 +163,7 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         'body',
         'subject',
         'topics',
+        'grade',
     ]
 
     def get_object(self, queryset=None):

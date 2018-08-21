@@ -196,6 +196,7 @@ class TestQuestionDetail(TestCase):
             title='Example question?',
             body='A question.',
             subject=subject,
+            grade=7,
         )
         question.topics.add("trigonometry")
         answer: models.Answer = models.Answer.objects.create(
@@ -275,6 +276,7 @@ class TestQuestionCreate(TestCase):
             body='This is a body',
             subject=subject.pk,
             topics="trig",
+            grade=7,
         ))
         question: models.Question = models.Question.objects.get()
         assert {
@@ -285,6 +287,7 @@ class TestQuestionCreate(TestCase):
             'modified': question.modified,
             'title': 'This is a title',
             'subject_id': subject.pk,
+            'grade': question.grade,
         } == models.Question.objects.filter(pk=question.pk).values().get()
         self.assertRedirects(response, f'/questions/{question.pk}/')
 
@@ -300,6 +303,7 @@ class TestQuestionUpdate(TestCase):
             title='question',
             subject=self.subject,
             topics="topic",
+            grade=7,
         )
 
     def test_get__anonymous(self) -> None:
@@ -355,6 +359,7 @@ class TestQuestionUpdate(TestCase):
             body='This is an updated body',
             subject=self.subject.pk,
             topics="topic",
+            grade=7,
         ))
 
         question: models.Question = models.Question.objects.get()
@@ -366,6 +371,7 @@ class TestQuestionUpdate(TestCase):
             'modified': question.modified,
             'title': 'This is a title updated',
             'subject_id': question.subject.pk,
+            'grade': question.grade,
         } == models.Question.objects.filter(pk=question.pk).values().get()
         self.assertRedirects(response, f'/questions/{self.question.pk}/')
 
@@ -380,6 +386,7 @@ class TestAnswerCreate(TestCase):
             author=self.user,
             title='question',
             subject=self.subject,
+            grade=7,
         )
         self.path = reverse('answer-create', kwargs=dict(question_pk=self.question.pk))
 
@@ -457,6 +464,7 @@ class TestAnswerUpdate(TestCase):
             author=self.author,
             title='question',
             subject=self.subject,
+            grade=12,
         )
         self.answer: models.Answer = models.Answer.objects.create(
             author=self.answer_author,
@@ -580,6 +588,7 @@ class TestSubjectDetails(TestCase):
             title='Example question?',
             body='A question.',
             subject=subject,
+            grade=7,
         )
         path = reverse('subject-detail', kwargs=dict(pk=subject.pk))
         response = self.client.get(path)
@@ -647,6 +656,7 @@ class TestQuestionTopicDetails(TestCase):
             author=self.author,
             title='title of a question',
             subject=self.subject,
+            grade=7,
         )
         self.question.topics.add("trig")
 
@@ -684,6 +694,7 @@ class TestQuestionTopicDetails(TestCase):
             author=self.author,
             title='title of the second question',
             subject=self.subject,
+            grade=7,
         )
         second_question.topics.add("trig")
         self.path = reverse('topic-detail',

@@ -84,12 +84,15 @@ class Question(TimestampedModel, models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
 
-    body = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     title = _CharField(
         verbose_name='Question Summary',
         help_text='Write a short sentence summarising your question',
     )
+    body = models.TextField(
+        blank=True,
+        verbose_name='Question Description',
+        help_text='Give a detailed description of your question')
     topics = TaggableManager(
         through=QuestionTopic,
         help_text="List all the relevant topics for this question. \n" +

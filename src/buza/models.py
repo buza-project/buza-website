@@ -95,12 +95,12 @@ class Question(TimestampedModel, models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     topics = TaggableManager(
         through=QuestionTopic,
-        help_text="List all the relevant topics for this question. \n" +
+        help_text="List all the relevant topics for this question. " +
                   "Example: Triangles, Equations, Photosynthesis.",
         verbose_name='Topics')
     grade = models.IntegerField(
         validators=[MinValueValidator(7), MaxValueValidator(12)],
-        help_text="Which grade it this question most relevant for? \n" +
+        help_text="Which grade it this question most relevant for? " +
                   "By default this will be the grade that you are in.",
     )
 

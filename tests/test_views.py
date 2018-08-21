@@ -261,6 +261,7 @@ class TestQuestionCreate(TestCase):
             'subject': ['This field is required.'],
             'title': ['This field is required.'],
             'topics': ['This field is required.'],
+            'grade': ['This field is required.'],
         } == form.errors
         assert not form.is_valid()
 

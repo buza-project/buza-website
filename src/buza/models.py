@@ -101,7 +101,7 @@ class Question(TimestampedModel, models.Model):
     grade = models.IntegerField(
         validators=[MinValueValidator(7), MaxValueValidator(12)],
         help_text="Which grade it this question most relevant for? \n" +
-                  "By default this should be the grade that you are in.",
+                  "By default this will be the grade that you are in.",
     )
 
     def __str__(self) -> str:

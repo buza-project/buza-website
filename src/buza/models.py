@@ -1,6 +1,7 @@
 from functools import partial
 
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from taggit import models as tags
@@ -90,6 +91,11 @@ class Question(TimestampedModel, models.Model):
         through=QuestionTopic,
         help_text="List all the relevant topics for this question. \n" +
                   "Example: Triangles, Equations, Photosynthesis.")
+    grade = models.IntegerField(
+        validators=[MinValueValidator(7), MaxValueValidator(12)],
+        help_text="Which grade it this question most relevant for? \n" +
+                  "By default this should be the grade that you are in.",
+    )
 
     def __str__(self) -> str:
         return f'By {self.author}: {self.title}'

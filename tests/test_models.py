@@ -76,6 +76,7 @@ class TestAnswer(TestCase):
             author=user,
             title='Example question?',
             subject=self.subject,
+            grade=7,
         )
         answer: models.Answer = question.answer_set.create(
             author=user,

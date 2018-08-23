@@ -10,12 +10,14 @@
 
 {% block content %}
     <h3>{{ subject.title }}</h3>
-
+    <div class="d-flex flex-wrap justify-content-between align-items-baseline">
+        <h2>Questions</h2>
+        <a href="{% url 'question-create' %}" class="d-block">
+            <div class="question__ask_question">Ask New {{ subject.title }} Question</div>
+        </a>
+    </div>
     <div>
         {{ subject.description|linebreaks }}
-        <p style="font-size: smaller">
-            Tags???
-        </p>
     </div>
 
     <p style="font-size: smaller">

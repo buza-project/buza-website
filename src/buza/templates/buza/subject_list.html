@@ -14,23 +14,20 @@
     <div class="subject__btn_container">
         {% if user.is_authenticated %}
             <a href="{% url 'my-subject-list' pk=user.pk%}" class="subject__subjects-nav subject__subjects-nav-hidden">
-                My Subjects </a>
+                Followed Subjects </a>
             <a href="{% url 'subject-list' %}" class="subject__subjects-nav subject__subjects-nav-view">
                 All Subjects </a>
         {% endif %}
     </div>
 
-
+    <div  class="row">
     {% for subject in subject_list %}
-        <div class="subject">
-
+        <div  class="column subject__card">
                 <a href="{% url 'subject-detail' subject.pk %}" class="d-block subject__title">
                     {{ subject.title }}
                 </a>
                     <div class="subject__body">
-        {{ subject.description|linebreaks|truncatewords:20 }}
-        </div>
-
+        {{ subject.description|linebreaks|truncatechars:100 }}
             {% if user.is_authenticated %}
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
@@ -49,11 +46,12 @@
                     {% endif %}
             {% endif %}
             <div class="subject__attribution">
-        {{ subject.question_set.count}} questions,  {{subject.user_set.count}} users
+        {{ subject.question_set.count}} questions,  {{subject.user_set.count}} members
         <a class="date"> {{ question.created }}</a>
     </div>
         </div>
+         </div>
     {% endfor %}
-
+    </div>
 {% endblock %}
 

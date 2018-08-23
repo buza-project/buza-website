@@ -1,16 +1,24 @@
 /* Styles for Subjects. */
 
 /* Block: Subjects */
-.subject {
+.subject__card {
     background-color: white;
-    padding: 1em 2em;
-    /* Spacing between questions: */
-    margin-top: 1em;
-    margin-bottom: 1em;
+    padding: 1% 1%;
+    /* Spacing between subjects: */
+    margin: 1% 0% 0% 1%;
+    display: table;
     /* Shadow */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0.25em;
     text-align: center;
+    width: 31%;
+}
+
+@media screen and (max-width: 650px) {
+  .subject__card {
+    width: 100%;
+    display: block;
+  }
 }
 
 subject-nav_bar{

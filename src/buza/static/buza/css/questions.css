@@ -25,20 +25,12 @@
     color: DarkOrchid;
 }
 
-.question__ask_question {
+.question__edit_question, .question__ask_question, input[type=button], input[type=submit], input[type=reset] {
     background-color:#32CD32;
     color: white;
     border-radius: 12px;
     padding: 1px 3px;
     text-align: center;
-}
-
-.question__edit_question {
-    background-color:#32CD32;
-    border-radius: 12px;
-    padding: 1px 4%;
-    text-align: center;
-    color: white;
 }
 
 .question__edit_question:hover{
@@ -75,3 +67,37 @@ textarea[name=body] {
     margin:1%;
 
 }
+
+.question__form_container{
+    width: 100%;
+    padding: 5% 5%;
+    margin: 8px 0;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.question__form_helptext{
+    opacity: 0.5;
+    font-size: smaller;
+
+}
+
+input[type=text], input[type=number], select, textarea {
+    border: 2px solid #32CD32;
+    width: 80%;
+    border-radius: 4px;
+    background-color: white;
+    padding: 8px 10px;
+}
+@media only screen and (max-width: 600px) {
+    body {
+        width:100%;
+        padding: 0px 0px;
+    }
+}
+
+input[type=text]:focus {
+    background-color:  #32CD32;
+    color:white;
+}
+

@@ -9,12 +9,23 @@
 {% block title %}Ask a question - {{ block.super }}{% endblock %}
 
 {% block content %}
+<div class="question__form_container">
     <form method="post"
           action="{% if question.pk %}{% url 'question-update' pk=question.pk %}{% else %}{% url 'question-create' %}{% endif %}">
+     <h2>Add a new Question</h2>
         {% csrf_token %}
-        {{ form.as_p }}
-        <p>
+       {% for field in form %}
+            <div>
+            <br/>{{ field.errors }}
+            {{ field.label_tag }}
+                <p class="question__form_helptext">
+                    {{ field.help_text }}</p>
+            {{ field }}
+            </div>
+        {% endfor %}
+         <br/><p>
             <input type="submit" Value ="{% if question.pk %}Update question{% else %}Ask question{% endif %}">
         </p>
     </form>
+</div>
 {% endblock %}

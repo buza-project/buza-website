@@ -37,12 +37,12 @@ def test_settings_env() -> None:
         'SECRET_KEY': 'secret key',
         'DATABASES': {
             'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'buza',
+                'USER': 'sewagodimo',
+                'PASSWORD': 'educationcanchangetheworld',
                 'HOST': '',
-                'NAME': '/base/buza.sqlite3',
-                'PASSWORD': '',
                 'PORT': '',
-                'USER': '',
             },
         },
         'STATIC_ROOT': '/base/static_root',

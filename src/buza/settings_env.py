@@ -14,12 +14,23 @@ base_dir = env.path('BASE_DIR')
 
 DEBUG = env('DJANGO_DEBUG', default=False)
 SECRET_KEY = env('DJANGO_SECRET_KEY')
-
+'''
 DATABASES = {
     'default': env.db(
         'DJANGO_DATABASE_URL',
         default=f'sqlite:///' + base_dir('buza.sqlite3'),
     ),
+ }
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'buza',
+        'USER': 'sewagodimo',
+        'PASSWORD': 'educationcanchangetheworld',
+        'HOST': '',
+        'PORT': '',
+    },
 }
 
 STATIC_ROOT = env('DJANGO_STATIC_ROOT', default=base_dir('static_root'))

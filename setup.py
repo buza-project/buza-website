@@ -11,6 +11,7 @@ with open(os.path.join(here, 'README.rst')) as f:
 setup(
     name='buza-website',
     description='buza',
+    version='0.0.1',
     long_description=README,
     classifiers=[
         'Programming Language :: Python',
@@ -30,16 +31,5 @@ setup(
     setup_requires=['setuptools-scm'],
     use_scm_version=True,
 
-    install_requires=[
-        'Django >2.0',
-
-        # General libraries
-        'Pillow',
-
-        # Django libraries
-        'django-environ',
-        'django-taggit',
-        'social-auth-app-django',
-    ],
     entry_points={},
 )

@@ -1,5 +1,26 @@
+
 {
+  "name": "Buza Application: Student hub",
+  "description": "A student Q&A mobisite.",
+  "image": "heroku/python",
+  "repository": "https://github.com/buza/buza-website",
+  "keywords": ["python", "django" ],
+  "addons": [ "heroku-postgresql" ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "The secret key for the Django application.",
+      "generator": "secret"
+    }
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "django-admin collectstatic --noinput",
+        "test": "django-admin manage.py test"
+      }
+    }
+  },
   "dependencies": {
-    "bootstrap": "^4.1.3"
+    "bootstrap": "^4.1.3",
   }
 }

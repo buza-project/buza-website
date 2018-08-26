@@ -13,7 +13,6 @@ from buza.settings_base import *  # noqa: F401
 
 # Assume we're running from a Git checkout directory.
 checkout_dir: Path = Path(__file__).parent.parent.parent
-assert checkout_dir.joinpath('.git').exists(), checkout_dir
 
 env = environ.Env()
 

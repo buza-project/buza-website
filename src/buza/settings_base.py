@@ -89,4 +89,4 @@ STATICFILES_DIRS = [
 
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '*']

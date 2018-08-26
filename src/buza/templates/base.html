@@ -35,7 +35,7 @@
             </div>
             <div class="col">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'user-detail' pk=user.pk %}" class="buza-nav__link">Account</a>
+                    <a href="{% url 'user-detail' pk=user.pk %}" class="buza-nav__link">Profile</a>
                 {% else %}
                     <a href="{% url 'login' %}" class="buza-nav__link">Sign in</a>
                 {% endif %}

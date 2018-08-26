@@ -1,8 +1,16 @@
 """
 Base Django settings for a buza-website instance.
 """
+import os
+from pathlib import Path
+
 from django.urls import reverse_lazy
 
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+checkout_dir: Path = Path(__file__).parent.parent.parent
 
 ROOT_URLCONF = 'buza.urls'
 
@@ -60,3 +68,25 @@ AUTH_USER_MODEL = 'buza.User'
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'buza',
+        'USER': 'sewagodimo',
+        'PASSWORD': 'educationcanchangetheworld',
+        'HOST': '',
+        'PORT': '',
+    },
+}
+
+SECRET_KEY = "{{ secret_key }}"
+
+STATICFILES_DIRS = [
+    # Path to Yarn's packages
+    str(checkout_dir.joinpath('node_modules')),
+]
+
+WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
+
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost']

@@ -11,15 +11,6 @@
 {% block content %}
     <h1 class="question__answers_heading ">Subjects</h1>
 
-    <div class="subject__btn_container">
-        {% if user.is_authenticated %}
-            <a href="{% url 'my-subject-list' pk=user.pk%}" class="subject__subjects-nav subject__subjects-nav-hidden">
-                Followed Subjects </a>
-            <a href="{% url 'subject-list' %}" class="subject__subjects-nav subject__subjects-nav-view">
-                All Subjects </a>
-        {% endif %}
-    </div>
-
     <div  class="row">
     {% for subject in subject_list %}
         <div  class="column subject__card">

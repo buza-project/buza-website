@@ -24,7 +24,7 @@ if 'BASE_DIR' not in os.environ:
 # Obtain a base instance directory.
 
 
-DEBUG = env('DJANGO_DEBUG', default=False)
+DEBUG = env('DJANGO_DEBUG', default=True)
 SECRET_KEY = env('DJANGO_SECRET_KEY', default="buza.key")
 
 

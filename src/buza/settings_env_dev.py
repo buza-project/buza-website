@@ -25,5 +25,3 @@ STATICFILES_DIRS = [
     # Path to Yarn's packages
     str(checkout_dir.joinpath('node_modules')),
 ]
-
-from buza.settings_env import *  # noqa: F401 isort:skip

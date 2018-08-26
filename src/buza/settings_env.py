@@ -36,20 +36,19 @@ DATABASES = {
     ),
  }
  '''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'buza',
-        'USER': 'sewagodimo',
-        'PASSWORD': 'educationcanchangetheworld',
-        'HOST': '',
-        'PORT': '',
-    },
+LOCAL_DATABASES = {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'buza',
+    'USER': 'sewagodimo',
+    'PASSWORD': 'educationcanchangetheworld',
+    'HOST': '',
+    'PORT': '',
 }
 
 LANGUAGE_CODE = env('DJANGO_LANGUAGE_CODE', default='en-ZA')
 TIME_ZONE = env('DJANGO_TIME_ZONE', default='Africa/Johannesburg')
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600) or LOCAL_DATABASES
 
 # Set a few more defaults for development.
 os.environ.setdefault('DJANGO_SECRET_KEY', 'buza-website example dev')

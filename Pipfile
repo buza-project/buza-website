@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 buza-website = {editable = true, path = "."}
 gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 "flake8" = "*"

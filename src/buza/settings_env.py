@@ -24,7 +24,7 @@ if 'BASE_DIR' not in os.environ:
 
 
 DEBUG = env('DJANGO_DEBUG', default=False)
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default="buza.key")
 '''
 DATABASES = {
     'default': env.db(

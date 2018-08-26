@@ -32,7 +32,7 @@ yarn-error.log*
 *.egg
 *.egg-info
 .eggs/
-dist
+
 build
 eggs
 parts

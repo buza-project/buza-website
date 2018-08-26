@@ -87,6 +87,4 @@ STATICFILES_DIRS = [
     str(checkout_dir.joinpath('node_modules')),
 ]
 
-WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
-
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '*']

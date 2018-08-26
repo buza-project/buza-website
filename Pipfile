@@ -8,6 +8,7 @@ buza-website = {editable = true, path = "."}
 gunicorn = "*"
 django-heroku = "*"
 "flake8" = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 "flake8" = "*"

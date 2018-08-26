@@ -618,51 +618,6 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, question.title, count=1)
 
 
-class TestUserSubjectsView(TestCase):
-    def setUp(self) -> None:
-        self.user: models.User = models.User.objects.create()
-        self.first_subject: models.Subject = \
-            models.Subject.objects.create(title="maths")
-        self.second_subject: models.Subject = \
-            models.Subject.objects.create(title="bio")
-        self.path = reverse('my-subject-list', kwargs=dict(pk=self.user.pk))
-
-    def test_get__anonymous(self) -> None:
-        """
-        Anonymous users are redirected
-        """
-        response = self.client.get(self.path)
-        self.assertRedirects(
-            response,
-            f'/auth/login/?next=/subjects/my-subjects/{self.user.pk}/',
-        )
-
-    def test_get__with_no_followed_subjects(self) -> None:
-        """
-        My subject view is empty before users follow any subjects
-        """
-        self.client.force_login(self.user)
-        response = self.client.get(self.path)
-        assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed('buza/my_subjects_list.html')
-        self.assertContains(response, 'Followed Subjects')
-        self.assertNotContains(response, self.first_subject.title)
-        self.assertNotContains(response, self.second_subject.title)
-
-    def test_get__with_followed_subjects(self) -> None:
-        """
-        My subject view is empty before users follow any subjects
-        """
-        self.client.force_login(self.user)
-        self.user.subjects.add(self.first_subject)
-        response = self.client.get(self.path)
-        assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed('buza/my_subjects_list.html')
-        self.assertContains(response, 'Followed Subjects')
-        self.assertContains(response, self.first_subject.title, count=1)
-        self.assertNotContains(response, self.second_subject.title)
-
-
 class TestQuestionTopicDetails(TestCase):
     def setUp(self) -> None:
         super().setUp()

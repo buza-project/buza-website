@@ -9,6 +9,7 @@ with open(os.path.join(here, 'README.rst')) as f:
 
 install_requires = [
     'Django==2.1',
+    'django-environ==0.4.5',
     'django-heroku==0.3.1',
     'django-taggit==0.23.0',
     'flake8==3.5.0',

@@ -466,7 +466,7 @@ class TestAnswerCreate(TestCase):
             'id': answer.pk,
             'modified': answer.modified,
             'body': 'An example answer',
-            'question_id': 1,
+            'question_id': self.question.pk,
         } == models.Answer.objects.filter(pk=answer.pk).values().get()
         self.assertRedirects(response, f'/questions/{answer.question.pk}/')
 

@@ -3,8 +3,6 @@
 # Default Django instance directory for development.
 /buza-instance/
 
-# dependencies
-/node_modules
 
 # testing
 /coverage
@@ -66,7 +64,6 @@ logs/*.log
 .vscode/
 
 local.py
-/static/
 /media/
 db.sqlite3
 db.sqlite4

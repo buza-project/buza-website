@@ -1,15 +1,27 @@
 """
 Django settings module for buza-website using django-environ.
 """
+import os
+from pathlib import Path
+
+# Configure Django App for Heroku.
+import django_heroku
 import environ
 
 from buza.settings_base import *  # noqa: F401
 
 
+# Assume we're running from a Git checkout directory.
+checkout_dir: Path = Path(__file__).parent.parent.parent
+assert checkout_dir.joinpath('.git').exists(), checkout_dir
+
 env = environ.Env()
 
+
+if 'BASE_DIR' not in os.environ:
+    os.environ['BASE_DIR'] = str(checkout_dir.joinpath('buza-instance'))
+    Path(os.environ['BASE_DIR']).mkdir(exist_ok=True)
 # Obtain a base instance directory.
-base_dir = env.path('BASE_DIR')
 
 
 DEBUG = env('DJANGO_DEBUG', default=False)
@@ -33,12 +45,12 @@ DATABASES = {
     },
 }
 
-STATIC_ROOT = env('DJANGO_STATIC_ROOT', default=base_dir('static_root'))
-STATIC_URL = env('DJANGO_STATIC_URL', default='/static/')
-
-MEDIA_ROOT = env('DJANGO_MEDIA_ROOT', default=base_dir('media_root'))
-MEDIA_URL = env('DJANGO_MEDIA_URL', default='/media/')
-
-# Internationalization
 LANGUAGE_CODE = env('DJANGO_LANGUAGE_CODE', default='en-ZA')
 TIME_ZONE = env('DJANGO_TIME_ZONE', default='Africa/Johannesburg')
+
+
+# Set a few more defaults for development.
+os.environ.setdefault('DJANGO_SECRET_KEY', 'buza-website example dev')
+os.environ.setdefault('DJANGO_DEBUG', 'True')
+
+django_heroku.settings(locals())

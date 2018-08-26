@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static buza_tags%}
 
 {% block head_extra %}
     {{ block.super }}
@@ -21,7 +21,8 @@
     </div>
 
 
-    {% for subject in subject_list %}
+    {% user_subjects_list user as subjects %}
+    {% for subject in subjects %}
         <div class="subject">
 
                 <a href="{% url 'subject-detail' subject.pk %}" class="d-block subject__title">

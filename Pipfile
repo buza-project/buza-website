@@ -9,6 +9,7 @@ gunicorn = "*"
 django-heroku = "*"
 "flake8" = "*"
 "psycopg2-binary" = "*"
+dj-database-url = "*"
 
 [dev-packages]
 "flake8" = "*"

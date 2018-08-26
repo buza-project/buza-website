@@ -25,6 +25,7 @@ install_requires = [
     'pyflakes==1.6.0',
     'PyJWT==1.6.4',
     'Pillow==5.2.0',
+    'dj-database-url==0.5.0',
     'pyparsing==2.2.0',
     'pytest==3.7.2',
     'pytest-django==3.4.2',

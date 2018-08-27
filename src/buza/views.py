@@ -11,6 +11,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.views.generic.edit import ModelFormMixin
 
 from buza import models
 from buza.forms import UserEditForm
@@ -127,7 +128,10 @@ class QuestionList(generic.ListView):
     ordering = ['-created']
 
 
-class QuestionCreate(LoginRequiredMixin, generic.CreateView):
+class QuestionModelFormMixin(LoginRequiredMixin, ModelFormMixin):
+    """
+    Base class for the Question create & update views.
+    """
     model = models.Question
     fields = [
         'title',
@@ -136,6 +140,17 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         'topics',
         'grade',
     ]
+
+    def get_success_url(self) -> str:
+        """
+        Redirect to the question.
+        """
+        question: models.Question = self.object
+        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
+        return success_url
+
+
+class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
 
     def form_valid(self, form: ModelForm) -> HttpResponse:
         """
@@ -147,24 +162,8 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         question.author = author
         return super().form_valid(form)
 
-    def get_success_url(self) -> str:
-        """
-        Redirect to the question.
-        """
-        question: models.Question = self.object
-        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
-        return success_url
 
-
-class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
-    model = models.Question
-    fields = [
-        'title',
-        'body',
-        'subject',
-        'topics',
-        'grade',
-    ]
+class QuestionUpdate(QuestionModelFormMixin, generic.UpdateView):
 
     def get_object(self, queryset=None):
         """
@@ -176,14 +175,6 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
         if question.author != self.request.user:
             raise PermissionDenied('You can only edit your own questions.')
         return question
-
-    def get_success_url(self) -> str:
-        """
-        Redirect to the question.
-        """
-        question: models.Question = self.object
-        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
-        return success_url
 
 
 class AnswerCreate(LoginRequiredMixin, generic.CreateView):

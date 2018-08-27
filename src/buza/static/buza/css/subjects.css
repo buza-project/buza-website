@@ -37,6 +37,10 @@ subject-nav_bar{
 .subject__title {
     font-weight: bold;
 }
+
+.subject__body{
+    opacity: 0.7;
+}
 .subject__attribution {
     opacity: 0.5;
     font-size: smaller;

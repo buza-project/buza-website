@@ -67,10 +67,3 @@ textarea[name=body] {
 .form-control {
     border: 2px solid #32CD32;
 }
-
-@media only screen and (max-width: 600px) {
-    body {
-        width:100%;
-        padding: 0px 0px;
-    }
-}

@@ -68,36 +68,14 @@ textarea[name=body] {
 
 }
 
-.question__form_container{
-    width: 100%;
-    padding: 5% 5%;
-    margin: 8px 0;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.question__form_helptext{
-    opacity: 0.5;
-    font-size: smaller;
-
-}
-
-input[type=text], input[type=number], select, textarea {
+/* TODO (Pi 2018-08-27): Target the Bootstrap form-control class directly, for now. Customise this more properly later. */
+.form-control {
     border: 2px solid #32CD32;
-    width: 80%;
-    border-radius: 4px;
-    background-color: white;
-    padding: 8px 10px;
 }
+
 @media only screen and (max-width: 600px) {
     body {
         width:100%;
         padding: 0px 0px;
     }
 }
-
-input[type=text]:focus {
-    background-color:  #32CD32;
-    color:white;
-}
-

@@ -1,5 +1,6 @@
 from typing import Any, Dict, Optional, Type
 
+from crispy_forms import layout
 from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib import messages
@@ -154,7 +155,7 @@ class QuestionList(generic.ListView):
     ordering = ['-created']
 
 
-class QuestionModelFormMixin(LoginRequiredMixin, ModelFormMixin):
+class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin):
     """
     Base class for the Question create & update views.
     """
@@ -174,6 +175,21 @@ class QuestionModelFormMixin(LoginRequiredMixin, ModelFormMixin):
         question: models.Question = self.object
         success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
         return success_url
+
+    def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
+        """
+        Add the question view's form action and submit button.
+        """
+        helper = super().get_form_helper(form)
+        helper.form_action = (
+            reverse('question-create') if not form.instance.pk else
+            reverse('question-update', kwargs=dict(pk=form.instance.pk))
+        )
+        helper.add_input(layout.Submit(
+            name='submit',
+            value=('Ask question' if not form.instance.pk else 'Edit question'),
+        ))
+        return helper
 
 
 class QuestionCreate(QuestionModelFormMixin, generic.CreateView):

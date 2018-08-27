@@ -188,6 +188,7 @@ class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin
         helper.add_input(layout.Submit(
             name='submit',
             value=('Ask question' if not form.instance.pk else 'Edit question'),
+            css_class='btn-buza-green',
         ))
         return helper
 

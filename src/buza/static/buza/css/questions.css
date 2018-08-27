@@ -25,16 +25,11 @@
     color: DarkOrchid;
 }
 
-.question__edit_question, .question__ask_question, input[type=button], input[type=submit], input[type=reset] {
-    background-color:#32CD32;
-    color: white;
-    border-radius: 12px;
-    padding: 1px 3px;
-    text-align: center;
-}
-
-.question__edit_question:hover{
-    color: white;
+/* XXX (Pi 2018-08-27): Temporary btn-primary override for our Buza green, until we do this better. */
+.btn-buza-green {
+    background-color: #32CD32;
+    border-color: #32CD32;
+    border-radius: 1em;
 }
 
 .question__add_answer {

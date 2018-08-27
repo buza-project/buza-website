@@ -1,12 +1,12 @@
 from typing import Any, Dict
 
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
-from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -152,7 +152,7 @@ class QuestionModelFormMixin(LoginRequiredMixin, ModelFormMixin):
 
 class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
 
-    def form_valid(self, form: ModelForm) -> HttpResponse:
+    def form_valid(self, form: forms.ModelForm) -> HttpResponse:
         """
         Set the question's author to the posting user.
         """
@@ -204,7 +204,7 @@ class AnswerCreate(LoginRequiredMixin, generic.CreateView):
         self.question = get_object_or_404(models.Question, pk=question_pk)
         return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form: ModelForm) -> HttpResponse:
+    def form_valid(self, form: forms.ModelForm) -> HttpResponse:
         """
         Set the answer's author to the posting user.
         """

@@ -1,5 +1,6 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Type
 
+from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -11,10 +12,35 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from django.views.generic.edit import ModelFormMixin
+from django.views.generic.edit import FormMixin, ModelFormMixin
 
 from buza import models
 from buza.forms import UserEditForm
+
+
+class CrispyFormMixin(FormMixin):
+    """
+    Helper class for crispy-forms rendering.
+    """
+
+    def get_form(
+            self,
+            form_class: Optional[Type[forms.BaseForm]] = None,
+    ) -> forms.BaseForm:
+        """
+        Add this view's crispy-forms ``helper`` to the form instance.
+        """
+        form = super().get_form(form_class)
+        form.helper = self.get_form_helper(form)
+        return form
+
+    def get_form_helper(self, form: forms.BaseForm) -> FormHelper:
+        """
+        Return the `FormHelper` to use for this view.
+
+        Extend this to customise
+        """
+        return FormHelper(form)
 
 
 # TODO: Migrate to class based views

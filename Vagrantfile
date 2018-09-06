@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8000, host: 8000, host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -63,8 +63,27 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+
+  # System dependencies.
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" >/etc/apt/sources.list.d/yarn.list
+
+    apt-get update
+    apt-get install -y python3-pip yarn
+  SHELL
+
+  # User dependencies.
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    pip3 install --user pipenv
+  SHELL
+
+  # Project setup
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    cd /vagrant
+    yarn
+    cp -p .env.example .env
+    pipenv install --dev
+  SHELL
+
 end

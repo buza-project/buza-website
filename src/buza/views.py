@@ -221,7 +221,7 @@ class QuestionUpdate(QuestionModelFormMixin, generic.UpdateView):
         )
         helper.add_input(layout.Submit(
             name='submit',
-            value='Edit question',
+            value='Save',
             css_class='btn-buza-green',
         ))
         return helper

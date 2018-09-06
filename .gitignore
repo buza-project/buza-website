@@ -91,3 +91,6 @@ gem_test.db
 node_modules/
 db.sqlite3-journal
 *.pyc
+
+# Vagrant
+.vagrant/

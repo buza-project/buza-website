@@ -176,24 +176,18 @@ class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin
         success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
         return success_url
 
+
+class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
+
     def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
-        """
-        Add the question view's form action and submit button.
-        """
         helper = super().get_form_helper(form)
-        helper.form_action = (
-            reverse('question-create') if not form.instance.pk else
-            reverse('question-update', kwargs=dict(pk=form.instance.pk))
-        )
+        helper.form_action = reverse('question-create')
         helper.add_input(layout.Submit(
             name='submit',
-            value=('Ask question' if not form.instance.pk else 'Edit question'),
+            value='Ask question',
             css_class='btn-buza-green',
         ))
         return helper
-
-
-class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
 
     def form_valid(self, form: forms.ModelForm) -> HttpResponse:
         """
@@ -218,6 +212,19 @@ class QuestionUpdate(QuestionModelFormMixin, generic.UpdateView):
         if question.author != self.request.user:
             raise PermissionDenied('You can only edit your own questions.')
         return question
+
+    def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
+        helper = super().get_form_helper(form)
+        helper.form_action = reverse(
+            'question-update',
+            kwargs=dict(pk=form.instance.pk),
+        )
+        helper.add_input(layout.Submit(
+            name='submit',
+            value='Edit question',
+            css_class='btn-buza-green',
+        ))
+        return helper
 
 
 class AnswerCreate(LoginRequiredMixin, generic.CreateView):

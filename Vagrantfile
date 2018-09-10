@@ -86,4 +86,11 @@ Vagrant.configure("2") do |config|
     pipenv install --dev
   SHELL
 
+  # Show a usage message:
+  config.vm.provision "shell", privileged: false, run: "always", inline: <<-SHELL
+    echo "Buza environment ready for use."
+    echo "To run the Django development server:"
+    echo "vagrant ssh -c 'cd /vagrant && pipenv run django-admin runserver 0.0.0.0:8000'"
+  SHELL
+
 end

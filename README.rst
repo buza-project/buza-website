@@ -6,7 +6,46 @@ This is the code for Buza mobi site
 Getting started
 ---------------
 
-Make sure you have the following tools installed:
+With Vagrant
+^^^^^^^^^^^^
+
+The easiest way to get a development instance of Buza up and running is to use `Vagrant`_.
+
+.. _`Vagrant`: https://www.vagrantup.com/
+
+After installing Vagrant, run the following to provision a Buza virtual machine::
+
+    vagrant up
+
+(This will take a while the first time you run it, but will be faster on subsequent runs.)
+
+To run the Django development server, you can execute the following command::
+
+    vagrant ssh -c 'cd /vagrant && pipenv run django-admin runserver 0.0.0.0:8000'
+
+You can also log into the virtual machine and activate the project,
+in order to run other Django development commands. For example::
+
+    $ vagrant ssh
+    vagrant@ubuntu-bionic:~$ cd /vagrant
+    vagrant@ubuntu-bionic:/vagrant$ pipenv shell
+    Loading .env environment variables...
+    Launching subshell in virtual environment…
+    (vagrant-gKDsaKU3) vagrant@ubuntu-bionic:/vagrant$ django-admin check
+    System check identified no issues (0 silenced).
+    (vagrant-gKDsaKU3) vagrant@ubuntu-bionic:/vagrant$
+
+When you're finished working, you can stop the Vagrant virtual machine by running ``vagrant halt``.
+Running ``vagrant up`` again will restart it.
+
+To destroy the virtual machine completely, run ``vagrant destroy``.
+
+
+With Pipenv
+^^^^^^^^^^^
+
+To set up a conventional Python development environment,
+make sure you have the following tools installed:
 
 * Pipenv_
 * Yarn_

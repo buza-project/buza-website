@@ -1,0 +1,26 @@
+[
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$FUddRKJRABdr$lb2RRI3eWo16yS7QO7twK3U0oKigcPLX8FGeGD2fexY=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.org",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2018-09-20T18:48:57.355Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": []
+  }
+}
+]

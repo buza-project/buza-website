@@ -85,6 +85,7 @@ Vagrant.configure("2") do |config|
     cp -p .env.example .env
     pipenv install --dev
     pipenv run django-admin migrate
+    pipenv run django-admin loaddata examples/example-data.json
   SHELL
 
   # Show a usage message:

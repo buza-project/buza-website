@@ -84,6 +84,7 @@ Vagrant.configure("2") do |config|
     yarn
     cp -p .env.example .env
     pipenv install --dev
+    pipenv run django-admin migrate
   SHELL
 
   # Show a usage message:

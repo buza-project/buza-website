@@ -9,17 +9,16 @@
 {% block title %}Subjects - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1 class="question__answers_heading ">Subjects</h1>
+    <h1 class="subject_heading ">Subjects</h1>
 
     <div  class="card-columns">
 
     {% for subject in subject_list %}
-         <div class="card subject__card" style="width: 18rem;">
-                <a href="{% url 'subject-detail' subject.pk }" class="card_title ">
+         <div class="card subject__card table-hover" >
+               <a href="{% url 'subject-detail' subject.pk %}" class="subject_title">
                     {{ subject.title }}
-                </a>
-                    <div class="subject__body card_body">
-            {% if user.is_authenticated %}
+                    <div class="card_body">
+                {% if user.is_authenticated %}
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
@@ -27,7 +26,7 @@
                                 follow
                             </button>
                         </form>
-                    {% else %}
+                        {% else %}
                         <form action="" method="post">
                             {% csrf_token %}
                             <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="btn btn-primary subject__following-button">
@@ -35,13 +34,15 @@
                             </button>
                         </form>
                     {% endif %}
-            {% endif %}
-                     <div>
-                          <p class="card-text"><small class="text-muted">
-                        {{ subject.question_set.count}} questions,  {{subject.user_set.count}} members
-                          </small></p>
+                {% endif %}
+                         <div>
+                             <p class="card-text"><small class="text-muted">
+                                {{ subject.question_set.count}} questions,  {{subject.user_set.count}} members
+                             </small></p>
+                        </div>
                     </div>
-        </div>
+               </a>
+
          </div>
     {% endfor %}
          </div>

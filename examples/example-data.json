@@ -1,0 +1,1231 @@
+[
+{
+  "model": "buza.subject",
+  "pk": 1,
+  "fields": {
+    "title": "English",
+    "description": "Literature, most generically, is any body of written works. More restrictively, literature refers to writing considered to be an art form, or any single writing deemed to have artistic or intellectual value, often due to deploying language in ways that differ from ordinary usage.\r\n\r\nIts Latin root literatura/litteratura (derived itself from littera: letter or handwriting) was used to refer to all written accounts, though contemporary definitions extend the term to include texts that are spoken or sung (oral literature). The concept has changed meaning over time: nowadays it can broaden to have non-written verbal art forms, and thus it is difficult to agree on its origin, which can be paired with that of language or writing itself. Developments in print technology have allowed an ever-growing distribution and proliferation of written works, culminating in electronic literature."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 2,
+  "fields": {
+    "title": "Life Science",
+    "description": "The life sciences or biological sciences comprise the branches of science that involve the scientific study of life and organisms \u2013 such as microorganisms, plants, and animals including human beings.\r\n\r\nLife science is one of the two major branches of natural science, the other being physical science, which is concerned with non-living matter.\r\n\r\nBy definition, biology is the natural science that studies life and living organisms, with the other life sciences being its sub-disciplines.\r\n\r\nSome life sciences focus on a specific type of organism. For example, zoology is the study of animals, while botany is the study of plants. Other life sciences focus on aspects common to all or many life forms, such as anatomy and genetics. Some focus on the micro scale (e.g. molecular biology, biochemistry) other on larger scales (e.g. cytology, immunology, ethology, ecology). Another major, branch of life sciences involves understanding the mind \u2013 neuroscience.\r\n\r\nLife sciences discoveries are helpful in improving the quality and standard of life, and have applications in health, agriculture, medicine, and the pharmaceutical and food science industries."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 3,
+  "fields": {
+    "title": "Setswana",
+    "description": "Setswana ke puo e e buiwang mo mafatsheng a Aforika Borwa, Botswana, Namibia le Zimbabwe. Ke nngwe ya dipuo tsa semmuso kwa Aforika Borwa fa kwa Botswana gone e le puo ee tsewang e le yone ya lefatshe ka bophara. Banni bangwe ba Botswana ba tsalwa ba sa bue Setswana jaaka Bakgalagadi, Bakalaka le ba bangwe. Ba se ithuta mo mebileng le kwa sekolong. Molao motheo wa Zimbabwe o moswa o kaya puo ya Setswana e le nngwe ya dipuo tsa semmuso tsa lefatshe leo."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 4,
+  "fields": {
+    "title": "Economics and Management Science",
+    "description": "Economic and Management Sciences is made up of the School of Management Sciences, the School of Economic and Financial Sciences, and the School of Public & Operations Management, The Institute For Corporate Citizenship and five Centres"
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 5,
+  "fields": {
+    "title": "Accounting",
+    "description": "Accounting or accountancy is the measurement, processing, and communication of financial information about economic entities[1][2] such as businesses and corporations. The modern field was established by the Italian mathematician Luca Pacioli in 1494.[3] Accounting, which has been called the \"language of business\",[4] measures the results of an organization's economic activities and conveys this information to a variety of users, including investors, creditors, management, and regulators.[5] Practitioners of accounting are known as accountants. The terms \"accounting\" and \"financial reporting\" are often used as synonyms."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 6,
+  "fields": {
+    "title": "Life Orientation",
+    "description": "Life orientation is an excitingly diverse subject, incorporating many aspects of life. Most people who matriculated more than a decade ago, will remember life skills, guidance counselling, PT classes and religious studies. However, Life orientation (LO) has evolved into a holistic subject encompassing emotional, physical, spiritual and mental aspects of life. For example: Life orientation provides a learner with the necessary skills to compile a CV, understand relationships, find a career, learn about lifestyle diseases or understand why democracy is necessary in our country\u2026.to name but a few."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 7,
+  "fields": {
+    "title": "Information Technology",
+    "description": "Computer science is the study of the theory, experimentation, and engineering that form the basis for the design and use of computers. It is the scientific and practical approach to computation and its applications and the systematic study of the feasibility, structure, expression, and mechanization of the methodical procedures (or algorithms) that underlie the acquisition, representation, processing, storage, communication of, and access to, information. An alternate, more succinct definition of computer science is the study of automating algorithmic processes that scale. A computer scientist specializes in the theory of computation and the design of computational systems.[1] See glossary of computer science."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 8,
+  "fields": {
+    "title": "Mathematics",
+    "description": "Mathematics as \"the Queen of the Sciences\". The science of numbers and their operations, interrelations, combinations, generalizations, and abstractions and of space  configurations and their structure, measurement, transformations, and generalizations\r\n\r\n   Algebra, arithmetic, calculus, geometry, and trigonometry are branches of mathematics."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 9,
+  "fields": {
+    "title": "Physics",
+    "description": "Physics is the branch of science concerned with the nature and properties of matter and energy. The subject matter of physics includes mechanics, heat, light and other radiation, sound, electricity, magnetism, and the structure of atoms."
+  }
+},
+{
+  "model": "buza.subject",
+  "pk": 10,
+  "fields": {
+    "title": "Economics",
+    "description": "Economics is the social science that studies the production, distribution, and consumption of goods and services.[4]\r\n\r\nEconomics focuses on the behaviour and interactions of economic agents and how economies work. Microeconomics analyzes basic elements in the economy, including individual agents and markets, their interactions, and the outcomes of interactions. Individual agents may include, for example, households, firms, buyers, and sellers. Macroeconomics analyzes the entire economy (meaning aggregated production, consumption, savings, and investment) and issues affecting it, including unemployment of resources (labour, capital, and land), inflation, economic growth, and the public policies that address these issues (monetary, fiscal, and other policies). See glossary of economics."
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 1,
+  "fields": {
+    "name": "",
+    "slug": "",
+    "description": "Trig is the study of shapes and stuff"
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 2,
+  "fields": {
+    "name": "maths",
+    "slug": "maths",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 3,
+  "fields": {
+    "name": "trig",
+    "slug": "trig",
+    "description": "Trigonometry is a branch of mathematics that studies relationships involving lengths and angles of triangles. The field emerged in the Hellenistic world during ..."
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 4,
+  "fields": {
+    "name": "calculus",
+    "slug": "calculus",
+    "description": "Numbers and stuff"
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 5,
+  "fields": {
+    "name": "circles",
+    "slug": "circles",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 6,
+  "fields": {
+    "name": "president mangope",
+    "slug": "president-mangope",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 7,
+  "fields": {
+    "name": "girl",
+    "slug": "girl",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 8,
+  "fields": {
+    "name": "triangles",
+    "slug": "triangles",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 9,
+  "fields": {
+    "name": "area",
+    "slug": "area",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 10,
+  "fields": {
+    "name": "geometry",
+    "slug": "geometry",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 11,
+  "fields": {
+    "name": "Triangles",
+    "slug": "triangles_1",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 12,
+  "fields": {
+    "name": "dennotation",
+    "slug": "dennotation",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 13,
+  "fields": {
+    "name": "energy",
+    "slug": "energy",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 14,
+  "fields": {
+    "name": "work",
+    "slug": "work",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 15,
+  "fields": {
+    "name": "and",
+    "slug": "and",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 16,
+  "fields": {
+    "name": "forces",
+    "slug": "forces",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 17,
+  "fields": {
+    "name": "potential",
+    "slug": "potential",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 18,
+  "fields": {
+    "name": "velocity",
+    "slug": "velocity",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 19,
+  "fields": {
+    "name": "lediri",
+    "slug": "lediri",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 20,
+  "fields": {
+    "name": "rule",
+    "slug": "rule",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 21,
+  "fields": {
+    "name": "The",
+    "slug": "the",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 22,
+  "fields": {
+    "name": "Trigonometric",
+    "slug": "trigonometric",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 23,
+  "fields": {
+    "name": "poetry",
+    "slug": "poetry",
+    "description": ""
+  }
+},
+{
+  "model": "buza.topic",
+  "pk": 24,
+  "fields": {
+    "name": "poems/",
+    "slug": "poems",
+    "description": ""
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 11,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 4,
+    "tag": 8
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 12,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 4,
+    "tag": 9
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 13,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 4,
+    "tag": 3
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 14,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 5,
+    "tag": 10
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 15,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 6,
+    "tag": 11
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 16,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 7,
+    "tag": 12
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 17,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 8,
+    "tag": 13
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 18,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 8,
+    "tag": 14
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 20,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 9,
+    "tag": 16
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 21,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 10,
+    "tag": 17
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 22,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 11,
+    "tag": 18
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 23,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 12,
+    "tag": 19
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 24,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 13,
+    "tag": 9
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 25,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 13,
+    "tag": 20
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 26,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 13,
+    "tag": 21
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 27,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 14,
+    "tag": 22
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 28,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 15,
+    "tag": 24
+  }
+},
+{
+  "model": "buza.questiontopic",
+  "pk": 29,
+  "fields": {
+    "content_type": [
+      "buza",
+      "question"
+    ],
+    "object_id": 15,
+    "tag": 23
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$FUddRKJRABdr$lb2RRI3eWo16yS7QO7twK3U0oKigcPLX8FGeGD2fexY=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.org",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2018-09-20T18:48:57.355Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": []
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$Pch3idPc5KPS$ZizlHSrPaer1lPmE8hHnTbXeUebnoaCeBOKDCifQYIQ=",
+    "last_login": "2018-08-24T17:29:28Z",
+    "is_superuser": false,
+    "username": "tester0",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-19T09:33:57Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      1
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$q2xi6FdRA9w9$Pc+Vv+SJvRuHRlh/g0e0Z+9/Q6vvW6jlOuu3WHLds5g=",
+    "last_login": "2018-08-21T07:08:07.390Z",
+    "is_superuser": false,
+    "username": "tester1",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-21T06:26:28.824Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      3,
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$ga58DyJKQM7P$nmkzjFEcuGeDZgbR8N+kVe/RXnELnJHNDsdt/+xSWMU=",
+    "last_login": "2018-08-21T07:15:58.144Z",
+    "is_superuser": false,
+    "username": "tester2",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-21T06:26:55.654Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      3
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$NtuN5wiiGowo$ImMgMxDWyGbd5NlmQupXXsZxqrqzOG/Yx9N+0r1IzTI=",
+    "last_login": "2018-08-21T07:22:15.987Z",
+    "is_superuser": false,
+    "username": "tester3",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-21T06:27:17.042Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      1,
+      6
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$LmgHyF6JmsnD$W48TkRhBLD79RX9i/nBXB2KCYMlm6QTRTEKToj4et8M=",
+    "last_login": "2018-08-21T07:33:37.125Z",
+    "is_superuser": false,
+    "username": "tester4",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-21T06:27:39.957Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      1
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$CTiDw7WZw8ms$gcX9Dw1OKQVga4s9KfrmYwrxSXN1iWZ3fiSBXV5/VZE=",
+    "last_login": "2018-08-22T11:10:29.771Z",
+    "is_superuser": false,
+    "username": "tester5",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-22T10:59:38.076Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      3,
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$fvymldkyRDij$k2Ht4KIuDfKPcR+AsuUPMK8nCHb4S1kkY+XnK5mJNWA=",
+    "last_login": "2018-08-22T11:21:25.126Z",
+    "is_superuser": false,
+    "username": "tester6",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-22T10:59:58.970Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      2
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$i3y6bsBxyo0R$taVDjjMcFF+RcW/9cGBG46pYMjUZPkvwqlARpfDwLTo=",
+    "last_login": "2018-08-22T11:30:34.453Z",
+    "is_superuser": false,
+    "username": "tester7",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-22T11:00:20.984Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      8
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$eoMSZdcvDKQ8$tEppJ4pN7eSjjApsVYTzex2DU7SkoEOFjxyGpYT6wZE=",
+    "last_login": "2018-08-22T11:38:21.137Z",
+    "is_superuser": false,
+    "username": "tester8",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-22T11:00:41.087Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$unkx3xPkws3J$r60J6aJ89R3UXfN6FPWFSqyaqDsTy3B9P2QMnOXiZUQ=",
+    "last_login": "2018-08-24T06:52:03.605Z",
+    "is_superuser": false,
+    "username": "tester9",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-24T06:49:24.806Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": []
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$25NPyzuMcPoR$IPpTcVYNcbHRC3VyjLiSBdcgVOL9tAuoiBfIh3J0kmg=",
+    "last_login": "2018-08-24T07:05:37.686Z",
+    "is_superuser": false,
+    "username": "tester10",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-24T06:49:55.212Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      3,
+      6
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$Ylx0hAasVf5D$88m+zfHTwgRLF9H+/PqtXvK8Y6wxD4xFTtRAvXs2cww=",
+    "last_login": "2018-08-24T09:17:03.531Z",
+    "is_superuser": false,
+    "username": "tester11",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-24T09:05:21.988Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      3,
+      7,
+      8,
+      9
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$zGudUZAOcO9S$tC5Rpy3UWjojw+PjjYQ74hhrYAg6R8H75ay7IzOvNfs=",
+    "last_login": "2018-08-24T09:30:10.586Z",
+    "is_superuser": false,
+    "username": "tester12",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-24T09:05:33.210Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": [
+      2
+    ]
+  }
+},
+{
+  "model": "buza.user",
+  "fields": {
+    "password": "pbkdf2_sha256$120000$eYWZDOghZwTI$lI3rFaaJeJCXYf9RKxS8nr8H7W48BNsj0JRzMC4uBbY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "tester13",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-08-24T09:05:49.071Z",
+    "phone": "",
+    "school": null,
+    "school_address": null,
+    "grade": 7,
+    "photo": "",
+    "bio": null,
+    "groups": [],
+    "user_permissions": [],
+    "subjects": []
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 4,
+  "fields": {
+    "created": "2018-08-20T18:09:15.604Z",
+    "modified": "2018-08-20T18:09:15.604Z",
+    "author": [
+      "tester0"
+    ],
+    "title": "How do I calculate the area of a triangle",
+    "body": "Given the height is 5 and base 16, how do I calculate the area of the triangle?",
+    "subject": 8,
+    "grade": 7
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 5,
+  "fields": {
+    "created": "2018-08-21T07:10:21.093Z",
+    "modified": "2018-08-21T07:10:21.093Z",
+    "author": [
+      "tester1"
+    ],
+    "title": "how do you calculate area of a circle",
+    "body": "how do you calculate area of a circle when given diameter of 8",
+    "subject": 8,
+    "grade": 7
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 6,
+  "fields": {
+    "created": "2018-08-21T07:25:49.811Z",
+    "modified": "2018-08-21T07:26:15.666Z",
+    "author": [
+      "tester3"
+    ],
+    "title": "finding the area",
+    "body": "how can i find the area of a triangle",
+    "subject": 8,
+    "grade": 7
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 7,
+  "fields": {
+    "created": "2018-08-21T07:36:10.340Z",
+    "modified": "2018-08-21T07:36:35.848Z",
+    "author": [
+      "tester4"
+    ],
+    "title": "dennotation",
+    "body": "define the word dennotation",
+    "subject": 1,
+    "grade": 7
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 8,
+  "fields": {
+    "created": "2018-08-22T11:13:31.835Z",
+    "modified": "2018-08-23T17:53:42.288Z",
+    "author": [
+      "tester5"
+    ],
+    "title": "what is the defination of potential energy",
+    "body": "what is the defination of potential energy",
+    "subject": 9,
+    "grade": 10
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 9,
+  "fields": {
+    "created": "2018-08-22T11:27:20.290Z",
+    "modified": "2018-08-23T17:53:31.160Z",
+    "author": [
+      "tester6"
+    ],
+    "title": "what is gravitational force",
+    "body": "the definition of gravitational force",
+    "subject": 9,
+    "grade": 10
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 10,
+  "fields": {
+    "created": "2018-08-22T11:34:31.907Z",
+    "modified": "2018-08-23T17:53:22.357Z",
+    "author": [
+      "tester7"
+    ],
+    "title": "the formula of the gravitation force",
+    "body": "",
+    "subject": 9,
+    "grade": 10
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 11,
+  "fields": {
+    "created": "2018-08-22T11:46:38.980Z",
+    "modified": "2018-08-23T17:53:02.755Z",
+    "author": [
+      "tester8"
+    ],
+    "title": "how do you calculate velocity",
+    "body": "how do you calculate velocity",
+    "subject": 9,
+    "grade": 10
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 12,
+  "fields": {
+    "created": "2018-08-23T18:02:04.896Z",
+    "modified": "2018-08-23T18:02:04.896Z",
+    "author": [
+      "tester0"
+    ],
+    "title": "lediri ke eng",
+    "body": "mme o jesa ngwana",
+    "subject": 3,
+    "grade": 8
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 13,
+  "fields": {
+    "created": "2018-08-24T07:03:26.578Z",
+    "modified": "2018-08-24T07:03:26.578Z",
+    "author": [
+      "tester9"
+    ],
+    "title": "What is the fomuler for distance?",
+    "body": "What is the fomuler for distance?",
+    "subject": 8,
+    "grade": 10
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 14,
+  "fields": {
+    "created": "2018-08-24T07:11:59.418Z",
+    "modified": "2018-08-24T07:11:59.418Z",
+    "author": [
+      "tester10"
+    ],
+    "title": "how do you keep up with changing school topics",
+    "body": "goreng ga o tlhaloganya topic mo maths e be morutabana a fetola kgotsa a tla ka topic e e ntshwa?",
+    "subject": 8,
+    "grade": 11
+  }
+},
+{
+  "model": "buza.question",
+  "pk": 15,
+  "fields": {
+    "created": "2018-08-24T09:26:28.140Z",
+    "modified": "2018-08-24T09:26:46.895Z",
+    "author": [
+      "tester11"
+    ],
+    "title": "how to master poetry tests?",
+    "body": "what should i do to understand poetry test and the question",
+    "subject": 1,
+    "grade": 12
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 3,
+  "fields": {
+    "created": "2018-08-20T18:11:53.164Z",
+    "modified": "2018-08-20T18:11:53.164Z",
+    "author": [
+      "tester0"
+    ],
+    "question": 4,
+    "body": "The area of a triangle is the 1/2(heightXbase)\r\nSo in your problem that would be 1/2(5*16) which is 80.\r\nI hope that helps"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 4,
+  "fields": {
+    "created": "2018-08-21T07:11:45.306Z",
+    "modified": "2018-08-21T07:12:27.797Z",
+    "author": [
+      "tester1"
+    ],
+    "question": 4,
+    "body": "1/2(base*height)"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 5,
+  "fields": {
+    "created": "2018-08-21T07:17:55.917Z",
+    "modified": "2018-08-21T07:17:55.918Z",
+    "author": [
+      "tester2"
+    ],
+    "question": 5,
+    "body": "3.14*4^2"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 6,
+  "fields": {
+    "created": "2018-08-21T07:28:56.610Z",
+    "modified": "2018-08-21T07:28:56.610Z",
+    "author": [
+      "tester3"
+    ],
+    "question": 5,
+    "body": "3.14*8=25.12"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 7,
+  "fields": {
+    "created": "2018-08-22T11:18:27.473Z",
+    "modified": "2018-08-22T11:18:27.473Z",
+    "author": [
+      "tester5"
+    ],
+    "question": 6,
+    "body": "1/2(base)*height"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 8,
+  "fields": {
+    "created": "2018-08-22T11:24:09.730Z",
+    "modified": "2018-08-22T11:24:26.786Z",
+    "author": [
+      "tester6"
+    ],
+    "question": 8,
+    "body": "it is the energy stored in an object"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 9,
+  "fields": {
+    "created": "2018-08-22T11:35:48.932Z",
+    "modified": "2018-08-22T11:35:48.932Z",
+    "author": [
+      "tester7"
+    ],
+    "question": 6,
+    "body": "1/2 base*height"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 10,
+  "fields": {
+    "created": "2018-08-22T11:41:13.718Z",
+    "modified": "2018-08-22T11:41:13.718Z",
+    "author": [
+      "tester8"
+    ],
+    "question": 4,
+    "body": "1/2*(5)*(16)"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 11,
+  "fields": {
+    "created": "2018-08-24T06:57:01.066Z",
+    "modified": "2018-08-24T06:57:01.066Z",
+    "author": [
+      "tester9"
+    ],
+    "question": 7,
+    "body": "dictionary meaning.The actual meaning of the word."
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 12,
+  "fields": {
+    "created": "2018-08-24T09:20:25.886Z",
+    "modified": "2018-08-24T09:20:25.886Z",
+    "author": [
+      "tester11"
+    ],
+    "question": 12,
+    "body": "lediri ke lefoko le le dirang tiro\r\nin the sentence \"mme o jesa ngwana\"\r\nlediri \" jesa\"\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n'"
+  }
+},
+{
+  "model": "buza.answer",
+  "pk": 13,
+  "fields": {
+    "created": "2018-08-24T09:34:19.994Z",
+    "modified": "2018-08-24T09:34:19.994Z",
+    "author": [
+      "tester12"
+    ],
+    "question": 14,
+    "body": "The thing is that teachers are there to keep their school learners up to date with the material the students need in order to be able to pass that particular date.So,you can make things easier for yourself by making sure that when ever you feel like you are getting lost in a topic,you actually go and ask for help from any person you feel comfortable asking questions with.Therefore it will be easy to inter-change between different topics."
+  }
+}
+]

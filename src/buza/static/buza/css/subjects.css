@@ -3,9 +3,9 @@
 /* Block: Subjects */
 .subject__card {
     background-color: white;
-    padding: 1% 1%;
+    padding: 1em 1em;
     /* Spacing between subjects: */
-    margin: 1% 0% 0% 1%;
+    margin: 1em 0em 0em 1em;
     display: table;
     /* Shadow */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);

@@ -1,16 +1,13 @@
 /* Styles for Subjects. */
 
 /* Block: Subjects */
-.subject {
-    background-color: white;
+.subject__card {
     padding: 1em 2em;
-    /* Spacing between questions: */
-    margin-top: 1em;
-    margin-bottom: 1em;
-    /* Shadow */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0.25em;
     text-align: center;
+    display: inline-block;
+}
+.subject__card:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 subject-nav_bar{
@@ -20,7 +17,7 @@ subject-nav_bar{
     border-radius: 10%;
 }
 
-.question__answers_heading {
+.subject_heading {
     font-weight: bold;
     text-align: center;
     color:  #5689E8;
@@ -28,10 +25,6 @@ subject-nav_bar{
 
 .subject__title {
     font-weight: bold;
-}
-.subject__attribution {
-    opacity: 0.5;
-    font-size: smaller;
 }
 
 .subject__follow-button{
@@ -73,9 +66,3 @@ subject-nav_bar{
 .subject__subjects-nav-hidden, .subject__subjects-nav-hidden:hover{
    color:   #32CD32; /* Green */
 }
-
-.subject__btn_container{
-text-align:center;
-font-size: 16px;
-}
-

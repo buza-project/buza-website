@@ -9,51 +9,42 @@
 {% block title %}Subjects - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1 class="question__answers_heading ">Subjects</h1>
+    <h1 class="subject_heading ">Subjects</h1>
 
-    <div class="subject__btn_container">
-        {% if user.is_authenticated %}
-            <a href="{% url 'my-subject-list' pk=user.pk%}" class="subject__subjects-nav subject__subjects-nav-hidden">
-                My Subjects </a>
-            <a href="{% url 'subject-list' %}" class="subject__subjects-nav subject__subjects-nav-view">
-                All Subjects </a>
-        {% endif %}
-    </div>
-
+    <div  class="card-columns">
 
     {% for subject in subject_list %}
-        <div class="subject">
-
-                <a href="{% url 'subject-detail' subject.pk %}" class="d-block subject__title">
+         <div class="card subject__card table-hover" >
+               <a href="{% url 'subject-detail' subject.pk %}" class="subject_title">
                     {{ subject.title }}
-                </a>
-                    <div class="subject__body">
-        {{ subject.description|linebreaks|truncatewords:20 }}
-        </div>
-
-            {% if user.is_authenticated %}
+                    <div class="card_body">
+                {% if user.is_authenticated %}
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="subject__follow-button">
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__follow-button">
                                 follow
                             </button>
                         </form>
-                    {% else %}
+                        {% else %}
                         <form action="" method="post">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="subject__following-button">
+                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="btn btn-primary subject__following-button">
                                 following
                             </button>
                         </form>
                     {% endif %}
-            {% endif %}
-            <div class="subject__attribution">
-        {{ subject.question_set.count}} questions,  {{subject.user_set.count}} users
-        <a class="date"> {{ question.created }}</a>
-    </div>
-        </div>
-    {% endfor %}
+                {% endif %}
+                         <div>
+                             <p class="card-text"><small class="text-muted">
+                                {{ subject.question_set.count}} questions,  {{subject.user_set.count}} members
+                             </small></p>
+                        </div>
+                    </div>
+               </a>
 
+         </div>
+    {% endfor %}
+         </div>
 {% endblock %}
 

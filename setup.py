@@ -37,6 +37,7 @@ setup(
         'Pillow',
 
         # Django libraries
+        'django-crispy-forms',
         'django-environ',
         'django-taggit',
         'social-auth-app-django',

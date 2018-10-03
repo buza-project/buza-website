@@ -1,19 +1,47 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Type
 
+from crispy_forms import layout
+from crispy_forms.helper import FormHelper
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
-from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.views.generic.edit import FormMixin, ModelFormMixin
 
 from buza import models
 from buza.forms import UserEditForm
+
+
+class CrispyFormMixin(FormMixin):
+    """
+    Helper class for crispy-forms rendering.
+    """
+
+    def get_form(
+            self,
+            form_class: Optional[Type[forms.BaseForm]] = None,
+    ) -> forms.BaseForm:
+        """
+        Add this view's crispy-forms ``helper`` to the form instance.
+        """
+        form = super().get_form(form_class)
+        form.helper = self.get_form_helper(form)
+        return form
+
+    def get_form_helper(self, form: forms.BaseForm) -> FormHelper:
+        """
+        Return the `FormHelper` to use for this view.
+
+        Extend this to customise
+        """
+        return FormHelper(form)
 
 
 # TODO: Migrate to class based views
@@ -127,7 +155,10 @@ class QuestionList(generic.ListView):
     ordering = ['-created']
 
 
-class QuestionCreate(LoginRequiredMixin, generic.CreateView):
+class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin):
+    """
+    Base class for the Question create & update views.
+    """
     model = models.Question
     fields = [
         'title',
@@ -136,16 +167,6 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         'topics',
         'grade',
     ]
-
-    def form_valid(self, form: ModelForm) -> HttpResponse:
-        """
-        Set the question's author to the posting user.
-        """
-        question: models.Question = form.instance
-        author: models.User = self.request.user
-        assert author.is_authenticated, author
-        question.author = author
-        return super().form_valid(form)
 
     def get_success_url(self) -> str:
         """
@@ -156,15 +177,30 @@ class QuestionCreate(LoginRequiredMixin, generic.CreateView):
         return success_url
 
 
-class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
-    model = models.Question
-    fields = [
-        'title',
-        'body',
-        'subject',
-        'topics',
-        'grade',
-    ]
+class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
+
+    def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
+        helper = super().get_form_helper(form)
+        helper.form_action = reverse('question-create')
+        helper.add_input(layout.Submit(
+            name='submit',
+            value='Ask question',
+            css_class='btn-buza-green',
+        ))
+        return helper
+
+    def form_valid(self, form: forms.ModelForm) -> HttpResponse:
+        """
+        Set the question's author to the posting user.
+        """
+        question: models.Question = form.instance
+        author: models.User = self.request.user
+        assert author.is_authenticated, author
+        question.author = author
+        return super().form_valid(form)
+
+
+class QuestionUpdate(QuestionModelFormMixin, generic.UpdateView):
 
     def get_object(self, queryset=None):
         """
@@ -177,13 +213,18 @@ class QuestionUpdate(LoginRequiredMixin, generic.UpdateView):
             raise PermissionDenied('You can only edit your own questions.')
         return question
 
-    def get_success_url(self) -> str:
-        """
-        Redirect to the question.
-        """
-        question: models.Question = self.object
-        success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
-        return success_url
+    def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
+        helper = super().get_form_helper(form)
+        helper.form_action = reverse(
+            'question-update',
+            kwargs=dict(pk=form.instance.pk),
+        )
+        helper.add_input(layout.Submit(
+            name='submit',
+            value='Save',
+            css_class='btn-buza-green',
+        ))
+        return helper
 
 
 class AnswerCreate(LoginRequiredMixin, generic.CreateView):
@@ -213,7 +254,7 @@ class AnswerCreate(LoginRequiredMixin, generic.CreateView):
         self.question = get_object_or_404(models.Question, pk=question_pk)
         return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form: ModelForm) -> HttpResponse:
+    def form_valid(self, form: forms.ModelForm) -> HttpResponse:
         """
         Set the answer's author to the posting user.
         """

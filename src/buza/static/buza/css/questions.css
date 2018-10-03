@@ -25,24 +25,11 @@
     color: DarkOrchid;
 }
 
-.question__ask_question {
-    background-color:#32CD32;
-    color: white;
-    border-radius: 12px;
-    padding: 1px 3px;
-    text-align: center;
-}
-
-.question__edit_question {
-    background-color:#32CD32;
-    border-radius: 12px;
-    padding: 1px 4%;
-    text-align: center;
-    color: white;
-}
-
-.question__edit_question:hover{
-    color: white;
+/* XXX (Pi 2018-08-27): Temporary btn-primary override for our Buza green, until we do this better. */
+.btn-buza-green {
+    background-color: #32CD32;
+    border-color: #32CD32;
+    border-radius: 1em;
 }
 
 .question__add_answer {
@@ -74,4 +61,9 @@ textarea[name=body] {
     border-radius: 12px;
     margin:1%;
 
+}
+
+/* TODO (Pi 2018-08-27): Target the Bootstrap form-control class directly, for now. Customise this more properly later. */
+.form-control {
+    border: 2px solid #32CD32;
 }

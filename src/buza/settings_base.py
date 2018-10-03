@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'buza',
 
     # Third-party apps
+    'crispy_forms',
     'taggit',
     # 'social_django',
 
@@ -41,11 +42,6 @@ TEMPLATES = [{
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
         ],
-
-        'libraries': {
-            'buze_tags': 'buza.templatetags.buza_tags',
-
-        },
     },
 }]
 
@@ -60,3 +56,7 @@ AUTH_USER_MODEL = 'buza.User'
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+
+# django-crispy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

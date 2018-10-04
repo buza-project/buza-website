@@ -561,6 +561,12 @@ class TestSubjectList(TestCase):
         self.assertContains(response, self.first_subject.title, count=1)
         self.assertContains(response, self.second_subject.title, count=1)
 
+        # Listed by title.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: bio>',
+            '<Subject: maths>',
+        ])
+
     def test_get__no_followed_subjects(self) -> None:
         """
         Logged in users can view the list of questions and follow them
@@ -572,6 +578,12 @@ class TestSubjectList(TestCase):
         self.assertContains(response, "following", 0)
         self.assertContains(response, self.first_subject.title, count=1)
         self.assertContains(response, self.second_subject.title, count=1)
+
+        # Listed by title.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: bio>',
+            '<Subject: maths>',
+        ])
 
     def test_get__followed_subjects(self) -> None:
         """
@@ -587,6 +599,12 @@ class TestSubjectList(TestCase):
         self.assertContains(
             response,
             "follow")
+
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: maths>',
+            '<Subject: bio>',
+        ])
 
 
 class TestSubjectDetails(TestCase):

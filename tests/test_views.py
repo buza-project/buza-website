@@ -543,10 +543,8 @@ class TestSubjectList(TestCase):
 
     def setUp(self) -> None:
         self.user: models.User = models.User.objects.create()
-        self.first_subject: models.Subject = \
-            models.Subject.objects.create(title="maths")
-        self.second_subject: models.Subject = \
-            models.Subject.objects.create(title="bio")
+        self.maths: models.Subject = models.Subject.objects.create(title='Maths')
+        self.biology: models.Subject = models.Subject.objects.create(title='Biology')
         self.path = reverse('subject-list')
 
     def test_get__unauthenticated(self) -> None:
@@ -558,8 +556,14 @@ class TestSubjectList(TestCase):
         assert HTTPStatus.OK == response.status_code
         self.assertNotContains(response, "Follow")
         self.assertNotContains(response, "Unfollow")
-        self.assertContains(response, self.first_subject.title, count=1)
-        self.assertContains(response, self.second_subject.title, count=1)
+        self.assertContains(response, self.maths.title, count=1)
+        self.assertContains(response, self.biology.title, count=1)
+
+        # Listed by title.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Maths>',
+        ])
 
     def test_get__no_followed_subjects(self) -> None:
         """
@@ -570,8 +574,14 @@ class TestSubjectList(TestCase):
         assert HTTPStatus.OK == response.status_code
         self.assertContains(response, "follow")
         self.assertContains(response, "following", 0)
-        self.assertContains(response, self.first_subject.title, count=1)
-        self.assertContains(response, self.second_subject.title, count=1)
+        self.assertContains(response, self.maths.title, count=1)
+        self.assertContains(response, self.biology.title, count=1)
+
+        # Listed by title.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Maths>',
+        ])
 
     def test_get__followed_subjects(self) -> None:
         """
@@ -579,14 +589,18 @@ class TestSubjectList(TestCase):
         :return:
         """
         self.client.force_login(self.user)
-        self.user.subjects.add(self.first_subject)
+        self.user.subjects.add(self.maths)
         response = self.client.get(self.path)
         self.assertTemplateUsed(response, 'buza/subject_list.html')
         assert HTTPStatus.OK == response.status_code
         self.assertContains(response, "following")
-        self.assertContains(
-            response,
-            "follow")
+        self.assertContains(response, "follow")
+
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Maths>',
+            '<Subject: Biology>',
+        ])
 
 
 class TestSubjectDetails(TestCase):

@@ -1,6 +1,7 @@
 from functools import partial
+from typing import Union
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -78,6 +79,10 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return str(self.username)
+
+
+#: Helper type for Django request users: either anonymous or signed-in.
+RequestUser = Union[AnonymousUser, User]
 
 
 class Question(TimestampedModel, models.Model):

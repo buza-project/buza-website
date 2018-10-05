@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import QuerySet
+from django.db.models import BooleanField, Exists, OuterRef, QuerySet, Value
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -117,6 +117,30 @@ class SubjectDetail(generic.DetailView):
 
 class SubjectList(generic.ListView):
     model = models.Subject
+
+    # Order subjects that the user is following first, then by title.
+    ordering = ['-user_following', 'title']
+
+    def get_queryset(self) -> QuerySet:
+        """
+        Annotate each `Subject` with a `user_following` field,
+        which is true if the authenticated user is following it.
+        """
+        queryset: QuerySet = super().get_queryset()
+        user: models.RequestUser = self.request.user
+
+        if user.is_authenticated:
+            # Subquery existence check for relation to user:
+            return queryset.annotate(
+                user_following=Exists(
+                    models.User.objects.filter(pk=user.pk, subjects=OuterRef('pk')),
+                ),
+            )
+        else:
+            # For anonymous users, always false.
+            return queryset.annotate(
+                user_following=Value(False, output_field=BooleanField()),
+            )
 
     def post(self, request, *args, **kwargs):
         if 'follow-subject' in request.POST:

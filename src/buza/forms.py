@@ -1,12 +1,20 @@
 from django import forms
 
 from buza.models import User
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 class UserEditForm(forms.ModelForm):
     """
     Allow users to edit all the extra information
     """
+
+    def __init__(self, *args, **kwargs):
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.add_input(Submit('submit', 'Save Changes'))
+
     class Meta:
         model = User
         fields = (

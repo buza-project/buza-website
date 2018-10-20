@@ -9,8 +9,7 @@
 {% block title %}Questions - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="d-flex flex-wrap justify-content-between align-items-baseline">
-        <h2>Questions</h2>
+    <div class="mx-auto ml-5 nav justify-content-end">
         <a href="{% url 'question-create' %}" class="d-block">
             <div class="btn btn-primary btn-buza-green">Ask New Question</div>
         </a>

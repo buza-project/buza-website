@@ -107,10 +107,6 @@ def edit(request: HttpRequest) -> HttpResponse:
     )
 
 
-class TopicDetail(generic.DetailView):
-    model = models.Topic
-
-
 class SubjectDetail(generic.DetailView):
     model = models.Subject
 
@@ -188,7 +184,6 @@ class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin
         'title',
         'body',
         'subject',
-        'topics',
         'grade',
     ]
 

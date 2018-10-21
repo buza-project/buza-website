@@ -162,7 +162,8 @@ class TestUserDetail(TestCase):
 
     def test_not_found(self) -> None:
         response = self.client.get(reverse('user-detail', kwargs=dict(pk=404)))
-        assert HTTPStatus.NOT_FOUND == response.status_code
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/404.html')
 
     def test_get(self) -> None:
         user = models.User.objects.create(
@@ -186,7 +187,8 @@ class TestQuestionDetail(TestCase):
 
     def test_not_found(self) -> None:
         response = self.client.get(reverse('user-detail', kwargs=dict(pk=404)))
-        assert HTTPStatus.NOT_FOUND == response.status_code
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/404.html')
 
     def test_get(self) -> None:
         user = models.User.objects.create()
@@ -411,12 +413,13 @@ class TestAnswerCreate(TestCase):
     def test__not_found(self) -> None:
         path = reverse('answer-create', kwargs=dict(question_pk=404))
         # Anonymous:
-        assert HTTPStatus.NOT_FOUND == self.client.get(path).status_code
-        assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
+        assert HTTPStatus.OK == self.client.get(path).status_code
+        assert HTTPStatus.METHOD_NOT_ALLOWED == self.client.post(path).status_code
         # Authenticated:
         self.client.force_login(self.user)
-        assert HTTPStatus.NOT_FOUND == self.client.get(path).status_code
-        assert HTTPStatus.NOT_FOUND == self.client.post(path).status_code
+        assert HTTPStatus.OK == self.client.get(path).status_code
+        self.assertTemplateUsed(self.client.get(path), 'buza/404.html')
+        assert HTTPStatus.METHOD_NOT_ALLOWED == self.client.post(path).status_code
 
     def test___anonymous(self) -> None:
         """
@@ -607,7 +610,8 @@ class TestSubjectDetails(TestCase):
 
     def test_not_found(self) -> None:
         response = self.client.get(reverse('subject-detail', kwargs=dict(pk=404)))
-        assert HTTPStatus.NOT_FOUND == response.status_code
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/404.html')
 
     def test_get(self) -> None:
         user = models.User.objects.create()
@@ -630,3 +634,13 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, subject.title)
         self.assertContains(response, subject.description, count=1)
         self.assertContains(response, question.title, count=1)
+
+
+
+class Test404PageNotFound(TestCase):
+
+    def test_url_not_found(self):
+        response = self.client.get('404/not-found/test')
+        self.assertTemplateUsed(response, 'buza/404.html')
+        self.assertContains(response, 'We could not find the page you were looking for')
+        self.assertContains(response, 'Take me home')

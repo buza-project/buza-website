@@ -265,11 +265,6 @@ class TestQuestionCreate(TestCase):
         self.assertContains(response, 'Question Summary', count=1)
         self.assertContains(
             response,
-            'Which grade it this question most relevant for?',
-            count=1,
-        )
-        self.assertContains(
-            response,
             'Give a detailed description of your question',
             count=1,
         )
@@ -287,7 +282,6 @@ class TestQuestionCreate(TestCase):
         assert [] == form.non_field_errors()
         assert {
             'title': ['This field is required.'],
-            'grade': ['This field is required.'],
         } == form.errors
         assert not form.is_valid()
 

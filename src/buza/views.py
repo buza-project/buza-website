@@ -183,7 +183,6 @@ class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin
     fields = [
         'title',
         'body',
-        'grade',
     ]
     subject: models.Subject
 
@@ -233,6 +232,7 @@ class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
         assert author.is_authenticated, author
         question.author = author
         question.subject = self.subject
+        question.grade = author.grade
         return super().form_valid(form)
 
 

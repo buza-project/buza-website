@@ -44,4 +44,18 @@
             </div>
              </div>
         </div>
+            <div>
+            {% with topics=question.topics.all %}
+                {% if topics %}
+                    {% for topic in topics %}
+                            <a href="{% url 'topic-detail' slug=topic.slug %}" class="questiontopic__box"> {{topic.name}} </a>
+
+                {% endfor %}
+                {% endif %}
+            {% endwith %}
+                </div>
+
+
+
+
 </div>

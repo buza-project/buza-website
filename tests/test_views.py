@@ -198,6 +198,7 @@ class TestQuestionDetail(TestCase):
             subject=subject,
             grade=7,
         )
+        question.topics.add("trigonometry")
         answer: models.Answer = models.Answer.objects.create(
             body='An answer',
             question=question,
@@ -213,6 +214,8 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, question.body, count=1)
         self.assertContains(response, subject.title, count=1)
         self.assertContains(response, answer.body, count=1)
+        # occurs twice: the link to the tag and the tag
+        self.assertContains(response, question.topics.all()[0].name, count=2)
 
 
 class TestQuestionList(TestCase):
@@ -230,39 +233,32 @@ class TestQuestionList(TestCase):
 
 class TestQuestionCreate(TestCase):
 
-    def setUp(self) -> None:
-        self.subject: models.Subject = models.Subject.objects.create(title='maths')
-        self.user: models.User = models.User.objects.create()
-
     def test_get__anonymous(self) -> None:
-        response = self.client.get(reverse(
-            'question-create',
-            kwargs=dict(subject_pk=self.subject.pk),
-        ))
-        self.assertRedirects(
-            response,
-            f'/auth/login/?next=/questions/{self.subject.pk}/ask/',
-        )
+        response = self.client.get(reverse('question-create'))
+        self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
 
     def test_post__anonymous(self) -> None:
-        response = self.client.post(reverse(
-            'question-create',
-            kwargs=dict(subject_pk=self.subject.pk),
-        ))
-        self.assertRedirects(
-            response,
-            f'/auth/login/?next=/questions/{self.subject.pk}/ask/',
-        )
+        response = self.client.post(reverse('question-create'))
+        self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
 
     def test_get__authenticated(self) -> None:
-        self.client.force_login(self.user)
-        response = self.client.get(reverse(
-            'question-create',
-            kwargs=dict(subject_pk=self.subject.pk),
-        ))
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        response = self.client.get(reverse('question-create'))
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/question_form.html')
         self.assertContains(response, 'Question Summary', count=1)
+        self.assertContains(
+            response,
+            'List all the relevant topics for this question. ' +
+            'Example: Triangles, Equations, Photosynthesis.',
+            count=1,
+        )
+        self.assertContains(
+            response,
+            'Which grade it this question most relevant for?',
+            count=1,
+        )
         self.assertContains(
             response,
             'Give a detailed description of your question',
@@ -270,18 +266,19 @@ class TestQuestionCreate(TestCase):
         )
 
     def test_post__empty(self) -> None:
-        self.client.force_login(self.user)
-        response = self.client.post(reverse(
-            'question-create',
-            kwargs=dict(subject_pk=self.subject.pk),
-        ))
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        response = self.client.post(reverse('question-create'))
         assert HTTPStatus.OK == response.status_code
 
         assert 'form' in response.context
         form: ModelForm = response.context['form']  # noqa: E701
         assert [] == form.non_field_errors()
         assert {
+            'subject': ['This field is required.'],
             'title': ['This field is required.'],
+            'topics': ['This field is required.'],
+            'grade': ['This field is required.'],
         } == form.errors
         assert not form.is_valid()
 
@@ -289,24 +286,25 @@ class TestQuestionCreate(TestCase):
         """
         Question post redirects to question view
         """
-        self.client.force_login(self.user)
-        response = self.client.post(reverse(
-            'question-create',
-            kwargs=dict(subject_pk=self.subject.pk)),
-            data=dict(
-                title='This is a title',
-                body='This is a body',
-                grade=7,
+        user: models.User = models.User.objects.create()
+        self.client.force_login(user)
+        subject: models.Subject = models.Subject.objects.create(title="maths")
+        response = self.client.post(reverse('question-create'), data=dict(
+            title='This is a title',
+            body='This is a body',
+            subject=subject.pk,
+            topics="trig",
+            grade=7,
         ))
         question: models.Question = models.Question.objects.get()
         assert {
-            'author_id': self.user.pk,
+            'author_id': user.pk,
             'body': 'This is a body',
             'created': question.created,
             'id': question.pk,
             'modified': question.modified,
             'title': 'This is a title',
-            'subject_id': self.subject.pk,
+            'subject_id': subject.pk,
             'grade': question.grade,
         } == models.Question.objects.filter(pk=question.pk).values().get()
         self.assertRedirects(response, f'/questions/{question.pk}/')
@@ -322,6 +320,7 @@ class TestQuestionUpdate(TestCase):
             author=self.author,
             title='question',
             subject=self.subject,
+            topics="topic",
             grade=7,
         )
 
@@ -377,6 +376,7 @@ class TestQuestionUpdate(TestCase):
             title='This is a title updated',
             body='This is an updated body',
             subject=self.subject.pk,
+            topics="topic",
             grade=7,
         ))
 
@@ -630,3 +630,81 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, subject.title)
         self.assertContains(response, subject.description, count=1)
         self.assertContains(response, question.title, count=1)
+
+
+class TestQuestionTopicDetails(TestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.author: models.User = models.User.objects.create()
+        self.answer_author: models.User = \
+            models.User.objects.create(username='answer_author')
+        self.subject: models.Subject = models.Subject.objects.create(title="maths")
+        self.question: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='title of a question',
+            subject=self.subject,
+            grade=7,
+        )
+        self.question.topics.add("trig")
+
+    def test_not_found(self) -> None:
+        response = self.client.get(reverse
+                                   ('topic-detail',
+                                    kwargs=dict(slug='not-found')))
+        assert HTTPStatus.NOT_FOUND == response.status_code
+
+    def test_get(self) -> None:
+        '''
+        users can navigate to a topic and view all the questions for that topic
+        '''
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.topics.all()[0].slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, self.question.topics.all()[0].name)
+        self.assertContains(
+            response,
+            self.question.topics.all()[0].name + ' questions',
+            count=1,
+        )
+        self.assertContains(response, self.question.topics.all()[0])
+        self.assertContains(response, self.question.title, count=1)
+
+    def test_get__repeated_topics_in_different_questions(self) -> None:
+        '''
+        Questions with the same topic should both be listed in
+        the topic view
+        '''
+        second_question: models.Question = models.Question.objects.create(
+            author=self.author,
+            title='title of the second question',
+            subject=self.subject,
+            grade=7,
+        )
+        second_question.topics.add("trig")
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=self.question.topics.all()[0].slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, self.question.title, count=1)
+        self.assertContains(response, second_question.title, count=1)
+
+    def test_get__topic_description(self) -> None:
+        '''
+        Topic Description is displayed
+        '''
+        topic: models.QuestionTopic = self.question.topics.get(pk=1)
+        topic.description = "This is the description of a question"
+        topic.save()
+        self.path = reverse('topic-detail',
+                            kwargs=dict(
+                                slug=topic.slug))
+        response = self.client.get(self.path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/topic_detail.html')
+        self.assertContains(response, topic.name)
+        self.assertContains(response, topic.description, count=1)

@@ -9,6 +9,11 @@
 {% block title %}Questions - {{ block.super }}{% endblock %}
 
 {% block content %}
+    <div class="mx-auto ml-5 nav justify-content-end">
+        <a href="{% url 'question-create' %}" class="d-block">
+            <div class="btn btn-primary btn-buza-green">Ask New Question</div>
+        </a>
+    </div>
 
     {% for question in question_list %}
         {% include 'includes/question_card_brief.html' with question=question only %}

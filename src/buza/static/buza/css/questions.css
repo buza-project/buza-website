@@ -54,6 +54,16 @@ textarea[name=body] {
     max-width: 100%;
 }
 
+.questiontopic__box {
+    padding: 1% 1%;
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+    border-radius: 12px;
+    margin:1%;
+
+}
+
 /* TODO (Pi 2018-08-27): Target the Bootstrap form-control class directly, for now. Customise this more properly later. */
 .form-control {
     border: 2px solid #32CD32;

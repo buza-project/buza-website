@@ -52,6 +52,21 @@ class TestQuestion(TestCase):
         assert '<Question: By tester: Example question?>' == repr(question)
 
 
+class TestTopic(TestCase):
+
+    def test_repr(self) -> None:
+        topic: models.Topic = models.Topic(name='tester')
+        assert '<Topic: By tester>' == repr(topic)
+
+
+class TestQuestionopic(TestCase):
+
+    def test_repr(self) -> None:
+        topic: models.Topic = models.Topic(name='tester')
+        questiontopic: models.QuestionTopic = models.QuestionTopic(tag=topic)
+        assert '<QuestionTopic: None tagged with By tester>' == repr(questiontopic)
+
+
 class TestAnswer(TestCase):
 
     def test_repr(self) -> None:

@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from taggit import models as tags
+from taggit.managers import TaggableManager
 
 
 # Shortcuts:
@@ -28,6 +30,25 @@ class Subject(models.Model):
 
     def __str__(self) -> str:
         return str(self.title)
+
+
+class Topic(tags.TagBase):
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = _("Topic")
+        verbose_name_plural = _("Topics")
+
+    def __str__(self) -> str:
+        return f'By {self.name}'
+
+
+class QuestionTopic(tags.GenericTaggedItemBase):
+    tag = models.ForeignKey(
+        Topic,
+        on_delete=models.PROTECT,
+        related_name="question_topics",
+    )
 
 
 class User(AbstractUser):
@@ -77,6 +98,11 @@ class Question(TimestampedModel, models.Model):
         verbose_name='Question Description',
         help_text='Give a detailed description of your question')
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    topics = TaggableManager(
+        through=QuestionTopic,
+        help_text="List all the relevant topics for this question. " +
+                  "Example: Triangles, Equations, Photosynthesis.",
+        verbose_name='Topics')
     grade = models.IntegerField(
         validators=[MinValueValidator(7), MaxValueValidator(12)],
         help_text="Which grade it this question most relevant for? " +

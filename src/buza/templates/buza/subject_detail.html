@@ -12,7 +12,8 @@
 {% block content %}
     <h3>{{ subject.title }}</h3>
     <div class="d-flex flex-wrap justify-content-between align-items-baseline">
-        <a href="{% url 'question-create' subject_pk=subject.pk%}" class="d-block">
+        <h2>Questions</h2>
+        <a href="{% url 'question-create' %}" class="d-block">
             <div class="btn btn-primary btn-buza-green">Ask New {{ subject.title }} Question</div>
         </a>
     </div>

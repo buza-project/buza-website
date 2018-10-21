@@ -81,6 +81,16 @@ def register(request: HttpRequest) -> HttpResponse:
     )
 
 
+class EditUser(LoginRequiredMixin, generic.UpdateView):
+    model = models.User
+    fields = ['phone', 'school', 'school_address', 'grade', 'photo', 'bio', 'subjects']
+
+    def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
+        helper = super().get_form_helper(form)
+        helper.form_action = reverse('edit')
+        self.helper.add_input(layout.Submit('submit', 'Save Changes'))
+
+
 @login_required  # type: ignore
 def edit(request: HttpRequest) -> HttpResponse:
     """

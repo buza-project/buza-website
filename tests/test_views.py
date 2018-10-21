@@ -230,18 +230,36 @@ class TestQuestionList(TestCase):
 
 class TestQuestionCreate(TestCase):
 
+    def setUp(self) -> None:
+        self.subject: models.Subject = models.Subject.objects.create(title='maths')
+        self.user: models.User = models.User.objects.create()
+
     def test_get__anonymous(self) -> None:
-        response = self.client.get(reverse('question-create'))
-        self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
+        response = self.client.get(reverse(
+            'question-create',
+            kwargs=dict(subject_pk=self.subject.pk),
+        ))
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/questions/{self.subject.pk}/ask/',
+        )
 
     def test_post__anonymous(self) -> None:
-        response = self.client.post(reverse('question-create'))
-        self.assertRedirects(response, '/auth/login/?next=/questions/ask/')
+        response = self.client.post(reverse(
+            'question-create',
+            kwargs=dict(subject_pk=self.subject.pk),
+        ))
+        self.assertRedirects(
+            response,
+            f'/auth/login/?next=/questions/{self.subject.pk}/ask/',
+        )
 
     def test_get__authenticated(self) -> None:
-        user: models.User = models.User.objects.create()
-        self.client.force_login(user)
-        response = self.client.get(reverse('question-create'))
+        self.client.force_login(self.user)
+        response = self.client.get(reverse(
+            'question-create',
+            kwargs=dict(subject_pk=self.subject.pk),
+        ))
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/question_form.html')
         self.assertContains(response, 'Question Summary', count=1)
@@ -257,16 +275,17 @@ class TestQuestionCreate(TestCase):
         )
 
     def test_post__empty(self) -> None:
-        user: models.User = models.User.objects.create()
-        self.client.force_login(user)
-        response = self.client.post(reverse('question-create'))
+        self.client.force_login(self.user)
+        response = self.client.post(reverse(
+            'question-create',
+            kwargs=dict(subject_pk=self.subject.pk),
+        ))
         assert HTTPStatus.OK == response.status_code
 
         assert 'form' in response.context
         form: ModelForm = response.context['form']  # noqa: E701
         assert [] == form.non_field_errors()
         assert {
-            'subject': ['This field is required.'],
             'title': ['This field is required.'],
             'grade': ['This field is required.'],
         } == form.errors
@@ -276,24 +295,24 @@ class TestQuestionCreate(TestCase):
         """
         Question post redirects to question view
         """
-        user: models.User = models.User.objects.create()
-        self.client.force_login(user)
-        subject: models.Subject = models.Subject.objects.create(title="maths")
-        response = self.client.post(reverse('question-create'), data=dict(
-            title='This is a title',
-            body='This is a body',
-            subject=subject.pk,
-            grade=7,
+        self.client.force_login(self.user)
+        response = self.client.post(reverse(
+            'question-create',
+            kwargs=dict(subject_pk=self.subject.pk)),
+            data=dict(
+                title='This is a title',
+                body='This is a body',
+                grade=7,
         ))
         question: models.Question = models.Question.objects.get()
         assert {
-            'author_id': user.pk,
+            'author_id': self.user.pk,
             'body': 'This is a body',
             'created': question.created,
             'id': question.pk,
             'modified': question.modified,
             'title': 'This is a title',
-            'subject_id': subject.pk,
+            'subject_id': self.subject.pk,
             'grade': question.grade,
         } == models.Question.objects.filter(pk=question.pk).values().get()
         self.assertRedirects(response, f'/questions/{question.pk}/')

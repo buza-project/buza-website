@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Page not found  404 {{ block.super }}{% endblock %}
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/errors.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>We could not find the page you were looking for</h1>
+    <h4><a href="{% url 'subject-list' %}" class="buza-nav__link">Take me home</a></h4>
+{% endblock %}

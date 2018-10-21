@@ -27,4 +27,5 @@ STATICFILES_DIRS = [
     str(checkout_dir.joinpath('node_modules')),
 ]
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 from buza.settings_env import *  # noqa: F401 isort:skip

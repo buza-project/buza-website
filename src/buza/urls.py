@@ -55,3 +55,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
 ]
+
+# Django Error Pages
+handler404 = views.Custom404View.as_view()

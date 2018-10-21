@@ -359,3 +359,19 @@ class AnswerUpdate(LoginRequiredMixin, generic.UpdateView):
         question: models.Question = answer.question
         success_url: str = reverse('question-detail', kwargs=dict(pk=question.pk))
         return success_url
+
+
+class Custom404View(generic.TemplateView):
+    template_name = "buza/404.html"
+
+    @classmethod
+    def get_rendered_view(cls):
+        as_view_fn = cls.as_view()
+
+        def view_fn(request):
+            response = as_view_fn(request)
+            # this is what was missing before
+            response.render()
+            return response
+
+        return view_fn

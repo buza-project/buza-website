@@ -183,9 +183,9 @@ class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin
     fields = [
         'title',
         'body',
-        'subject',
         'grade',
     ]
+    subject: models.Subject
 
     def get_success_url(self) -> str:
         """
@@ -198,9 +198,25 @@ class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin
 
 class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
 
+    def dispatch(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            subject_pk: int,
+            **kwargs: Any,
+    ) -> HttpResponse:
+        """
+        Look up the question, and set `self.question`.
+        """
+        self.subject: models.Subject = get_object_or_404(models.Subject, pk=subject_pk)
+        return super().dispatch(request, *args, **kwargs)
+
     def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
         helper = super().get_form_helper(form)
-        helper.form_action = reverse('question-create')
+        helper.form_action = reverse(
+            'question-create',
+            kwargs=dict(subject_pk=self.subject.pk),
+        )
         helper.add_input(layout.Submit(
             name='submit',
             value='Ask question',
@@ -216,6 +232,7 @@ class QuestionCreate(QuestionModelFormMixin, generic.CreateView):
         author: models.User = self.request.user
         assert author.is_authenticated, author
         question.author = author
+        question.subject = self.subject
         return super().form_valid(form)
 
 

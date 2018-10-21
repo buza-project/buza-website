@@ -22,7 +22,11 @@ urlpatterns = [
     # question related paths
     path('questions/', views.QuestionList.as_view(), name='question-list'),
     path('questions/<int:pk>/', views.QuestionDetail.as_view(), name='question-detail'),
-    path('questions/ask/', views.QuestionCreate.as_view(), name='question-create'),
+    path(
+        'questions/<int:subject_pk>/ask/',
+        views.QuestionCreate.as_view(),
+        name='question-create',
+    ),
     path(
         'questions/<int:pk>/edit/',
         views.QuestionUpdate.as_view(),

@@ -12,7 +12,7 @@ urlpatterns = [
 
     # user related paths
     url(r'^register/$', views.register, name='register'),
-    path(r'edit/<int:pk>/', views.EditUser.as_view(), name='edit'),
+    path(r'users/<int:pk>/update/', views.UserUpdate.as_view(), name='user-update'),
     path(r'users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
 
     # subject related paths

@@ -8,7 +8,7 @@
     {# Viewing the signed-in user? #}
     {% if user_object == user %}
     <ul>
-        <li><a href="{% url 'edit' %}">Edit Account</a></li>
+        <li><a href="{% url 'user-update' pk=user_object.pk %}">Edit Account</a></li>
         <li><a href="{% url 'password_change' %}">Change Password</a></li>
         <li><a href="{% url 'logout' %}">Sign out</a></li>
     </ul>

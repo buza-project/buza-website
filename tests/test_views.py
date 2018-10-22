@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
 
-from buza import models, views
+from buza import models
 
 
 class TestRegister(TestCase):
@@ -104,58 +104,49 @@ class TestUserUpdate(TestCase):
         self.client.force_login(user)
         return user
 
-    def _assert_successful(self, user: models.User, response: HttpResponse) -> None:
-        """
-        Helper: Assert a successful form post.
-        """
-        assert HTTPStatus.OK == response.status_code
-        self.assertTemplateUsed(response, 'accounts/edit.html')
-
-        assert 'user_form' in response.context
-        form: views.UserEditForm = response.context['user_form']  # noqa: E701
-        assert user == form.instance
-        assert [] == form.non_field_errors()
-        assert {} == form.errors
-        assert form.is_valid()
-
     def test_get__anonymous(self) -> None:
-        response = self.client.get(reverse('edit'))
-        self.assertRedirects(response, '/auth/login/?next=/edit/')
+        user: models.User = models.User.objects.create()
+        response = self.client.get(reverse('user-update', kwargs=dict(pk=user.pk)))
+        self.assertRedirects(response, f'/auth/login/?next=/users/{user.pk}/update/')
 
     def test_post__anonymous(self) -> None:
-        response = self.client.post(reverse('edit'))
-        self.assertRedirects(response, '/auth/login/?next=/edit/')
+        user: models.User = models.User.objects.create()
+        response = self.client.post(reverse('user-update', kwargs=dict(pk=user.pk)))
+        self.assertRedirects(response, f'/auth/login/?next=/users/{user.pk}/update/')
 
     def test_get__authenticated(self) -> None:
         user = self._authenticated_user()
-        response = self.client.get(reverse('edit'))
+        response = self.client.get(reverse('user-update', kwargs=dict(pk=user.pk)))
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'accounts/edit.html')
 
-        assert 'user_form' in response.context
-        form: views.UserEditForm = response.context['user_form']  # noqa: E701
+        assert 'form' in response.context
+        form: ModelForm = response.context['form']  # noqa: E701
         assert user == form.instance
         assert not form.is_bound
 
     def test_post__empty(self) -> None:
         user = self._authenticated_user()
-        response = self.client.post(reverse('edit'))
-        self._assert_successful(user, response)
+        response = self.client.post(reverse('user-update', kwargs=dict(pk=user.pk)))
+        self.assertRedirects(response, reverse('user-detail', kwargs=dict(pk=user.pk)))
 
     def test_post__blank(self) -> None:
         user = self._authenticated_user()
-        response = self.client.post(reverse('edit'), data={
-            'email': '',
-            'phone': '',
-            'photo': '',
-            'first_name': '',
-            'last_name': '',
-            'school': '',
-            'school_address': '',
-            'grade': '',
-            'bio': '',
-        })
-        self._assert_successful(user, response)
+        response = self.client.post(
+            path=reverse('user-update', kwargs=dict(pk=user.pk)),
+            data={
+                'email': '',
+                'phone': '',
+                'photo': '',
+                'first_name': '',
+                'last_name': '',
+                'school': '',
+                'school_address': '',
+                'grade': '',
+                'bio': '',
+            },
+        )
+        self.assertRedirects(response, reverse('user-detail', kwargs=dict(pk=user.pk)))
 
 
 class TestUserDetail(TestCase):

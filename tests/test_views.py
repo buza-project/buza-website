@@ -608,6 +608,7 @@ class TestSubjectDetails(TestCase):
     def test_not_found(self) -> None:
         response = self.client.get(reverse('subject-detail', kwargs=dict(pk=404)))
         assert HTTPStatus.NOT_FOUND == response.status_code
+        self.assertTemplateUsed(response, '404.html')
 
     def test_get(self) -> None:
         user = models.User.objects.create()
@@ -630,3 +631,16 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, subject.title)
         self.assertContains(response, subject.description, count=1)
         self.assertContains(response, question.title, count=1)
+
+
+class Test404PageNotFound(TestCase):
+
+    def test_url_not_found(self):
+        response = self.client.get('404/not-found/test')
+        self.assertTemplateUsed(response, '404.html')
+        self.assertContains(
+            response,
+            'We could not find the page you were looking for',
+            status_code=HTTPStatus.NOT_FOUND,
+        )
+        self.assertContains(response, 'Take me home', status_code=HTTPStatus.NOT_FOUND)

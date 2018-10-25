@@ -19,6 +19,7 @@
 
 .question__title {
     font-weight: bold;
+    font-size: 1.2rem
 }
 .question__attribution {
     opacity: 0.5;

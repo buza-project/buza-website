@@ -38,6 +38,11 @@
     border-radius: 1em;
 }
 
+.btn-buza-green:hover{
+    background-color: #32CD32;
+    border-color: #C3E58B;
+}
+
 .question__add_answer {
     background-color:MediumOrchid ;
     border-radius: 12px;

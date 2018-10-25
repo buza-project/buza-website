@@ -15,7 +15,7 @@
 
     {% for subject in subject_list %}
          <div class="card subject__card table-hover" >
-               <a href="{% url 'subject-detail' subject.pk %}" class="subject_title">
+               <a href="{% url 'subject-detail' subject.pk %}" class="subject__title">
                     {{ subject.title }}
                     <div class="card_body">
                 {% if user.is_authenticated %}

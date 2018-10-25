@@ -20,7 +20,7 @@ subject-nav_bar{
 .subject_heading {
     font-weight: bold;
     text-align: center;
-    color:  #5689E8;
+    color: #32CD32;
 }
 
 .subject__title {
@@ -33,17 +33,20 @@ subject-nav_bar{
 
 .subject__follow-button{
     background-color: white;
+    opacity: 0.8;
     color: rgb(64,64,64);
-    border: 2px solid #5689E8;; /* Nav bar color */
+    border: 2px solid #efcfb0; /* Nav bar color */
     border-radius: 12px;
+    font-size: small;
 }
 
 .subject__following-button{
-    background:  #5689E8;
+    background:  #efcfb0;
     color: white;
-    border: 2px solid #5689E8; /* Nav bar color */
+    border: 2px solid #efcfb0; /* Nav bar color */
     border-radius: 12px;
     font-weight: bold;
+    font-size: small;
 }
 
 .subject__subjects-nav{

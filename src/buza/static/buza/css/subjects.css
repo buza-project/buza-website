@@ -26,6 +26,10 @@ subject-nav_bar{
 .subject__title {
     font-weight: bold;
 }
+.subject__title:hover {
+    font-weight: bold;
+    text-decoration: None;
+}
 
 .subject__follow-button{
     background-color: white;

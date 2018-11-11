@@ -79,7 +79,7 @@ class Question(TimestampedModel, models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     grade = models.IntegerField(
         validators=[MinValueValidator(7), MaxValueValidator(12)],
-        help_text="Which grade it this question most relevant for? " +
+        help_text="Which grade it this question most relevant for? "
                   "By default this will be the grade that you are in.",
     )
 

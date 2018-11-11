@@ -8,12 +8,18 @@
     margin-top: 1em;
     margin-bottom: 1em;
     /* Shadow */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.15em;
     max-width: 45em;
 }
+
+.question:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .question__title {
     font-weight: bold;
+    font-size: 1.2rem
 }
 .question__attribution {
     opacity: 0.5;
@@ -31,6 +37,11 @@
     background-color: #32CD32;
     border-color: #32CD32;
     border-radius: 1em;
+}
+
+.btn-buza-green:hover{
+    background-color: #32CD32;
+    border-color: #C3E58B;
 }
 
 .question__add_answer {

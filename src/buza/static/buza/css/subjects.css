@@ -20,26 +20,34 @@ subject-nav_bar{
 .subject_heading {
     font-weight: bold;
     text-align: center;
-    color:  #5689E8;
+    color:#007bff;
 }
 
 .subject__title {
     font-weight: bold;
 }
+.subject__title:hover {
+    font-weight: bold;
+    text-decoration: None;
+}
 
 .subject__follow-button{
     background-color: white;
-    color: rgb(64,64,64);
-    border: 2px solid #5689E8;; /* Nav bar color */
-    border-radius: 12px;
+    opacity: 0.8;
+    color: #5689E8;
+    border: 1px solid #5689E8;
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 0.2em 0.2em;
 }
 
 .subject__following-button{
-    background:  #5689E8;
+    background: #5689E8;
     color: white;
-    border: 2px solid #5689E8; /* Nav bar color */
-    border-radius: 12px;
+    border: 1.5px solid #5689E8;
+    border-radius: 50%;
     font-weight: bold;
+    padding: 0.2em 0.2em;
 }
 
 .subject__subjects-nav{

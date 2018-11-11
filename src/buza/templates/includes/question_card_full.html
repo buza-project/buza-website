@@ -8,7 +8,7 @@
 {% endcomment %}
 <div class="question">
     <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
-        <h2>{{ question.title }}</h2>
+        <p>{{ question.title }}</p>
     </a>
 
     <div class="question__body">
@@ -19,7 +19,7 @@
 
         {% if user == question.author %}
             <p class="flex-grow-1">
-                <a href="{% url 'question-update' pk=question.pk %}" class="d-inline-block question__edit_question">
+                <a href="{% url 'question-update' pk=question.pk %}" class="btn btn-primary btn-buza-green">
                     Edit question
                 </a>
             </p>
@@ -44,18 +44,4 @@
             </div>
              </div>
         </div>
-            <div>
-            {% with topics=question.topics.all %}
-                {% if topics %}
-                    {% for topic in topics %}
-                            <a href="{% url 'topic-detail' slug=topic.slug %}" class="questiontopic__box"> {{topic.name}} </a>
-
-                {% endfor %}
-                {% endif %}
-            {% endwith %}
-                </div>
-
-
-
-
 </div>

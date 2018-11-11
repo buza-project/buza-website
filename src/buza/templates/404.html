@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Page not found  404 {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>We could not find the page you were looking for</h1>
+        <p style="font-size: 3rem">😭</p>
+        <p><a href="{% url 'home' %}" class="btn btn-primary btn-lg">Take me home</a></p>
+    </div>
+{% endblock %}

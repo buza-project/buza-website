@@ -8,11 +8,18 @@
     margin-top: 1em;
     margin-bottom: 1em;
     /* Shadow */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0.25em;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.15em;
+    max-width: 45em;
 }
+
+.question:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .question__title {
     font-weight: bold;
+    font-size: 1.2rem
 }
 .question__attribution {
     opacity: 0.5;
@@ -25,16 +32,16 @@
     color: DarkOrchid;
 }
 
-.question__edit_question, .question__ask_question, input[type=button], input[type=submit], input[type=reset] {
-    background-color:#32CD32;
-    color: white;
-    border-radius: 12px;
-    padding: 1px 3px;
-    text-align: center;
+/* XXX (Pi 2018-08-27): Temporary btn-primary override for our Buza green, until we do this better. */
+.btn-buza-green {
+    background-color: #32CD32;
+    border-color: #32CD32;
+    border-radius: 1em;
 }
 
-.question__edit_question:hover{
-    color: white;
+.btn-buza-green:hover{
+    background-color: #32CD32;
+    border-color: #C3E58B;
 }
 
 .question__add_answer {
@@ -58,46 +65,7 @@ textarea[name=body] {
     max-width: 100%;
 }
 
-.questiontopic__box {
-    padding: 1% 1%;
-    background-color: white;
-    color: black;
-    border: 2px solid #008CBA;
-    border-radius: 12px;
-    margin:1%;
-
-}
-
-.question__form_container{
-    width: 100%;
-    padding: 5% 5%;
-    margin: 8px 0;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.question__form_helptext{
-    opacity: 0.5;
-    font-size: smaller;
-
-}
-
-input[type=text], input[type=number], select, textarea {
+/* TODO (Pi 2018-08-27): Target the Bootstrap form-control class directly, for now. Customise this more properly later. */
+.form-control {
     border: 2px solid #32CD32;
-    width: 80%;
-    border-radius: 4px;
-    background-color: white;
-    padding: 8px 10px;
 }
-@media only screen and (max-width: 600px) {
-    body {
-        width:100%;
-        padding: 0px 0px;
-    }
-}
-
-input[type=text]:focus {
-    background-color:  #32CD32;
-    color:white;
-}
-

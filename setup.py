@@ -58,6 +58,21 @@ setup(
     packages=find_packages('src'),
     include_package_data=True,
     zip_safe=False,
-    install_requires=install_requires,
+
+    setup_requires=['setuptools-scm'],
+    use_scm_version=True,
+
+    install_requires=[
+        'Django >2.0',
+
+        # General libraries
+        'Pillow',
+
+        # Django libraries
+        'django-crispy-forms',
+        'django-environ',
+        'django-taggit',
+        'social-auth-app-django',
+    ],
     entry_points={},
 )

@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'buza',
 
     # Third-party apps
+    'crispy_forms',
     'taggit',
     # 'social_django',
 
@@ -49,11 +50,6 @@ TEMPLATES = [{
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
         ],
-
-        'libraries': {
-            'buze_tags': 'buza.templatetags.buza_tags',
-
-        },
     },
 }]
 
@@ -88,3 +84,6 @@ STATICFILES_DIRS = [
 ]
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '*']
+
+# django-crispy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -25,3 +25,6 @@ STATICFILES_DIRS = [
     # Path to Yarn's packages
     str(checkout_dir.joinpath('node_modules')),
 ]
+
+# Include the local host by default for development.
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']

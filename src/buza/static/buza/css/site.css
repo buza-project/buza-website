@@ -1,7 +1,13 @@
 /* Site-wide Buza styles. */
 
+:root{
+    --buza-blue:    #5689E8;
+    --buza-green:   #32CD32;
+    --buza-grey:    #FAFAFA;
+}
+
 .bg-buza-site {
-    background-color: #FAFAFA;
+    background-color: var(buza-grey);
 }
 
 /* Block: Navigation bar. */

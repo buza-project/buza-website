@@ -14,7 +14,7 @@
     <div  class="card-columns">
 
     {% for subject in subject_list %}
-         <div class="card subject__card table-hover" >
+         <div class="card subject__card" >
                <a href="{% url 'subject-detail' subject.pk %}" class="subject__title">
                     {{ subject.title }}
                     <div class="card_body">

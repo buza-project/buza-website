@@ -35,18 +35,20 @@ subject-nav_bar{
     background-color: white;
     opacity: 0.8;
     color: rgb(64,64,64);
-    border: 2px solid #efcfb0; /* Nav bar color */
+    border: 1px solid #5689E8;
     border-radius: 12px;
     font-size: small;
+    padding: 0.1em 0.2em;
 }
 
 .subject__following-button{
-    background:  #efcfb0;
+    background: #5689E8;
     color: white;
-    border: 2px solid #efcfb0; /* Nav bar color */
+    border: 1.5px solid #5689E8;
     border-radius: 12px;
     font-weight: bold;
     font-size: small;
+    padding: 0.1em 0.2em;
 }
 
 .subject__subjects-nav{

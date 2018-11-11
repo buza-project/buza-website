@@ -20,32 +20,35 @@ subject-nav_bar{
 .subject_heading {
     font-weight: bold;
     text-align: center;
-    color:  #5689E8;
+    color:#007bff;
 }
 
 .subject__title {
     font-weight: bold;
 }
-
-.subject__follow-button{
-    border-color: var(--buza-green);
-    border-radius: 1em;
-    background-color: white;
-    color: var(--buza-green);
+.subject__title:hover {
     font-weight: bold;
-     padding: 0 0;
-    font-size: 2em;
+    text-decoration: None;
 }
 
-.subject__following-button{
-    background:  white;
-    color: var(--buza-green);
-    border: 1px solid var(--buza-green); /* buza green */
-    border-radius: 1em;
+.subject__buttons {
+    border: 1px solid var(--buza-green);
+    padding: 0.2em 0.2em;
+    border-radius: 50%;
     font-weight: bold;
-    font-size: 1em;
-    padding: 0 0;
-    font-size: 2em;
+
+}
+
+.subject__buttons-follow{
+    background-color: white;
+    color: var(--buza-green);
+
+}
+
+.subject__buttons-following{
+    background: var(--buza-green);
+    color: white;
+    opacity: 0.8;_
 }
 
 .subject__subjects-nav{

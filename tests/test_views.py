@@ -231,7 +231,10 @@ class TestQuestionList(TestCase):
 class TestQuestionCreate(TestCase):
 
     def setUp(self) -> None:
-        self.subject: models.Subject = models.Subject.objects.create(title='maths')
+        self.subject: models.Subject = models.Subject.objects.create(
+            title='mathematics',
+            short_title='maths',
+        )
         self.user: models.User = models.User.objects.create()
 
     def test_get__anonymous(self) -> None:

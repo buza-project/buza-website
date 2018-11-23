@@ -10,31 +10,27 @@
 {% block title %}{{ subject.title }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h3>{{ subject.title }}</h3>
-    <div class="d-flex flex-wrap justify-content-between align-items-baseline">
-        <a href="{% url 'question-create' subject_pk=subject.pk%}" class="d-block">
-            <div class="btn btn-primary btn-buza-green">Ask New {{subject.short_title}} Question</div>
+    <div class="subject_detail-container">
+    <div class="subject__deck">
+           {% for subject in subject_list %}
+        {% include 'includes/subject_cards.html' with subject=subject user=user only%}
+            {% endfor %}
+    </div>
+        <div class="subject__question_list" style="flex-grow: 4">
+                <span class="btn__new_question">
+        <a href="{% url 'question-create' subject_pk=subject.pk%}" class="btn btn-primary btn-buza-green">
+           Ask New {{subject.short_title}} Question
         </a>
-    </div>
-    <div>
-        {{ subject.description|linebreaks }}
-    </div>
-
-    <p style="font-size: smaller">
-        Questions: {{ subject.question_set.count}}
-        <br>
-        Users: {{subject.user_set.count}}
-        <br>
-    </p>
-
-    {% with questions=subject.question_set.all %}  {# TODO: Ordering #}
+        </span>
+            {% with questions=subject.question_set.all %}
         {% if questions %}
-            <h2>{{subject.title}} Questions</h2>
-
             {% for question in questions %}
                 {% include 'includes/question_card_brief.html' with question=question only %}
             {% endfor %}
         {% endif %}
     {% endwith %}
+        </div>
 
+
+        </div>
 {% endblock %}

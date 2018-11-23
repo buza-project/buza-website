@@ -103,3 +103,13 @@ subject-nav_bar{
 .subject__subjects-nav-hidden, .subject__subjects-nav-hidden:hover{
    color:   #32CD32; /* Green */
 }
+ /* Subject Detail flext box */
+ .subject_detail-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+.btn__new_question{
+    align: center;
+     margin: auto;
+}
+

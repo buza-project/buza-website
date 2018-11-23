@@ -145,9 +145,9 @@ class SubjectList(generic.ListView):
             )
             request.user.subjects.add(subject)
             return HttpResponseRedirect(reverse('subject-list'))
-        elif 'unfollow-subject' in request.POST:
+        elif 'following-subject' in request.POST:
             subject = models.Subject.objects.get(
-                pk=request.POST['unfollow-subject'],
+                pk=request.POST['following-subject'],
             )
             request.user.subjects.remove(subject)
             return HttpResponseRedirect(reverse('subject-list'))

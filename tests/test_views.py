@@ -564,7 +564,7 @@ class TestSubjectList(TestCase):
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertNotContains(response, "Follow")
-        self.assertNotContains(response, "Unfollow")
+        self.assertNotContains(response, "Following")
         self.assertContains(response, self.maths.title, count=1)
         self.assertContains(response, self.biology.title, count=1)
 
@@ -582,6 +582,7 @@ class TestSubjectList(TestCase):
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertContains(response, "follow")
+        self.assertContains(response, "🕮")
         self.assertContains(response, "following", 0)
         self.assertContains(response, self.maths.title, count=1)
         self.assertContains(response, self.biology.title, count=1)
@@ -610,6 +611,25 @@ class TestSubjectList(TestCase):
             '<Subject: Mathematics>',
             '<Subject: Biology>',
         ])
+
+    def test_get__long_subject_names(self) -> None:
+        """
+        When follow a question, the UI updates
+        :return:
+        """
+        self.client.force_login(self.user)
+        self.user.subjects.add(self.maths)
+
+        ems: models.Subject = models.Subject.objects.create(
+            title='Economics and Management Sciences',
+            short_title='EMS',
+        )
+        response = self.client.get(self.path)
+        self.assertTemplateUsed(response, 'buza/subject_list.html')
+        assert HTTPStatus.OK == response.status_code
+        # test that EMS is truncated
+        self.assertNotContains(response, ems.title)
+        self.assertContains(response, 'Economics and Manage...')
 
 
 class TestSubjectDetails(TestCase):

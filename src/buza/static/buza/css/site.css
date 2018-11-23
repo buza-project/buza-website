@@ -27,3 +27,7 @@
 .buza-nav__link, .buza-nav__link:hover {
     color: white;
 }
+
+.buza-container {
+    margin-left: 0;
+}

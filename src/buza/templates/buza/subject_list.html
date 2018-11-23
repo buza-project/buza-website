@@ -25,12 +25,28 @@
                                 &#9734;
                             </button>
                         </form>
+                   {{ subject.title| truncatechars:23}}
+                    </a> </div>
+                        {% else %}
+                <div class="card mb-1 subject__card_follow " >
+                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
+                            <form action="" method="post" class="d-inline-block">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__buttons subject__buttons-follow">
+                                &#9733;
+                            </button>
+                        </form>
+                            {{ subject.title| truncatechars:23}}
+                    </a> </div>
                     {% endif %}
+                {% else %}
+                        <div class="card mb-1 subject__card_follow " >
+                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
+                            {{ subject.title| truncatechars:23}}
+                    </a> </div>
                 {% endif %}
-               </a>
 
-         </div>
     {% endfor %}
-         </div>
+    </div>
 {% endblock %}
 

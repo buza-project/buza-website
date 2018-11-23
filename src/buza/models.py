@@ -24,6 +24,7 @@ class TimestampedModel(models.Model):
 
 class Subject(models.Model):
     title = _CharField()
+    short_title = models.TextField()
     description = models.TextField()
 
     def __str__(self) -> str:

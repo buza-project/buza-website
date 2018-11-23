@@ -21,14 +21,14 @@
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__follow-button">
+                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__buttons subject__buttons-follow">
                                 🕮
                             </button>
                         </form>
                         {% else %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__following-button">
+                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="btn btn-primary subject__buttons subject__buttons-following">
                                 🕮
                             </button>
                         </form>

@@ -37,6 +37,7 @@ class TestSubject(TestCase):
         subject = models.Subject(
             title='Biology',
             description='The study of life',
+            short_title='Bio',
         )
         assert '<Subject: Biology>' == repr(subject)
 

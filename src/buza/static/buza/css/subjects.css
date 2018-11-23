@@ -31,23 +31,24 @@ subject-nav_bar{
     text-decoration: None;
 }
 
-.subject__follow-button{
-    background-color: white;
-    opacity: 0.8;
-    color: #5689E8;
-    border: 1px solid #5689E8;
+.subject__buttons {
+    border: 1px solid var(--buza-green);
+    padding: 0.2em 0.2em;
     border-radius: 50%;
     font-weight: bold;
-    padding: 0.2em 0.2em;
+
 }
 
-.subject__following-button{
-    background: #5689E8;
+.subject__buttons-follow{
+    background-color: white;
+    color: var(--buza-green);
+
+}
+
+.subject__buttons-following{
+    background: var(--buza-green);
     color: white;
-    border: 1.5px solid #5689E8;
-    border-radius: 50%;
-    font-weight: bold;
-    padding: 0.2em 0.2em;
+    opacity: 0.8;_
 }
 
 .subject__subjects-nav{

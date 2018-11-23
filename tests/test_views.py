@@ -629,7 +629,7 @@ class TestSubjectList(TestCase):
         assert HTTPStatus.OK == response.status_code
         # test that EMS is truncated
         self.assertNotContains(response, ems.title)
-        self.assertContains(response, 'Economics and Man...')
+        self.assertContains(response, 'Economics and Manage...')
 
 
 class TestSubjectDetails(TestCase):

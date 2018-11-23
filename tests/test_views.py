@@ -661,7 +661,6 @@ class TestSubjectDetails(TestCase):
 
         self.assertContains(response, self.subject.title)
         self.assertContains(response, "Ask New  Question")
-        self.assertContains(response, self.subject.description, count=1)
         self.assertContains(response, self.question.title, count=1)
 
     def test_get__authenticated__subject_short_title(self) -> None:
@@ -682,7 +681,6 @@ class TestSubjectDetails(TestCase):
             response,
             "Ask New " + self.subject.short_title + " Question",
         )
-        self.assertContains(response, self.subject.description, count=1)
 
 
 class Test404PageNotFound(TestCase):

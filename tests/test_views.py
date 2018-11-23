@@ -564,7 +564,7 @@ class TestSubjectList(TestCase):
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertNotContains(response, "Follow")
-        self.assertNotContains(response, "Unfollow")
+        self.assertNotContains(response, "Following")
         self.assertContains(response, self.maths.title, count=1)
         self.assertContains(response, self.biology.title, count=1)
 

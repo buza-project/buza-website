@@ -14,37 +14,7 @@
     <div  class="subject__deck">
 
     {% for subject in subject_list %}
-
-                {% if user.is_authenticated %}
-                    {% if subject in user.subjects.all %}
-                   <div class="card mb-1 subject__card_following " >
-                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_following">
-                   <form action="" method="post" class="d-inline-block">
-                            {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__buttons subject__buttons-following">
-                                &#9733;
-                            </button>
-                        </form>
-                   {{ subject.title| truncatechars:23}}
-                    </a> </div>
-                        {% else %}
-                <div class="card mb-1 subject__card_follow " >
-                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
-                            <form action="" method="post" class="d-inline-block">
-                            {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__buttons subject__buttons-follow">
-                                &#9733;
-                            </button>
-                        </form>
-                            {{ subject.title| truncatechars:23}}
-                    </a> </div>
-                    {% endif %}
-                {% else %}
-                        <div class="card mb-1 subject__card_follow " >
-                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
-                            {{ subject.title| truncatechars:23}}
-                    </a> </div>
-                {% endif %}
+        {% include 'includes/subject_cards.html' with subject=subject user=user only%}
 
     {% endfor %}
     </div>

@@ -53,6 +53,7 @@ subject-nav_bar{
 }
 
 .subject__buttons-following{
+    border: 1px solid white;
     background: var(--buza-green);
     color: white;
     opacity: 0.8;

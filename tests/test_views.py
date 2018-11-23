@@ -546,8 +546,14 @@ class TestSubjectList(TestCase):
 
     def setUp(self) -> None:
         self.user: models.User = models.User.objects.create()
-        self.maths: models.Subject = models.Subject.objects.create(title='Maths')
-        self.biology: models.Subject = models.Subject.objects.create(title='Biology')
+        self.maths: models.Subject = models.Subject.objects.create(
+            title='Mathematics',
+            short_title='maths',
+        )
+        self.biology: models.Subject = models.Subject.objects.create(
+            title='Biology',
+            short_title='bio',
+        )
         self.path = reverse('subject-list')
 
     def test_get__unauthenticated(self) -> None:
@@ -565,7 +571,7 @@ class TestSubjectList(TestCase):
         # Listed by title.
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Biology>',
-            '<Subject: Maths>',
+            '<Subject: Mathematics>',
         ])
 
     def test_get__no_followed_subjects(self) -> None:
@@ -583,7 +589,7 @@ class TestSubjectList(TestCase):
         # Listed by title.
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Biology>',
-            '<Subject: Maths>',
+            '<Subject: Mathematics>',
         ])
 
     def test_get__followed_subjects(self) -> None:
@@ -601,12 +607,27 @@ class TestSubjectList(TestCase):
 
         # Maths (followed) listed first.
         self.assertQuerysetEqual(response.context['subject_list'], [
-            '<Subject: Maths>',
+            '<Subject: Mathematics>',
             '<Subject: Biology>',
         ])
 
 
 class TestSubjectDetails(TestCase):
+
+    def setUp(self) -> None:
+        self.user = models.User.objects.create()
+        self.subject: models.Subject = models.Subject.objects.create(
+            title="mathematics",
+            description="the study of numbers",
+        )
+        self.question = models.Question.objects.create(
+            author=self.user,
+            title='Example question?',
+            body='A question.',
+            subject=self.subject,
+            grade=7,
+        )
+        self.path = reverse('subject-detail', kwargs=dict(pk=self.subject.pk))
 
     def test_not_found(self) -> None:
         response = self.client.get(reverse('subject-detail', kwargs=dict(pk=404)))
@@ -614,26 +635,30 @@ class TestSubjectDetails(TestCase):
         self.assertTemplateUsed(response, '404.html')
 
     def test_get(self) -> None:
-        user = models.User.objects.create()
-        subject: models.Subject = models.Subject.objects.create(
-            title="maths",
-            description="the study of numbers",
-        )
-        question = models.Question.objects.create(
-            author=user,
-            title='Example question?',
-            body='A question.',
-            subject=subject,
-            grade=7,
-        )
-        path = reverse('subject-detail', kwargs=dict(pk=subject.pk))
-        response = self.client.get(path)
+        response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/subject_detail.html')
 
-        self.assertContains(response, subject.title)
-        self.assertContains(response, subject.description, count=1)
-        self.assertContains(response, question.title, count=1)
+        self.assertContains(response, self.subject.title)
+        self.assertContains(response, "Ask New  Question")
+        self.assertContains(response, self.subject.description, count=1)
+        self.assertContains(response, self.question.title, count=1)
+
+    def test_get__authenticated__subject_short_title(self) -> None:
+        self.subject.short_title = 'maths'
+        self.client.force_login(self.user)
+        response = self.client.get(self.path)
+
+        assert HTTPStatus.OK == response.status_code
+        self.assertContains(response, self.subject.title)
+        print(response.content)
+        print(self.subject.short_title)
+        self.assertContains(
+            response,
+            "Ask New " + self.subject.short_title + " Question",
+        )
+        self.assertContains(response, self.subject.description, count=1)
+        self.assertContains(response, self.question.title, count=1)
 
 
 class Test404PageNotFound(TestCase):

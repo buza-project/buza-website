@@ -1,19 +1,6 @@
 /* Styles for Subjects. */
 
 /* Block: Subjects */
-.subject__deck {
-    padding: 1em 2em;
-    text-align: center;
-    display: inline-block;
-    width: 20em;
-}
-
-.subject__card {
-    padding: 0.5em 1em;
-}
-.subject__card:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
 
 subject-nav_bar{
     background-color: silver;
@@ -28,7 +15,12 @@ subject-nav_bar{
     color:#007bff;
 }
 
-.subject__title {
+.subject__deck {
+    padding: 1em 2em;
+    text-align: center;
+    display: inline-block;
+    width: 20em;
+}
     text-align: left;
 }
 .subject__title:hover {

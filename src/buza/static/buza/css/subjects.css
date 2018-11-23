@@ -109,7 +109,6 @@ subject-nav_bar{
   flex-flow: row wrap;
 }
 .btn__new_question{
-    align: center;
-     margin: auto;
+     padding: 15em;
 }
 

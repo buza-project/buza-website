@@ -11,10 +11,10 @@
 {% block content %}
     <h1 class="subject_heading ">Subjects</h1>
 
-    <div  class="card-columns">
+    <div  class="subject__deck">
 
     {% for subject in subject_list %}
-         <div class="card subject__card" >
+         <div class="card mb-1 subject__card " >
                <a href="{% url 'subject-detail' subject.pk %}" class="subject__title">
                     {{ subject.title| truncatechars:20}}
                 {% if user.is_authenticated %}
@@ -28,7 +28,7 @@
                         {% else %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="btn btn-primary subject__buttons subject__buttons-following">
+                            <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__buttons subject__buttons-following">
                                 🕮
                             </button>
                         </form>

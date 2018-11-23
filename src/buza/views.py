@@ -110,6 +110,14 @@ def edit(request: HttpRequest) -> HttpResponse:
 class SubjectDetail(generic.DetailView):
     model = models.Subject
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Add the question to the context.
+        """
+        context_data: Dict[str, Any] = super().get_context_data(**kwargs)
+        context_data.setdefault('subject_list', models.Subject.objects.all())
+        return context_data
+
 
 class SubjectList(generic.ListView):
     model = models.Subject

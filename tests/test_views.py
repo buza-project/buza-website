@@ -612,6 +612,25 @@ class TestSubjectList(TestCase):
             '<Subject: Biology>',
         ])
 
+    def test_get__long_subject_names(self) -> None:
+        """
+        When follow a question, the UI updates
+        :return:
+        """
+        self.client.force_login(self.user)
+        self.user.subjects.add(self.maths)
+
+        ems: models.Subject = models.Subject.objects.create(
+            title='Economics and Management Sciences',
+            short_title='EMS',
+        )
+        response = self.client.get(self.path)
+        self.assertTemplateUsed(response, 'buza/subject_list.html')
+        assert HTTPStatus.OK == response.status_code
+        # test that EMS is truncated
+        self.assertNotContains(response, ems.title)
+        self.assertContains(response, 'Economics and Man...')
+
 
 class TestSubjectDetails(TestCase):
 

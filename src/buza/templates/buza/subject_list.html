@@ -17,20 +17,19 @@
          <div class="card subject__card" >
                <a href="{% url 'subject-detail' subject.pk %}" class="subject__title">
                     {{ subject.title }}
-                    <div class="card_body">
                 {% if user.is_authenticated %}
                     {% if not subject in user.subjects.all %}
                         <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
                             <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__follow-button">
-                                🗸
+                                🕮
                             </button>
                         </form>
                         {% else %}
-                        <form action="" method="post">
+                        <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="unfollow-subject" class="btn btn-primary subject__following-button">
-                                🗸
+                            <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__following-button">
+                                🕮
                             </button>
                         </form>
                     {% endif %}

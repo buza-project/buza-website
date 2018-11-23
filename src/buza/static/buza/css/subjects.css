@@ -21,9 +21,21 @@ subject-nav_bar{
     display: inline-block;
     width: 20em;
 }
-    text-align: left;
+/* The Subject Following Card*/
+.subject__card_following {
+    padding: 0.5em 1em;
+    background: var(--buza-green);
+    color: white;
 }
-.subject__title:hover {
+.subject__card_following:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.subject__title_following {
+    text-align: left;
+    color:white;
+    font-weight:bold;
+}
+.subject__title_following:hover {
     font-weight: bold;
     text-decoration: None;
 }

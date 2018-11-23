@@ -582,7 +582,7 @@ class TestSubjectList(TestCase):
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertContains(response, "follow")
-        self.assertContains(response, "🕮")
+        self.assertContains(response, "&#9733;")
         self.assertContains(response, "following", 0)
         self.assertContains(response, self.maths.title, count=1)
         self.assertContains(response, self.biology.title, count=1)

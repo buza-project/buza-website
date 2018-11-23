@@ -36,6 +36,7 @@ subject-nav_bar{
     text-decoration: None;
 }
 
+/* The Follow/Following buttons*/
 .subject__buttons {
     border: 1px solid var(--buza-green);
     padding: 0.2em 0.2em;

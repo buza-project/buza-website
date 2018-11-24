@@ -16,7 +16,7 @@
         {% include 'includes/subject_cards.html' with subject=subject user=user only%}
             {% endfor %}
     </div>
-        <div class="subject__question_list" style="flex-grow: 4">
+        <div class="subject__question_list" style="flex-grow: 3">
                 <span class="btn__new_question">
         <a href="{% url 'question-create' subject_pk=subject.pk%}" class="btn btn-primary btn-buza-green">
            Ask New {{subject.short_title}} Question

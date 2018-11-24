@@ -4,7 +4,7 @@
 
 subject-nav_bar{
     background-color: silver;
-    padding: 1%;
+
     font-weight: bold;
     border-radius: 10%;
 }
@@ -106,9 +106,9 @@ subject-nav_bar{
  /* Subject Detail flext box */
  .subject_detail-container {
   display: flex;
-  flex-flow: row wrap;
+  align-items: stretch;
 }
 .btn__new_question{
-     padding: 15em;
+     padding-left: 15em;
 }
 

@@ -682,6 +682,49 @@ class TestSubjectDetails(TestCase):
             "Ask New " + self.subject.short_title + " Question",
         )
 
+    def test_get__no_followed_subjects(self) -> None:
+        """
+        Test subject list and question list
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.path)
+
+        assert HTTPStatus.OK == response.status_code
+        # Question list and button
+        self.assertContains(response, "Ask New  Question")
+        self.assertContains(response, self.question.title, count=1)
+        # Subjects listing
+        self.assertContains(response, "follow")
+        self.assertContains(response, "&#9733;")
+        self.assertContains(response, "following", 0)
+        self.assertContains(response, self.maths.title, count=2)
+        self.assertContains(response, self.biology.title, count=1)
+
+        # Listed subjects by title.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Mathematics>',
+        ])
+
+    def test_get__followed_subjects(self) -> None:
+        """
+        When follow a question, the UI updates
+        :return:
+        """
+        self.client.force_login(self.user)
+        self.user.subjects.add(self.maths)
+        response = self.client.get(self.path)
+        self.assertTemplateUsed(response, 'buza/subject_detail.html')
+        assert HTTPStatus.OK == response.status_code
+        self.assertContains(response, "following")
+        self.assertContains(response, "follow")
+
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Mathematics>',
+            '<Subject: Biology>',
+        ])
+
 
 class Test404PageNotFound(TestCase):
 

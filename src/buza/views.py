@@ -118,6 +118,23 @@ class SubjectDetail(generic.DetailView):
         context_data.setdefault('subject_list', models.Subject.objects.all())
         return context_data
 
+    def post(self, request, *args, **kwargs):
+        if 'follow-subject' in request.POST:
+            subject: models.Subject = models.Subject.objects.get(
+                pk=request.POST['follow-subject'],
+            )
+            request.user.subjects.add(subject)
+            return HttpResponseRedirect(
+                reverse('subject-detail', kwargs=dict(pk=subject.pk)))
+        elif 'following-subject' in request.POST:
+            subject = models.Subject.objects.get(
+                pk=request.POST['following-subject'],
+            )
+            request.user.subjects.remove(subject)
+            return HttpResponseRedirect(
+                reverse('subject-detail', kwargs=dict(pk=subject.pk)))
+        return HttpResponseRedirect(
+            reverse('subject-list'))
 
 class SubjectList(generic.ListView):
     model = models.Subject

@@ -13,7 +13,7 @@
     <div class="subject_detail-container">
     <div class="subject__deck">
            {% for subject in subject_list %}
-        {% include 'includes/subject_cards.html' with subject=subject user=user only%}
+        {% include 'includes/subject_cards.html' with subject=subject user=user csrf_token=csrf_token only%}
             {% endfor %}
     </div>
         <div class="subject__question_list" style="flex-grow: 3">

@@ -4,7 +4,6 @@
 
 subject-nav_bar{
     background-color: silver;
-    padding: 1%;
     font-weight: bold;
     border-radius: 10%;
 }
@@ -102,4 +101,16 @@ subject-nav_bar{
 
 .subject__subjects-nav-hidden, .subject__subjects-nav-hidden:hover{
    color:   #32CD32; /* Green */
+}
+ /* Subject Detail flext box */
+ .subject_detail-container {
+  display: flex;
+  align-items: stretch;
+}
+.btn__new_question{
+     padding-left: 15em;
+}
+
+.subject__question_list{
+    flex-grow: 3;
 }

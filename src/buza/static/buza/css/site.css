@@ -2,7 +2,7 @@
 
 :root{
     --buza-blue:    #5689E8;
-    --buza-green:   #87DD8E;
+    --buza-green:    #32CD32;
     --buza-grey:    #FAFAFA;
 }
 
@@ -30,4 +30,5 @@
 
 .buza-container {
     margin-left: 0;
+    max-width: 100%;
 }

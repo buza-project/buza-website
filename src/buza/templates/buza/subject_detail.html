@@ -12,8 +12,8 @@
 {% block content %}
     <div class="subject_detail-container">
         <div class="subject__deck">
-           {% for subject in subject_list %}
-                 {% include 'includes/subject_cards.html' with subject=subject user=user csrf_token=csrf_token only%}
+           {% for view_subject in subject_list %}
+                 {% include 'includes/subject_cards.html' with subject=view_subject user=user csrf_token=csrf_token selected_subject=subject only%}
             {% endfor %}
         </div>
         <div class="subject__question_list">

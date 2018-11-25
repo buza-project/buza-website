@@ -1,10 +1,11 @@
  {% if user.is_authenticated %}
     {% if subject in user.subjects.all %}
-        <div class="card mb-1 subject__card_following " >
-            <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_following">
-                   <form action="" method="post" class="d-inline-block">
+        <div class="card mb-1 subject__card_following {% if selected_subject.pk == subject.pk%} subject__card_focus {% endif %}" >
+            <a href="{% url 'subject-detail' subject.pk %}" class="{% if selected_subject.pk == subject.pk%} subject__title_focus {% else %} subject__title_following {% endif %}">
+                   <form action="" method="post" class="d-inline-block ">
                             {% csrf_token %}
-                       <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__buttons subject__buttons-following">
+                       <button type="submit" value="{{ subject.pk }}" name="following-subject"
+                               class="subject__buttons subject__buttons-following">
                                 &#9733;
                        </button>
                    </form>
@@ -12,8 +13,8 @@
             </a>
         </div>
     {% else %}
-           <div class="card mb-1 subject__card_follow " >
-               <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
+           <div class="card mb-1 subject__card_follow {% if selected_subject.pk == subject.pk%} subject__card_focus {% endif %}" >
+               <a href="{% url 'subject-detail' subject.pk %}" class="{% if selected_subject.pk == subject.pk%} subject__title_focus {% else %} subject__title_follow {% endif %}">
                    <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
                        <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__buttons subject__buttons-follow">

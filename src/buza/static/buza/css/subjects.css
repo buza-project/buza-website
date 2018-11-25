@@ -26,14 +26,31 @@ subject-nav_bar{
     background: var(--buza-green);
     color: white;
 }
+
 .subject__card_following:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 12px 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+.subject__card_focus{
+    background: var(--buza-light-green);
+    color: var(--buza-green);
+    padding-bottom: 1em;
+    padding-top: 1em;
+    box-shadow: 0 16px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .subject__title_following {
     text-align: left;
     color:white;
     font-weight:bold;
 }
+
+.subject__title_focus{
+    color: var(--buza-green);
+    font-weight:bold;
+    text-align: left;
+}
+
 .subject__title_following:hover {
     font-weight: bold;
     text-decoration: None;

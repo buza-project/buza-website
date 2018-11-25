@@ -163,10 +163,6 @@ class SubjectList(generic.ListView):
             reverse('subject-list'))
 
 
-class UserSubjectsView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'buza/my_subjects_list.html'
-
-
 class UserDetail(generic.DetailView):
     model = models.User
 

@@ -11,26 +11,24 @@
 
 {% block content %}
     <div class="subject_detail-container">
-    <div class="subject__deck">
+        <div class="subject__deck">
            {% for subject in subject_list %}
-        {% include 'includes/subject_cards.html' with subject=subject user=user csrf_token=csrf_token only%}
+                 {% include 'includes/subject_cards.html' with subject=subject user=user csrf_token=csrf_token only%}
             {% endfor %}
-    </div>
+        </div>
         <div class="subject__question_list" style="flex-grow: 3">
                 <span class="btn__new_question">
-        <a href="{% url 'question-create' subject_pk=subject.pk%}" class="btn btn-primary btn-buza-green">
-           Ask New {{subject.short_title}} Question
-        </a>
-        </span>
+                    <a href="{% url 'question-create' subject_pk=subject.pk%}" class="btn btn-primary btn-buza-green">
+                    Ask New {{subject.short_title}} Question
+                    </a>
+                </span>
             {% with questions=subject.question_set.all %}
-        {% if questions %}
-            {% for question in questions %}
-                {% include 'includes/question_card_brief.html' with question=question only %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+                {% if questions %}
+                    {% for question in questions %}
+                        {% include 'includes/question_card_brief.html' with question=question only %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </div>
-
-
-        </div>
+    </div>
 {% endblock %}

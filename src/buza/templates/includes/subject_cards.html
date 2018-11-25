@@ -1,30 +1,33 @@
  {% if user.is_authenticated %}
-                    {% if subject in user.subjects.all %}
-                   <div class="card mb-1 subject__card_following " >
-                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_following">
+    {% if subject in user.subjects.all %}
+        <div class="card mb-1 subject__card_following " >
+            <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_following">
                    <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__buttons subject__buttons-following">
+                       <button type="submit" value="{{ subject.pk }}" name="following-subject" class="btn btn-primary subject__buttons subject__buttons-following">
                                 &#9733;
-                            </button>
-                        </form>
+                       </button>
+                   </form>
                    {{ subject.title| truncatechars:23}}
-                    </a> </div>
-                        {% else %}
-                <div class="card mb-1 subject__card_follow " >
-                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
-                            <form action="" method="post" class="d-inline-block">
+            </a>
+        </div>
+    {% else %}
+           <div class="card mb-1 subject__card_follow " >
+               <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
+                   <form action="" method="post" class="d-inline-block">
                             {% csrf_token %}
-                            <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__buttons subject__buttons-follow">
+                       <button type="submit" value="{{ subject.pk }}" name="follow-subject" class="btn btn-primary subject__buttons subject__buttons-follow">
                                 &#9733;
-                            </button>
-                        </form>
-                            {{ subject.title| truncatechars:23}}
-                    </a> </div>
-                    {% endif %}
-                {% else %}
-                        <div class="card mb-1 subject__card_follow " >
-                        <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
-                            {{ subject.title| truncatechars:23}}
-                    </a> </div>
-                {% endif %}
+                       </button>
+                   </form>
+                   {{ subject.title| truncatechars:23}}
+               </a>
+           </div>
+    {% endif %}
+ {% else %}
+        <div class="card mb-1 subject__card_follow " >
+            <a href="{% url 'subject-detail' subject.pk %}" class="subject__title_follow">
+                {{ subject.title| truncatechars:23}}
+            </a>
+        </div>
+ {% endif %}

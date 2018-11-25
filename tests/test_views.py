@@ -636,18 +636,23 @@ class TestSubjectDetails(TestCase):
 
     def setUp(self) -> None:
         self.user: models.User = models.User.objects.create()
-        self.subject: models.Subject = models.Subject.objects.create(
-            title="mathematics",
+        self.maths: models.Subject = models.Subject.objects.create(
+            title="Mathematics",
             description="the study of numbers",
+        )
+
+        self.biology: models.Subject = models.Subject.objects.create(
+            title='Biology',
+            short_title='bio',
         )
         self.question: models.Question = models.Question.objects.create(
             author=self.user,
             title='Example question?',
             body='A question.',
-            subject=self.subject,
+            subject=self.maths,
             grade=7,
         )
-        self.path = reverse('subject-detail', kwargs=dict(pk=self.subject.pk))
+        self.path = reverse('subject-detail', kwargs=dict(pk=self.maths.pk))
 
     def test_not_found(self) -> None:
         response = self.client.get(reverse('subject-detail', kwargs=dict(pk=404)))
@@ -659,27 +664,27 @@ class TestSubjectDetails(TestCase):
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/subject_detail.html')
 
-        self.assertContains(response, self.subject.title)
+        self.assertContains(response, self.maths.title)
         self.assertContains(response, "Ask New  Question")
         self.assertContains(response, self.question.title, count=1)
 
     def test_get__authenticated__subject_short_title(self) -> None:
-        self.subject: models.Subject = models.Subject.objects.create(
+        self.maths: models.Subject = models.Subject.objects.create(
             title="mathematics",
             short_title="maths",
             description="the study of numbers",
         )
         self.client.force_login(self.user)
-        path = reverse('subject-detail', kwargs=dict(pk=self.subject.pk))
+        path = reverse('subject-detail', kwargs=dict(pk=self.maths.pk))
         response = self.client.get(path)
 
         assert HTTPStatus.OK == response.status_code
-        self.assertContains(response, self.subject.title)
+        self.assertContains(response, self.maths.title)
         print(response.content)
-        print(self.subject.short_title)
+        print(self.maths.short_title)
         self.assertContains(
             response,
-            "Ask New " + self.subject.short_title + " Question",
+            "Ask New " + self.maths.short_title + " Question",
         )
 
     def test_get__no_followed_subjects(self) -> None:

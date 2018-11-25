@@ -111,3 +111,6 @@ subject-nav_bar{
      padding-left: 15em;
 }
 
+.subject__question_list{
+    flex-grow: 3;
+}

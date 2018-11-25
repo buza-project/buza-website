@@ -115,7 +115,23 @@ class SubjectDetail(generic.DetailView):
         Add the question to the context.
         """
         context_data: Dict[str, Any] = super().get_context_data(**kwargs)
-        context_data.setdefault('subject_list', models.Subject.objects.all())
+        queryset = models.Subject.objects.all()
+        user: models.RequestUser = self.request.user
+
+        if user.is_authenticated:
+            # Subquery existence check for relation to user:
+            queryset = queryset.annotate(
+                user_following=Exists(
+                    models.User.objects.filter(pk=user.pk, subjects=OuterRef('pk')),
+                ),
+            )
+        else:
+            # For anonymous users, always false.
+            queryset = queryset.annotate(
+                user_following=Value(False, output_field=BooleanField()),
+            )
+        queryset = queryset.order_by('-user_following', 'title')
+        context_data.setdefault('subject_list', queryset)
         return context_data
 
     def post(self, request, *args, **kwargs):
@@ -135,6 +151,7 @@ class SubjectDetail(generic.DetailView):
                 reverse('subject-detail', kwargs=dict(pk=subject.pk)))
         return HttpResponseRedirect(
             reverse('subject-list'))
+
 
 class SubjectList(generic.ListView):
     model = models.Subject

@@ -631,6 +631,37 @@ class TestSubjectList(TestCase):
         self.assertNotContains(response, ems.title)
         self.assertContains(response, 'Economics and Manage...')
 
+    def test_post_unauthenticated(self) -> None:
+        """Redirect unauthenticated user's posts """
+
+        response: HttpResponse = self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/auth/login/?next=/subjects/')
+
+    def test_post__follow_subject(self) -> None:
+        """Redirect unauthenticated user's posts """
+        self.client.force_login(self.user)
+        response: HttpResponse = self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/subjects/')
+        self.assertEquals(self.user.subjects.all().count(), 1)
+
+        response = self.client.get(response.url)
+        self.assertContains(response, "following")
+        self.assertContains(response, "follow")
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Mathematics>',
+            '<Subject: Biology>',
+        ])
+
     def test_post__unfollow_in_subjectlist(self) -> None:
         """Redirect unauthenticated user's posts """
         self.client.force_login(self.user)
@@ -790,37 +821,6 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, "following")
         self.assertContains(response, "follow")
 
-        # Maths (followed) listed first.
-        self.assertQuerysetEqual(response.context['subject_list'], [
-            '<Subject: Mathematics>',
-            '<Subject: Biology>',
-        ])
-
-    def test_post_unauthenticated__follow_subject(self) -> None:
-        """Redirect unauthenticated user's posts """
-
-        response: HttpResponse = self.client.post(self.path, data={
-            'follow-subject': self.maths.pk,
-        })
-
-        assert HTTPStatus.FOUND == response.status_code
-        self.assertRedirects(response, f'/auth/login/?next=/subjects/{self.maths.pk}/')
-
-    def test_post__authenticated__follow_subject(self) -> None:
-        """Redirect unauthenticated user's posts """
-        self.client.force_login(self.user)
-        response: HttpResponse = self.client.post(self.path, data={
-            'follow-subject': self.maths.pk,
-
-        })
-
-        assert HTTPStatus.FOUND == response.status_code
-        self.assertRedirects(response, f'/subjects/{self.maths.pk}/')
-        self.assertEquals(self.user.subjects.all().count(), 1)
-
-        response = self.client.get(response.url)
-        self.assertContains(response, "following")
-        self.assertContains(response, "follow")
         # Maths (followed) listed first.
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Mathematics>',

@@ -631,6 +631,33 @@ class TestSubjectList(TestCase):
         self.assertNotContains(response, ems.title)
         self.assertContains(response, 'Economics and Manage...')
 
+    def test_post__unfollow_in_subjectlist(self) -> None:
+        """Redirect unauthenticated user's posts """
+        self.client.force_login(self.user)
+
+        # follow and unfollow a subject
+        self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+
+        })
+        response: HttpResponse = self.client.post(self.path, data={
+            'following-subject': self.maths.pk,
+
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/subjects/')
+        self.assertEquals(self.user.subjects.all().count(), 0)
+
+        response = self.client.get(response.url)
+        self.assertNotContains(response, "following")
+        self.assertContains(response, "follow")
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Mathematics>',
+        ])
+
 
 class TestSubjectDetails(TestCase):
 
@@ -659,14 +686,22 @@ class TestSubjectDetails(TestCase):
         assert HTTPStatus.NOT_FOUND == response.status_code
         self.assertTemplateUsed(response, '404.html')
 
-    def test_get(self) -> None:
+    def test_get_authenticated(self) -> None:
         response = self.client.get(self.path)
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/subject_detail.html')
 
         self.assertContains(response, self.maths.title)
         self.assertContains(response, "Ask New  Question")
+        self.assertContains(response, self.biology.title, count=1)
         self.assertContains(response, self.question.title, count=1)
+        self.assertNotContains(response, "Follow")
+        self.assertNotContains(response, "Following")
+        # Listed subjects by title.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Mathematics>',
+        ])
 
     def test_get__authenticated__subject_short_title(self) -> None:
         self.maths: models.Subject = models.Subject.objects.create(
@@ -686,6 +721,37 @@ class TestSubjectDetails(TestCase):
             response,
             "Ask New " + self.maths.short_title + " Question",
         )
+
+    def test_post_unauthenticated(self) -> None:
+        """Redirect unauthenticated user's posts """
+
+        response: HttpResponse = self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/auth/login/?next=/subjects/{self.maths.pk}/')
+
+    def test_post__follow_subject(self) -> None:
+        """Redirect unauthenticated user's posts """
+        self.client.force_login(self.user)
+        response: HttpResponse = self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/subjects/{self.maths.pk}/')
+        self.assertEquals(self.user.subjects.all().count(), 1)
+
+        response = self.client.get(response.url)
+        self.assertContains(response, "following")
+        self.assertContains(response, "follow")
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Mathematics>',
+            '<Subject: Biology>',
+        ])
 
     def test_get__no_followed_subjects(self) -> None:
         """
@@ -728,6 +794,64 @@ class TestSubjectDetails(TestCase):
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Mathematics>',
             '<Subject: Biology>',
+        ])
+
+    def test_post_unauthenticated__follow_subject(self) -> None:
+        """Redirect unauthenticated user's posts """
+
+        response: HttpResponse = self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/auth/login/?next=/subjects/{self.maths.pk}/')
+
+    def test_post__authenticated__follow_subject(self) -> None:
+        """Redirect unauthenticated user's posts """
+        self.client.force_login(self.user)
+        response: HttpResponse = self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/subjects/{self.maths.pk}/')
+        self.assertEquals(self.user.subjects.all().count(), 1)
+
+        response = self.client.get(response.url)
+        self.assertContains(response, "following")
+        self.assertContains(response, "follow")
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Mathematics>',
+            '<Subject: Biology>',
+        ])
+
+    def test_post__unfollow_subject(self) -> None:
+        """Redirect unauthenticated user's posts """
+        self.client.force_login(self.user)
+
+        # follow and unfollow a subject
+        self.client.post(self.path, data={
+            'follow-subject': self.maths.pk,
+
+        })
+        response: HttpResponse = self.client.post(self.path, data={
+            'following-subject': self.maths.pk,
+
+        })
+
+        assert HTTPStatus.FOUND == response.status_code
+        self.assertRedirects(response, f'/subjects/{self.maths.pk}/')
+        self.assertEquals(self.user.subjects.all().count(), 0)
+
+        response = self.client.get(response.url)
+        self.assertNotContains(response, "following")
+        self.assertContains(response, "follow")
+        # Maths (followed) listed first.
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Mathematics>',
         ])
 
 

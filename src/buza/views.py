@@ -135,22 +135,30 @@ class SubjectDetail(generic.DetailView):
         return context_data
 
     def post(self, request, *args, **kwargs):
-        if 'follow-subject' in request.POST:
-            subject: models.Subject = models.Subject.objects.get(
-                pk=request.POST['follow-subject'],
-            )
-            request.user.subjects.add(subject)
-            return HttpResponseRedirect(
-                reverse('subject-detail', kwargs=dict(pk=subject.pk)))
-        elif 'following-subject' in request.POST:
-            subject = models.Subject.objects.get(
-                pk=request.POST['following-subject'],
-            )
-            request.user.subjects.remove(subject)
-            return HttpResponseRedirect(
-                reverse('subject-detail', kwargs=dict(pk=subject.pk)))
+        user: models.RequestUser = self.request.user
+        subject: models.Subject = models.Subject.objects.get(pk=kwargs.get('pk'))
+        if user.is_authenticated:
+            if 'follow-subject' in request.POST:
+                follow_subject: models.Subject = models.Subject.objects.get(
+                    pk=request.POST['follow-subject'],
+                )
+                request.user.subjects.add(follow_subject)
+                return HttpResponseRedirect(
+                    reverse('subject-detail', kwargs=dict(pk=subject.pk)))
+            elif 'following-subject' in request.POST:
+                follow_subject = models.Subject.objects.get(
+                    pk=request.POST['following-subject'],
+                )
+                request.user.subjects.remove(follow_subject)
+                return HttpResponseRedirect(
+                    reverse('subject-detail', kwargs=dict(pk=follow_subject.pk)))
+            else:
+                print("nothing is working here")
+                print(request.POST)
+                return HttpResponseRedirect(
+                    reverse('subject-detail', kwargs=dict(pk=subject.pk)))
         return HttpResponseRedirect(
-            reverse('subject-list'))
+            f'/auth/login/?next=/subjects/{subject.pk}/')
 
 
 class SubjectList(generic.ListView):
@@ -181,20 +189,22 @@ class SubjectList(generic.ListView):
             )
 
     def post(self, request, *args, **kwargs):
-        if 'follow-subject' in request.POST:
-            subject: models.Subject = models.Subject.objects.get(
-                pk=request.POST['follow-subject'],
-            )
-            request.user.subjects.add(subject)
-            return HttpResponseRedirect(reverse('subject-list'))
-        elif 'following-subject' in request.POST:
-            subject = models.Subject.objects.get(
-                pk=request.POST['following-subject'],
-            )
-            request.user.subjects.remove(subject)
-            return HttpResponseRedirect(reverse('subject-list'))
+        user: models.RequestUser = self.request.user
+        if user.is_authenticated:
+            if 'follow-subject' in request.POST:
+                subject: models.Subject = models.Subject.objects.get(
+                    pk=request.POST['follow-subject'],
+                )
+                request.user.subjects.add(subject)
+                return HttpResponseRedirect(reverse('subject-list'))
+            elif 'following-subject' in request.POST:
+                subject = models.Subject.objects.get(
+                    pk=request.POST['following-subject'],
+                )
+                request.user.subjects.remove(subject)
+                return HttpResponseRedirect(reverse('subject-list'))
         return HttpResponseRedirect(
-            reverse('subject-list'))
+            f'/auth/login/?next=/subjects/')
 
 
 class UserDetail(generic.DetailView):

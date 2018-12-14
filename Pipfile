@@ -4,7 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-buza-website = {editable = true, path = "."}
+buza-website = {editable = true,path = "."}
+python-social-auth = "*"
 
 [dev-packages]
 "flake8" = "*"

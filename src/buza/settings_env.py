@@ -16,6 +16,8 @@ base_dir = env.path('BASE_DIR')
 
 DEBUG = env('DJANGO_DEBUG', default=False)
 SECRET_KEY = env('DJANGO_SECRET_KEY')
+SOCIAL_AUTH_RAISE_EXCEPTIONS = env('SOCIAL_AUTH_RAISE_EXCEPTIONS', default=False)
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.8'
 
 DATABASES = {
     'default': env.db(

@@ -22,7 +22,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'social_django',
+    'social.apps.django_app.default'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
-    'social.backends.google.GooglePlusAuth',
+    'social_core.backends.google.GooglePlusAuth',
     'django.contrib.auth.backends.ModelBackend',
 ]
 # Internationalization

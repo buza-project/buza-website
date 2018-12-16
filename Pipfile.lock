@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4405772348bac0bd5444151cf9c049706fa49689a9975c69cbaac6f5addbc673"
+            "sha256": "60c4783f83f65f02262119d934ef2a705f2e09d657583312449e16d50e855d88"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -177,7 +177,6 @@
                 "sha256:9237e3d7b6f6f59494c3b02e0cce6efc69c9d33ad9d1a064e3b2318bcbe89ae3",
                 "sha256:f151396e5b16e2eee12cd2e211004257826ece24fc4ae97a147df386c1cd7082"
             ],
-            "index": "pypi",
             "version": "==3.1.0"
         },
         "social-auth-core": {
@@ -186,7 +185,6 @@
                 "sha256:b8a34e7eb71c66e4d68deb007c81d4f74d4e0bc52c1c4f871a7758db0a0c268e",
                 "sha256:cec8e0a2297a23c0e1cab21bbcfaf32c8378fdb98762f47e315bbc65c3a83c89"
             ],
-            "index": "pypi",
             "version": "==2.0.0"
         },
         "urllib3": {

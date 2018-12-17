@@ -45,8 +45,6 @@ TEMPLATES = [{
         'context_processors': [
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
-            'social.apps.django_app.context_processors.backends',
-            'social.apps.django_app.context_processors.login_redirect',
         ],
     },
 }]

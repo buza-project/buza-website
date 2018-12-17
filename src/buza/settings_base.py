@@ -36,8 +36,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'home'
-
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'APP_DIRS': True,
@@ -64,6 +62,7 @@ USE_TZ = True
 
 # django.contrib.auth
 AUTH_USER_MODEL = 'buza.User'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 LOGIN_REDIRECT_URL = reverse_lazy('home')

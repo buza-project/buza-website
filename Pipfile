@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 buza-website = {editable = true,path = "."}
-python-social-auth = "*"
 
 [dev-packages]
 "flake8" = "*"

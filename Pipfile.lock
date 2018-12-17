@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "60c4783f83f65f02262119d934ef2a705f2e09d657583312449e16d50e855d88"
+            "sha256": "60a096012afb5e3f73acaa823e30a6c27047dc40a67a188188aa34499fbc4449"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -125,15 +125,6 @@
                 "sha256:8d59a976fb773f3e6a39c85636357c4f0e242707394cadadd9814f5cbaa20e96"
             ],
             "version": "==1.7.1"
-        },
-        "python-social-auth": {
-            "hashes": [
-                "sha256:6986220df76934aee15c54938a13ebe370a1976e043af01fa3bea417f6722e74",
-                "sha256:8aac8531f7dd4d1b9af606654532fef4f615cb437774a7a1f8dcdebe89c17664",
-                "sha256:9aaad6f7bf83fd129620eadaab1e78e63200da61a5d8898fd1aa243686b36575"
-            ],
-            "index": "pypi",
-            "version": "==0.3.6"
         },
         "python3-openid": {
             "hashes": [

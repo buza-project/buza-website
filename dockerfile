@@ -13,32 +13,17 @@ RUN apt-get install apt-transport-https
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get install yarn -y
+RUN apt-get install -y python3-pip yarn &&\
+	apt-get update
 
 WORKDIR /buza-website
-
 
 # Copy the current directory contents into the container
 ADD . /buza-website
 
-RUN apt-get update
-RUN apt-get install apt-transport-https
-
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN apt-get update
-
-
-# set an env var
-ENV PATH="/home/buza-website/.local/bin:${PATH}"
-
-# Install packages in the piplockfile
-RUN cd /buza-website
-RUN pip install pipenv
-RUN pip install --upgrade setuptools
-RUN yarn
-RUN cp -p .env.example .env
-RUN pipenv install --system --deploy
-RUN pipenv run django-admin migrate
+RUN pip install pipenv &&\
+	# RUN yarn &&\
+    cp -p .env.example .env  &&\
+	pipenv install --system --deploy &&\
+	pipenv run django-admin migrate
  EXPOSE 8000

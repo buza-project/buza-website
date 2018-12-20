@@ -40,6 +40,10 @@ Running ``vagrant up`` again will restart it.
 
 To destroy the virtual machine completely, run ``vagrant destroy``.
 
+You can also create the docker image for the project to run it::
+
+    $ docker-compose up
+
 
 With Pipenv
 ^^^^^^^^^^^

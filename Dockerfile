@@ -26,4 +26,7 @@ RUN pip install pipenv &&\
     cp -p .env.example .env  &&\
 	pipenv install --system --deploy &&\
 	pipenv run django-admin migrate
+
+CMD ./buza-website
+
  EXPOSE 8000

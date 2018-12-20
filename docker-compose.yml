@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+   web:
+    build: .
+    image: buza/buza-django:latest
+    container_name: buza-django
+    ports:
+      - ${BUZA_PORT:-8000}:8000
+    command: pipenv run django-admin runserver 0.0.0.0:8000

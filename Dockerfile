@@ -20,7 +20,7 @@ WORKDIR /buza-website
 COPY . /buza-website
 
 RUN pip install pipenv &&\
-	RUN yarn &&\
+	yarn &&\
     cp -p .env.example .env  &&\
 	pipenv install --system --deploy &&\
 	pipenv run django-admin migrate

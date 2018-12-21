@@ -22,9 +22,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
 
 MIDDLEWARE = [
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -45,6 +47,13 @@ TEMPLATES = [{
     },
 }]
 
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.google.GooglePlusAuth',
+    'django.contrib.auth.backends.ModelBackend',
+]
 # Internationalization
 USE_I18N = True
 USE_L10N = True
@@ -53,10 +62,10 @@ USE_TZ = True
 
 # django.contrib.auth
 AUTH_USER_MODEL = 'buza.User'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
-
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

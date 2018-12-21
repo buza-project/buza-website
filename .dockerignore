@@ -1,0 +1,15 @@
+*
+!.env.example
+!Pipfile
+!Pipfile.lock
+!README.rst
+!buza-instance
+!examples
+!mypy.ini
+!package.json
+!setup.cfg
+!setup.py
+!src
+!tests
+!yarn.lock
+*.pyc

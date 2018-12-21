@@ -4,6 +4,7 @@ FROM python:3.6
 # The enviroment variable ensures that the python output is set straight
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
+ENV IN_DOCKER 1
 
 RUN mkdir /buza-website
 

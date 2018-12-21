@@ -11,7 +11,10 @@ from pathlib import Path
 
 # Assume we're running from a Git checkout directory.
 checkout_dir: Path = Path(__file__).parent.parent.parent
-assert checkout_dir.joinpath('.git').exists(), checkout_dir
+if 'IN_DOCKER' not in os.environ:
+    assert checkout_dir.joinpath('.git').exists(), checkout_dir
+else:
+    assert checkout_dir.exists(), checkout_dir
 
 # If BASE_DIR is not set, set and create a default for it.
 if 'BASE_DIR' not in os.environ:

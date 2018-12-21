@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from setuptools import find_packages, setup
 
@@ -6,6 +7,15 @@ from setuptools import find_packages, setup
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.rst')) as f:
     README = f.read()
+
+
+extra_kwargs = dict(use_scm_version=True)
+
+if subprocess.call(
+        "git rev-parse", shell=True,
+        stderr=subprocess.DEVNULL) != 0:
+    print("Disabling setuptools-scm")
+    extra_kwargs['use_scm_version'] = False
 
 
 setup(
@@ -29,7 +39,6 @@ setup(
     zip_safe=False,
 
     setup_requires=['setuptools-scm'],
-    use_scm_version=True,
 
     install_requires=[
         'Django >2.0',
@@ -44,4 +53,6 @@ setup(
         'social-auth-app-django',
     ],
     entry_points={},
+    **extra_kwargs,
+
 )

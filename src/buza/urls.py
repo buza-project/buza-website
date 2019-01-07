@@ -19,7 +19,7 @@ urlpatterns = [
 
     # user related paths
     url(r'^register/$', views.register, name='register'),
-    url(r'^edit/$', views.edit, name='edit'),
+    path(r'users/<int:pk>/update/', views.UserUpdate.as_view(), name='user-update'),
     path(r'users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
 
     # subject related paths

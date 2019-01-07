@@ -3,8 +3,6 @@ from typing import Any, Dict, Optional, Type
 from crispy_forms import layout
 from crispy_forms.helper import FormHelper
 from django import forms
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
@@ -16,7 +14,6 @@ from django.views import generic
 from django.views.generic.edit import FormMixin, ModelFormMixin
 
 from buza import models
-from buza.forms import UserEditForm
 
 
 class CrispyFormMixin(FormMixin):
@@ -81,30 +78,43 @@ def register(request: HttpRequest) -> HttpResponse:
     )
 
 
-@login_required  # type: ignore
-def edit(request: HttpRequest) -> HttpResponse:
-    """
-    Allow user to edit their own profile.
-    """
-    if request.method == 'POST':
-        user_form = UserEditForm(
-            instance=request.user,
-            files=request.FILES,
-            data=request.POST,
-        )
+class UserUpdate(CrispyFormMixin, LoginRequiredMixin, generic.UpdateView):
+    model = models.User
+    fields = [
+        'email',
+        'phone',
+        'photo',
+        'first_name',
+        'last_name',
+        'school',
+        'school_address',
+        'grade',
+        'bio',
+    ]
 
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Profile updated successfully')
-        else:
-            messages.error(request, 'Error updating your profile')
-    else:
-        user_form = UserEditForm(instance=request.user)
-    return render(
-        request,
-        'accounts/edit.html',
-        {'user_form': user_form},
-    )
+    # TODO: Merge with and migrate to existing buza/user_form.html ?
+    template_name = 'accounts/edit.html'
+
+    def get_object(self, queryset: QuerySet = None) -> models.User:
+        """
+        Only allow users to update their own profile.
+        """
+        user: models.User = super().get_object(queryset)
+        if not user == self.request.user:
+            raise PermissionDenied('You can only update your own profile.')
+        return user
+
+    def get_form_helper(self, form: forms.ModelForm) -> FormHelper:
+        user: models.User = self.object
+        helper = super().get_form_helper(form)
+        helper.form_action = reverse('user-update', kwargs=dict(pk=user.pk))
+        helper.add_input(layout.Submit('submit', 'Save Changes'))
+        return helper
+
+    def get_success_url(self) -> str:
+        user: models.User = self.object
+        success_url: str = reverse('user-detail', kwargs=dict(pk=user.pk))
+        return success_url
 
 
 class SubjectDetail(generic.DetailView):

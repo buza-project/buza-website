@@ -1,5 +1,6 @@
 *
 !.env.example
+!.git
 !Pipfile
 !Pipfile.lock
 !README.rst

@@ -1,0 +1,76 @@
+
+
+# Base Python build image: Python + build-base
+FROM python:3.6-alpine AS python-alpine-build
+RUN apk add --no-cache \
+    build-base
+
+
+# Stage: Build Pillow wheel for Alpine
+FROM python-alpine-build AS build-pillow
+RUN apk add --no-cache \
+    # Pillow dependencies:
+    # https://github.com/python-pillow/Pillow/blob/master/depends/alpine_Dockerfile
+    # https://github.com/python-pillow/docker-images/blob/master/alpine/Dockerfile
+    jpeg-dev \
+    zlib-dev \
+    freetype-dev \
+    lcms2-dev \
+    openjpeg-dev \
+    tiff-dev \
+    tk-dev \
+    tcl-dev
+RUN pip wheel --no-cache \
+    --wheel-dir /wheels \
+    Pillow
+
+FROM python-alpine-build AS build-psycopg2
+RUN apk add --no-cache \
+    postgresql-dev
+RUN pip wheel --no-cache \
+    --wheel-dir /wheels \
+    psycopg2
+
+
+# Stage: Build Yarn packages
+#FROM alpine AS build-yarn
+#RUN apk add --no-cache \
+#    yarn
+FROM node:alpine AS build-yarn
+# TODO: .yarnclean
+COPY package.json /
+RUN yarn
+# Output dir: /node_modules
+
+
+# Stage: Build wheels
+FROM python:3.6-alpine AS build-wheels
+# setuptools-scm needs git
+RUN apk add --no-cache git
+COPY --from=build-pillow /wheels /wheels
+COPY --from=build-psycopg2 /wheels /wheels
+COPY . /buza-website
+RUN pip wheel --no-cache \
+    --wheel-dir /wheels \
+    --find-links /wheels \
+    /buza-website
+# Output dir: /wheels
+
+
+# Stage: Build site
+FROM python:3.6-alpine AS build-site
+COPY --from=build-wheels /wheels /wheels
+# TODO:
+COPY --from=build-yarn /node_modules /node_modules
+RUN pip install --no-cache \
+    --no-index \
+    --user /wheels/*
+RUN /root/.local/bin/django-admin
+# Output dir: /root/.local
+# Output dir: /static_root
+
+
+# Stage: Final image.
+FROM python:3.6-alpine
+COPY --from=build-site /root/.local /root/.local
+# TODO: COPY --from=build-site /static_root /static_root

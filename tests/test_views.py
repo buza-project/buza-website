@@ -642,7 +642,7 @@ class TestSubjectList(TestCase):
 
         assert HTTPStatus.FOUND == response.status_code
         self.assertRedirects(response, f'/subjects/')
-        self.assertEquals(self.user.subjects.all().count(), 1)
+        self.assertEqual(self.user.subjects.all().count(), 1)
 
         response = self.client.get(response.url)
         self.assertContains(response, "following")
@@ -669,7 +669,7 @@ class TestSubjectList(TestCase):
 
         assert HTTPStatus.FOUND == response.status_code
         self.assertRedirects(response, f'/subjects/')
-        self.assertEquals(self.user.subjects.all().count(), 0)
+        self.assertEqual(self.user.subjects.all().count(), 0)
 
         response = self.client.get(response.url)
         self.assertNotContains(response, "following")
@@ -764,7 +764,7 @@ class TestSubjectDetails(TestCase):
 
         assert HTTPStatus.FOUND == response.status_code
         self.assertRedirects(response, f'/subjects/{self.maths.pk}/')
-        self.assertEquals(self.user.subjects.all().count(), 1)
+        self.assertEqual(self.user.subjects.all().count(), 1)
 
         response = self.client.get(response.url)
         self.assertContains(response, "following")
@@ -834,7 +834,7 @@ class TestSubjectDetails(TestCase):
 
         assert HTTPStatus.FOUND == response.status_code
         self.assertRedirects(response, f'/subjects/{self.maths.pk}/')
-        self.assertEquals(self.user.subjects.all().count(), 0)
+        self.assertEqual(self.user.subjects.all().count(), 0)
 
         response = self.client.get(response.url)
         self.assertNotContains(response, "following")

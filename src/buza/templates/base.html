@@ -29,11 +29,9 @@
         </div>
 
         <div class="row">
+
             <div class="col">
-                <a href="{% url 'subject-list' %}" class="buza-nav__link">Subjects</a>
-            </div>
-            <div class="col">
-                <a href="{% url 'question-list' %}" class="buza-nav__link">Questions</a>
+                <a href="{% url 'question-list' %}" class="buza-nav__link">Home</a>
             </div>
             <div class="col">
                 {% if user.is_authenticated %}

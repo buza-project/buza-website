@@ -227,11 +227,17 @@ class TestQuestionList(TestCase):
         assert HTTPStatus.OK == response.status_code
         self.assertTemplateUsed(response, 'buza/question_list.html')
 
-        self.assertQuerysetEqual(response.context['question_list'], [])
+        self.assertNotContains(response, "Follow")
+        self.assertNotContains(response, "Following")
+        self.assertQuerysetEqual([], response.context['question_list'])
+        self.assertQuerysetEqual(response.context['subject_list'], [
+            '<Subject: Biology>',
+            '<Subject: Mathematics>',
+        ])
 
     def test_get__unauthenticated(self) -> None:
         """
-        Unauthenticated users can view but not follow questions
+        Unauthenticated users can view but not follow subjects
         :return:
         """
         response = self.client.get(self.path)
@@ -249,7 +255,7 @@ class TestQuestionList(TestCase):
 
     def test_get__no_followed_subjects(self) -> None:
         """
-        Logged in users can view the list of questions and follow them
+        Logged in users can view the list of subjects and follow them
         """
         self.client.force_login(self.user)
         response = self.client.get(self.path)

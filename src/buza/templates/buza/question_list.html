@@ -4,13 +4,22 @@
 {% block head_extra %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+    <link rel="stylesheet" href="{% static 'buza/css/subjects.css' %}">
 {% endblock %}
 
 {% block title %}Questions - {{ block.super }}{% endblock %}
 
 {% block content %}
-
+ <div class="subject_detail-container">
+<div  class="subject__deck">
+    {% for subject in subject_list %}
+        {% include 'includes/subject_cards.html' with subject=subject user=user csrf_token=csrf_token only%}
+    {% endfor %}
+</div>
+ <div class="subject__question_list">
     {% for question in question_list %}
         {% include 'includes/question_card_brief.html' with question=question only %}
     {% endfor %}
+ </div>
+ </div>
 {% endblock %}

@@ -163,58 +163,10 @@ class SubjectDetail(generic.DetailView):
                 return HttpResponseRedirect(
                     reverse('subject-detail', kwargs=dict(pk=follow_subject.pk)))
             else:
-                print("nothing is working here")
-                print(request.POST)
                 return HttpResponseRedirect(
                     reverse('subject-detail', kwargs=dict(pk=subject.pk)))
         return HttpResponseRedirect(
             f'/auth/login/?next=/subjects/{subject.pk}/')
-
-
-class SubjectList(generic.ListView):
-    model = models.Subject
-
-    # Order subjects that the user is following first, then by title.
-    ordering = ['-user_following', 'title']
-
-    def get_queryset(self) -> QuerySet:
-        """
-        Annotate each `Subject` with a `user_following` field,
-        which is true if the authenticated user is following it.
-        """
-        queryset: QuerySet = super().get_queryset()
-        user: models.RequestUser = self.request.user
-
-        if user.is_authenticated:
-            # Subquery existence check for relation to user:
-            return queryset.annotate(
-                user_following=Exists(
-                    models.User.objects.filter(pk=user.pk, subjects=OuterRef('pk')),
-                ),
-            )
-        else:
-            # For anonymous users, always false.
-            return queryset.annotate(
-                user_following=Value(False, output_field=BooleanField()),
-            )
-
-    def post(self, request, *args, **kwargs):
-        user: models.RequestUser = self.request.user
-        if user.is_authenticated:
-            if 'follow-subject' in request.POST:
-                subject: models.Subject = models.Subject.objects.get(
-                    pk=request.POST['follow-subject'],
-                )
-                request.user.subjects.add(subject)
-                return HttpResponseRedirect(reverse('subject-list'))
-            elif 'following-subject' in request.POST:
-                subject = models.Subject.objects.get(
-                    pk=request.POST['following-subject'],
-                )
-                request.user.subjects.remove(subject)
-                return HttpResponseRedirect(reverse('subject-list'))
-        return HttpResponseRedirect(
-            f'/auth/login/?next=/subjects/')
 
 
 class UserDetail(generic.DetailView):
@@ -231,6 +183,56 @@ class QuestionDetail(generic.DetailView):
 class QuestionList(generic.ListView):
     model = models.Question
     ordering = ['-created']
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Add the question to the context.
+        """
+        context_data: Dict[str, Any] = super().get_context_data(**kwargs)
+        queryset = models.Subject.objects.all()
+        user: models.RequestUser = self.request.user
+
+        if user.is_authenticated:
+            # Subquery existence check for relation to user:
+            queryset = queryset.annotate(
+                user_following=Exists(
+                    models.User.objects.filter(pk=user.pk, subjects=OuterRef('pk')),
+                ),
+            )
+        else:
+            # For anonymous users, always false.
+            queryset = queryset.annotate(
+                user_following=Value(False, output_field=BooleanField()),
+            )
+        queryset = queryset.order_by('-user_following', 'title')
+        context_data.setdefault('subject_list', queryset)
+        return context_data
+
+    def post(self, request, *args, **kwargs):
+        user: models.RequestUser = self.request.user
+        if user.is_authenticated:
+            if 'follow-subject' in request.POST:
+                follow_subject: models.Subject = models.Subject.objects.get(
+                    pk=request.POST['follow-subject'],
+                )
+                request.user.subjects.add(follow_subject)
+                return HttpResponseRedirect(
+                    reverse(
+                        'subject-list',
+                        kwargs=dict(pk=request.POST['follow-subject'])),
+                )
+            elif 'following-subject' in request.POST:
+                following_subject = models.Subject.objects.get(
+                    pk=request.POST['following-subject'],
+                )
+                request.user.subjects.remove(following_subject)
+                return HttpResponseRedirect(
+                    reverse('subject-detail', kwargs=dict(pk=following_subject.pk)))
+            else:
+                return HttpResponseRedirect(
+                    reverse('question-list'))
+        return HttpResponseRedirect(
+            f'/auth/login/?next=/')
 
 
 class QuestionModelFormMixin(CrispyFormMixin, LoginRequiredMixin, ModelFormMixin):

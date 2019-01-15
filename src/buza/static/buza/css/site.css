@@ -11,6 +11,14 @@
     background-color: var(buza-grey);
 }
 
+.buza-green_text{
+color: var(--buza-green);
+}
+
+.buza-blue_text{
+color: var(--buza-blue);
+}
+
 /* Block: Navigation bar. */
 .buza-nav {
     background: linear-gradient(to bottom right, #17EAD9, #6078EA), #5689E8;
@@ -33,3 +41,5 @@
     margin-left: 0;
     max-width: 100%;
 }
+
+

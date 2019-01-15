@@ -1,7 +1,7 @@
 /* Styles for questions. */
 
 /* Block: Question */
-.question {
+.question__card {
     background-color: white;
     padding: 1em 2em;
     /* Spacing between questions: */
@@ -24,12 +24,17 @@
 .question__attribution {
     opacity: 0.5;
     font-size: smaller;
+    font-weight: bold;
 }
 
 .question__answers_heading {
     font-weight: bold;
     text-align: center;
     color: DarkOrchid;
+}
+
+.question__card-header{
+   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 /* XXX (Pi 2018-08-27): Temporary btn-primary override for our Buza green, until we do this better. */

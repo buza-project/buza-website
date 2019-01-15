@@ -217,11 +217,21 @@ class TestQuestionList(TestCase):
             title='Biology',
             short_title='bio',
         )
+        self.question: models.Question = models.Question.objects.create(
+            title="this is a queston",
+            author=self.user,
+            subject=self.maths,
+            grade=7,
+        )
+        self.answer: models.Answer = models.Answer.objects.create(
+            question=self.question,
+            author=self.user,
+        )
         self.path = reverse('question-list')
 
-    def test_get__empty(self) -> None:
+    def test_get__one_question(self) -> None:
         """
-        Test Question list view
+        Test Question list view with one question
         """
         response = self.client.get(reverse('question-list'))
         assert HTTPStatus.OK == response.status_code
@@ -229,11 +239,16 @@ class TestQuestionList(TestCase):
 
         self.assertNotContains(response, "Follow")
         self.assertNotContains(response, "Following")
-        self.assertQuerysetEqual([], response.context['question_list'])
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Biology>',
             '<Subject: Mathematics>',
         ])
+        self.assertContains(response, self.maths.title, count=2)
+        self.assertContains(response, self.biology.title, count=1)
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.question.title)
+        self.assertContains(response, "now")
+        self.assertContains(response, self.answer.body)
 
     def test_get__unauthenticated(self) -> None:
         """
@@ -244,8 +259,12 @@ class TestQuestionList(TestCase):
         assert HTTPStatus.OK == response.status_code
         self.assertNotContains(response, "Follow")
         self.assertNotContains(response, "Following")
-        self.assertContains(response, self.maths.title, count=1)
+        self.assertContains(response, self.maths.title, count=2)
         self.assertContains(response, self.biology.title, count=1)
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.answer.body)
+        # test the humanizer
+        self.assertContains(response, "now")
 
         # Listed by title.
         self.assertQuerysetEqual(response.context['subject_list'], [
@@ -263,8 +282,12 @@ class TestQuestionList(TestCase):
         self.assertContains(response, "follow")
         self.assertContains(response, "&#9733;")
         self.assertContains(response, "following", 0)
-        self.assertContains(response, self.maths.title, count=1)
+        self.assertContains(response, self.maths.title, count=2)
         self.assertContains(response, self.biology.title, count=1)
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.question.title)
+        self.assertContains(response, "now")
+        self.assertContains(response, self.answer.body)
 
         # Listed by title.
         self.assertQuerysetEqual(response.context['subject_list'], [
@@ -284,7 +307,10 @@ class TestQuestionList(TestCase):
         assert HTTPStatus.OK == response.status_code
         self.assertContains(response, "following")
         self.assertContains(response, "follow")
-
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.question.title)
+        self.assertContains(response, "now")
+        self.assertContains(response, self.answer.body)
         # Maths (followed) listed first.
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Mathematics>',
@@ -309,6 +335,11 @@ class TestQuestionList(TestCase):
         # test that EMS is truncated
         self.assertNotContains(response, ems.title)
         self.assertContains(response, 'Economics and Manage...')
+
+        # regular question list tests
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.question.title)
+        self.assertContains(response, "now")
 
     def test_post_unauthenticated(self) -> None:
         """Redirect unauthenticated user's posts """
@@ -341,6 +372,11 @@ class TestQuestionList(TestCase):
             '<Subject: Biology>',
         ])
 
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.question.title)
+        self.assertContains(response, "now")
+        self.assertContains(response, self.answer.body)
+
     def test_post__unfollow_in_subjectlist(self) -> None:
         """Redirect unauthenticated user's posts """
         self.client.force_login(self.user)
@@ -368,6 +404,11 @@ class TestQuestionList(TestCase):
             '<Subject: Biology>',
             '<Subject: Mathematics>',
         ])
+
+        self.assertContains(response, "@" + self.user.username)
+        self.assertContains(response, self.question.title)
+        self.assertContains(response, "now")
+        self.assertContains(response, self.answer.body)
 
 
 class TestQuestionCreate(TestCase):
@@ -737,8 +778,6 @@ class TestSubjectDetails(TestCase):
 
         assert HTTPStatus.OK == response.status_code
         self.assertContains(response, self.maths.title)
-        print(response.content)
-        print(self.maths.short_title)
         self.assertContains(
             response,
             "Ask New " + self.maths.short_title + " Question",
@@ -770,6 +809,7 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, "following")
         self.assertContains(response, "follow")
         # Maths (followed) listed first.
+        self.assertContains(response, self.maths.title, count=3)
         self.assertQuerysetEqual(response.context['subject_list'], [
             '<Subject: Mathematics>',
             '<Subject: Biology>',
@@ -790,7 +830,7 @@ class TestSubjectDetails(TestCase):
         self.assertContains(response, "follow")
         self.assertContains(response, "&#9733;")
         self.assertContains(response, "following", 0)
-        self.assertContains(response, self.maths.title, count=2)
+        self.assertContains(response, self.maths.title, count=3)
         self.assertContains(response, self.biology.title, count=1)
 
         # Listed subjects by title.

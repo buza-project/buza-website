@@ -3,8 +3,8 @@
 :root{
     --buza-blue:    #5689E8;
     --buza-green:    #32CD32;
-    --buza-grey:    #FAFAFA;
-    --buza-light-green:  #D4EDDA;
+    --buza-grey:    #A6C8C6;
+    --buza-light-green:  #62dd7f;
 }
 
 .bg-buza-site {
@@ -17,6 +17,9 @@ color: var(--buza-green);
 
 .buza-blue_text{
 color: var(--buza-blue);
+}
+.buza-grey_text{
+    color: var(--buza-grey);
 }
 
 /* Block: Navigation bar. */

@@ -23,7 +23,7 @@ subject-nav_bar{
 /* The Subject Following Card*/
 .subject__card_following {
     padding: 0.5em 1em;
-    background: var(--buza-green);
+    background: var(--buza-light-green);
     color: white;
 }
 
@@ -90,7 +90,7 @@ subject-nav_bar{
 
 .subject__buttons-following{
     border: 1px solid white;
-    background: var(--buza-green);
+    background: var(--buza-light-green);
     color: white;
     opacity: 0.8;
 }

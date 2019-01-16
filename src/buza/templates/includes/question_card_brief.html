@@ -1,3 +1,4 @@
+{% load humanize %}
 {% comment %}
     A question card with only brief details.
 
@@ -5,15 +6,17 @@
 
     * question: The question being viewed
 {% endcomment %}
-<div class="question mx-auto table-hover">
+<div class=" card question__card mx-auto table-hover">
+    <div class="question__card-header d-flex justify-content-between">
+        @{{ question.author.username }}
+            <a href="{% url 'subject-detail' question.subject.pk %}" class=" question__attribution buza-green_text"> {{question.subject}}</a>
+             <p class="date question__attribution buza-blue_text"> {{ question.created | naturaltime}}</p>
+  </div>
     <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
-        <p>{{ question.title }}</p>
+       {{ question.title|linebreaks|truncatewords:50 }}
     </a>
     <div class="question__body">
-        {{ question.body|linebreaks|truncatewords:20 }}
+        {{ question.answer_set.all.0.body|truncatewords:50}}
     </div>
-    <div class="question__attribution">
-        {{ question.author.get_full_name|default:question.author.username }}
-        <a class="date"> {{ question.created }}</a>
-    </div>
+
 </div>

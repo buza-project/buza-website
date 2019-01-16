@@ -4,7 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-buza-website = {editable = true, path = "."}
+buza-website = {path = ".",editable = true}
+humanize = "*"
 
 [dev-packages]
 "flake8" = "*"

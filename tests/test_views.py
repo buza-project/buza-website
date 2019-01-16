@@ -201,7 +201,7 @@ class TestQuestionDetail(TestCase):
 
         assert question == response.context['question']
         self.assertContains(response, question.title, count=2)
-        self.assertContains(response, question.body, count=1)
+        self.assertContains(response, question.body, count=0)
         self.assertContains(response, subject.title, count=1)
         self.assertContains(response, answer.body, count=1)
 

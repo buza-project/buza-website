@@ -13,7 +13,7 @@
     max-width: 45em;
 }
 
-.question:hover {
+.question__card:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
@@ -50,7 +50,7 @@
 }
 
 .question__add_answer {
-    background-color:MediumOrchid ;
+    background-color: var(--buza-light-purple);
     border-radius: 12px;
     padding: 1px 4%;
     text-align: center;
@@ -58,7 +58,7 @@
 }
 
 .question__edit_answer {
-    background-color:Orchid ;
+    background-color:var(--buza-purple);
     border-radius: 12px;
     padding: 1px 2%;
     text-align: center;
@@ -73,4 +73,13 @@ textarea[name=body] {
 /* TODO (Pi 2018-08-27): Target the Bootstrap form-control class directly, for now. Customise this more properly later. */
 .form-control {
     border: 2px solid #32CD32;
+}
+
+
+.dot {
+  height: 15px;
+  width: 15px;
+  background-color: var(--buza-light-purple);
+  border-radius: 50%;
+  display: inline-block;
 }

@@ -30,7 +30,7 @@
 .question__answers_heading {
     font-weight: bold;
     text-align: center;
-    color: DarkOrchid;
+    color: var(--buza-purple);
 }
 
 .question__card-header{
@@ -39,18 +39,18 @@
 
 /* XXX (Pi 2018-08-27): Temporary btn-primary override for our Buza green, until we do this better. */
 .btn-buza-green {
-    background-color: #32CD32;
-    border-color: #32CD32;
+    background-color: var(--buza-green);
+    border-color: var(--buza-green);
     border-radius: 1em;
 }
 
 .btn-buza-green:hover{
-    background-color: #32CD32;
-    border-color: #C3E58B;
+    background-color: var(--buza-green);
+    border-color:  var(--buza-light-green);
 }
 
 .question__add_answer {
-    background-color: var(--buza-light-purple);
+    background-color: var(--buza-purple);
     border-radius: 12px;
     padding: 1px 4%;
     text-align: center;
@@ -72,13 +72,13 @@ textarea[name=body] {
 
 /* TODO (Pi 2018-08-27): Target the Bootstrap form-control class directly, for now. Customise this more properly later. */
 .form-control {
-    border: 2px solid #32CD32;
+    border: 2px solid var(--buza-light-blue);
 }
 
 
 .dot {
-  height: 15px;
-  width: 15px;
+  height: 10px;
+  width: 10px;
   background-color: var(--buza-light-purple);
   border-radius: 50%;
   display: inline-block;

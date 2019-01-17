@@ -180,7 +180,8 @@ class TestQuestionDetail(TestCase):
         assert HTTPStatus.NOT_FOUND == response.status_code
 
     def test_get(self) -> None:
-        user = models.User.objects.create()
+        user = models.User.objects.create(username="username")
+        user2 = models.User.objects.create(username="username2")
         subject: models.Subject = models.Subject.objects.create(title="maths")
         question = models.Question.objects.create(
             author=user,
@@ -192,7 +193,7 @@ class TestQuestionDetail(TestCase):
         answer: models.Answer = models.Answer.objects.create(
             body='An answer',
             question=question,
-            author=user,
+            author=user2,
         )
         path = reverse('question-detail', kwargs=dict(pk=question.pk))
         response = self.client.get(path)
@@ -203,7 +204,8 @@ class TestQuestionDetail(TestCase):
         self.assertContains(response, question.title, count=2)
         self.assertContains(response, question.body, count=0)
         self.assertContains(response, subject.title, count=1)
-        self.assertContains(response, answer.body, count=1)
+        self.assertContains(response, answer.author, count=1)
+        self.assertContains(response, "now", count=2)
 
 
 class TestQuestionList(TestCase):

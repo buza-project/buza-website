@@ -19,5 +19,11 @@
     <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
        {{ question.title|linebreaks}}
     </a>
-
+    {% if user == question.author %}
+            <p class="flex-grow-1">
+                <a href="{% url 'question-update' pk=question.pk %}" class="btn btn-primary btn-buza-green">
+                    Edit question
+                </a>
+            </p>
+        {% endif %}
 </div>

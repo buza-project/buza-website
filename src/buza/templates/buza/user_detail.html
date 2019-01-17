@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+    <link rel="stylesheet" href="{% static 'buza/css/subjects.css' %}">
+{% endblock %}
 
 {% block title %}{{ user_object.get_full_name }} - {{ block.super }}{% endblock %}
+
+
 
 {% block content %}
     <h1>{{ user_object.get_full_name }}</h1>
@@ -13,13 +22,7 @@
         <li><a href="{% url 'logout' %}">Sign out</a></li>
     </ul>
     {% endif %}
+        {# get all the questions that the user has liked or asked #}
+    {% include 'includes/user_card_full.html' with profile_user=user_object only %}
 
-    {% if user_object.photo %}
-        <div style="float:right">
-            <img src="{{ user_object.photo.url }}">
-        </div>
-    {% endif %}
-
-    <p>Email: {{ user_object.email }}</p>  {# XXX: Privacy? #}
-    <p>Bio: {{ user_object.bio }}</p>
 {% endblock %}

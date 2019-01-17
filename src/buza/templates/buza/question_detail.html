@@ -14,7 +14,7 @@
 <br>
     {% with answers=question.answer_set.all %}  {# TODO: Ordering #}
         {% if answers %}
-            <h2 class="question__answers_heading">Answers</h2>
+            <h5 class="question__answers_heading">Answers</h5>
     <div class="d-flex justify-content-center">
         <span class="dot mr-2"></span>
         <span class="dot ml-2"></span>
@@ -22,7 +22,7 @@
     </div>
             {% for answer in question.answer_set.all %}
                <div class=" card question__card mx-auto table-hover">
-    <div class="question__card-header d-flex justify-content-between buza-blue_text">
+    <div class="question__card-header d-flex justify-content-between buza-purple_text">
                         <a href="{% url 'user-detail' question.author.pk %}">
             @{{ answer.author.username }}</a>
         <p class="date question__attribution buza-grey_text">

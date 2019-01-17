@@ -7,10 +7,13 @@
     * question: The question being viewed
 {% endcomment %}
 <div class=" card question__card mx-auto table-hover">
-    <div class="question__card-header d-flex justify-content-between">
-        @{{ question.author.username }}
-            <a href="{% url 'subject-detail' question.subject.pk %}" class=" question__attribution buza-green_text"> {{question.subject}}</a>
-             <p class="date question__attribution buza-blue_text"> {{ question.created | naturaltime}}</p>
+    <div class="question__card-header d-flex justify-content-between buza-blue_text">
+        <a href="{% url 'user-detail' question.author.pk %}">
+            @{{ question.author.username }}</a>
+        <a href="{% url 'subject-detail' question.subject.pk %}" class=" buza-green_text">
+            {{question.subject}}</a>
+        <p class="date question__attribution buza-grey_text">
+            {{ question.created | naturaltime}}</p>
   </div>
     <a href="{% url 'question-detail' question.pk %}" class="d-block question__title">
        {{ question.title|linebreaks|truncatewords:50 }}

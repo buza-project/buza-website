@@ -2,13 +2,16 @@
 
 :root{
     --buza-blue:    #5689E8;
-    --buza-green:    #32CD32;
-    --buza-grey:    #FAFAFA;
-    --buza-light-green:  #D4EDDA;
+    --buza-light-blue: #3BC9EC;
+    --buza-green:    #62DD7F;
+    --buza-grey:    #A6C8C6;
+    --buza-light-green:  #77DB8F;
+    --buza-light-purple: #C6B9CA;
+    --buza-purple: #B293BC;
 }
 
 .bg-buza-site {
-    background-color: var(buza-grey);
+    background-color: --var(buza-grey);
 }
 
 .buza-green_text{
@@ -18,7 +21,13 @@ color: var(--buza-green);
 .buza-blue_text{
 color: var(--buza-blue);
 }
+.buza-grey_text{
+    color: var(--buza-grey);
+}
 
+.buza-purple_text{
+    color: var(--buza-purple);
+}
 /* Block: Navigation bar. */
 .buza-nav {
     background: linear-gradient(to bottom right, #17EAD9, #6078EA), #5689E8;

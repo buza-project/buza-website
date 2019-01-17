@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block head_extra %}
     {{ block.super }}
@@ -10,56 +11,47 @@
 
 {% block content %}
     {% include 'includes/question_card_full.html' with question=question user=user only %}
-
+<br>
     {% with answers=question.answer_set.all %}  {# TODO: Ordering #}
         {% if answers %}
-            <h2 class="question__answers_heading">Answers</h2>
-
+            <h5 class="question__answers_heading">Answers</h5>
+    <div class="d-flex justify-content-center">
+        <span class="dot mr-2"></span>
+        <span class="dot ml-2"></span>
+        <span class="dot ml-2"></span>
+    </div>
             {% for answer in question.answer_set.all %}
-                {# XXX: Just base on question styling, for now. #}
-                <div class="question">
-
-                    <div class="question__body">
-                        {{ answer.body|linebreaks }}
-                    </div>
-
-                    <div class="d-flex flex-wrap justify-content-end">
-
-                        {% if user == answer.author %}
-                            <p class="flex-grow-1">
-                                <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block question__edit_answer">
+               <div class=" card question__card mx-auto table-hover">
+    <div class="question__card-header d-flex justify-content-between buza-purple_text">
+                        <a href="{% url 'user-detail' question.author.pk %}">
+            @{{ answer.author.username }}</a>
+        <p class="date question__attribution buza-grey_text">
+            {{ answer.modified | naturaltime}}</p>
+  </div>
+    <div class="question__body">
+        {{ answer.body}}
+            {% if user == answer.author %}
+              <p class="flex-grow-1">
+                  <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block question__edit_answer">
                                     Edit answer
-                                </a>
-                            </p>
+                  </a>
+              </p>
                         {% endif %}
-
-                        <div class="question__attribution">
-                            <div>
-                                Answered by:
-                                <a href="{% url 'user-detail' pk=answer.author.pk %}">
-                                    {{ answer.author.get_full_name|default:answer.author.username }}
-                                </a>
-                            </div>
-                            <div>
-                                Answered on: {{ answer.created }}
-                            </div>
-                            <div>
-                                Last modified: {{ answer.modified }}
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
+    </div></div>
             {% endfor %}
         {% else %}
-            <h2>No answers yet</h2>
+            <h2 class="question__answers_heading">No answers yet</h2>
+    <div class="d-flex justify-content-center">
+        <span class="dot mr-2"></span>
+        <span class="dot ml-2"></span>
+        <span class="dot ml-2"></span>
+    </div>
         {% endif %}
     {% endwith %}
 
-    <p>
-        <a href="{% url 'answer-create' question_pk=question.pk %}" class="d-inline-block question__add_answer">
+    <div class="justify-content-center">
+        <a href="{% url 'answer-create' question_pk=question.pk %}" class="d-inline-block question__add_answer justify-content-center">
            Add your answer
         </a>
-    </p>
+    </div>
 {% endblock %}

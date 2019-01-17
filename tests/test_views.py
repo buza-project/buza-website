@@ -180,7 +180,8 @@ class TestQuestionDetail(TestCase):
         assert HTTPStatus.NOT_FOUND == response.status_code
 
     def test_get(self) -> None:
-        user = models.User.objects.create()
+        user = models.User.objects.create(username="username")
+        user2 = models.User.objects.create(username="username2")
         subject: models.Subject = models.Subject.objects.create(title="maths")
         question = models.Question.objects.create(
             author=user,
@@ -192,7 +193,7 @@ class TestQuestionDetail(TestCase):
         answer: models.Answer = models.Answer.objects.create(
             body='An answer',
             question=question,
-            author=user,
+            author=user2,
         )
         path = reverse('question-detail', kwargs=dict(pk=question.pk))
         response = self.client.get(path)
@@ -201,9 +202,38 @@ class TestQuestionDetail(TestCase):
 
         assert question == response.context['question']
         self.assertContains(response, question.title, count=2)
-        self.assertContains(response, question.body, count=1)
+        self.assertContains(response, question.body, count=0)
         self.assertContains(response, subject.title, count=1)
-        self.assertContains(response, answer.body, count=1)
+        self.assertContains(response, answer.author, count=1)
+        self.assertContains(response, "now", count=2)
+        self.assertContains(response, "answers")
+        self.assertNotContains(response, "edit answer")
+
+    def test_get__authenticated(self) -> None:
+        user = models.User.objects.create(username="username")
+        subject: models.Subject = models.Subject.objects.create(title="maths")
+        self.client.force_login(user)
+        question = models.Question.objects.create(
+            author=user,
+            title='Example question?',
+            body='A question.',
+            subject=subject,
+            grade=7,
+        )
+        path = reverse('question-detail', kwargs=dict(pk=question.pk))
+        response = self.client.get(path)
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/question_detail.html')
+
+        assert question == response.context['question']
+        self.assertContains(response, question.title, count=2)
+        self.assertContains(response, question.body, count=0)
+        self.assertContains(response, subject.title, count=1)
+        self.assertContains(response, "now", count=1)
+        self.assertContains(response, "answers")
+        print(response.content)
+        self.assertContains(response, "Edit question")
+        self.assertContains(response, "No answers yet")
 
 
 class TestQuestionList(TestCase):
@@ -247,7 +277,7 @@ class TestQuestionList(TestCase):
         self.assertContains(response, self.biology.title, count=1)
         self.assertContains(response, "@" + self.user.username)
         self.assertContains(response, self.question.title)
-        self.assertContains(response, "now")
+        self.assertContains(response, "now", count=1)
         self.assertContains(response, self.answer.body)
 
     def test_get__unauthenticated(self) -> None:

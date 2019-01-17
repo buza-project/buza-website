@@ -30,19 +30,14 @@
   </div>
     <div class="question__body">
         {{ answer.body}}
-
-
-                        {% if user == answer.author %}
-                            <p class="flex-grow-1">
-                                <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block question__edit_answer">
+            {% if user == answer.author %}
+              <p class="flex-grow-1">
+                  <a href="{% url 'answer-update' pk=answer.pk %}" class="d-inline-block question__edit_answer">
                                     Edit answer
-                                </a>
-                            </p>
+                  </a>
+              </p>
                         {% endif %}
-                     </div>
-                    </div>
-                </div>
-               </div>
+    </div></div>
             {% endfor %}
         {% else %}
             <h2 class="question__answers_heading">No answers yet</h2>

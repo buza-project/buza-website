@@ -83,3 +83,9 @@ textarea[name=body] {
   border-radius: 50%;
   display: inline-block;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}

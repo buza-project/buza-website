@@ -1,9 +1,10 @@
+<div class="text-center">
 <h1>{{user.full_name}}</h1>
  <a href="{% url 'user-detail' profile_user.pk %}">
-            @{{ profile_user.username }}</a>
+            @{{profile_user.username }}</a>
         <p class="date question__attribution buza-grey_text">
-    <p>{{ user_object.bio }}</p>
-
+    <p>{% if profile_user.bio %}{{ profile_user.bio }} {% endif %}</p>
+</div>
       <div class="subject_detail-container">
       <div class="subject__question_list">
     {% for question in profile_user.question_set.all %}

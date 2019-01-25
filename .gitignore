@@ -94,3 +94,8 @@ db.sqlite3-journal
 
 # Vagrant
 .vagrant/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

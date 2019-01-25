@@ -14,3 +14,6 @@
 !tests
 !yarn.lock
 *.pyc
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+.gitignore

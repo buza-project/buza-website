@@ -28,6 +28,6 @@ deploy:
   region: "eu-west-1"
   app: "buza-website"
   env: "buza-testing"
-  bucket_name: "elasticbeanstalk-eu-west-1-134668310374"
+  bucket_name: $BUCKET_NAME
   on:
     branch: elastic-beanstalk

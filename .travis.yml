@@ -27,7 +27,7 @@ deploy:
     secure: "$SECRETACCESSKEY"
   region: "eu-west-1"
   app: "buza-website"
-  env: "buza-testing"
+  env: "buza-testing2"
   bucket_name: $BUCKET_NAME
   on:
     branch: elastic-beanstalk

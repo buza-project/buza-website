@@ -168,9 +168,33 @@ class TestUserDetail(TestCase):
         self.assertTemplateUsed(response, 'buza/user_detail.html')
 
         self.assertContains(response, 'Test User', count=2)
-        self.assertContains(response, f'<img src="{user.photo.url}">', count=1)
-        self.assertContains(response, 'Email: tester@example.com', count=1)
-        self.assertContains(response, 'Bio: Example bio.', count=1)
+        self.assertContains(response, 'Example bio.', count=1)
+
+    def test_get__user_with_question(self) -> None:
+        user = models.User.objects.create(
+            first_name='Test',
+            last_name='User',
+            username='newuser',
+            email='tester@example.com',
+            bio='Example bio.',
+        )
+        subject: models.Subject = models.Subject.objects.create(title="maths")
+        question = models.Question.objects.create(
+            author=user,
+            title='Example question?',
+            body='A question.',
+            subject=subject,
+            grade=7,
+        )
+        response = self.client.get(reverse('user-detail', kwargs=dict(pk=user.pk)))
+        assert HTTPStatus.OK == response.status_code
+        self.assertTemplateUsed(response, 'buza/user_detail.html')
+
+        self.assertContains(response, user.get_full_name(), count=2)
+        self.assertContains(response, "@" + user.username, count=2)
+        self.assertContains(response, user.bio, count=1)
+        self.assertContains(response, question.title, count=1)
+        self.assertContains(response, question.subject, count=1)
 
 
 class TestQuestionDetail(TestCase):

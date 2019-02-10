@@ -1,25 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'buza/css/questions.css' %}">
+    <link rel="stylesheet" href="{% static 'buza/css/subjects.css' %}">
+{% endblock %}
 
 {% block title %}{{ user_object.get_full_name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1>{{ user_object.get_full_name }}</h1>
+    <div class="text-center">
 
-    {# Viewing the signed-in user? #}
-    {% if user_object == user %}
-    <ul>
-        <li><a href="{% url 'user-update' pk=user_object.pk %}">Edit Account</a></li>
-        <li><a href="{% url 'password_change' %}">Change Password</a></li>
-        <li><a href="{% url 'logout' %}">Sign out</a></li>
-    </ul>
-    {% endif %}
+        {# Show account actions for the signed-in user. #}
+        {% if user_object == user %}
+            <p>
+                <a class="btn btn-info btn-sm" href="{% url 'user-update' pk=user_object.pk %}">Edit Account</a>
+                <a class="btn btn-outline-info btn-sm" href="{% url 'password_change' %}">Change Password</a>
+                <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">Sign out</a>
+            </p>
+        {% endif %}
 
-    {% if user_object.photo %}
-        <div style="float:right">
-            <img src="{{ user_object.photo.url }}">
-        </div>
-    {% endif %}
+        <h1>{{ user_object.get_full_name }}</h1>
 
-    <p>Email: {{ user_object.email }}</p>  {# XXX: Privacy? #}
-    <p>Bio: {{ user_object.bio }}</p>
+        <p>
+            <a href="{% url 'user-detail' user_object.pk %}">
+                @{{ user_object.username }}
+            </a>
+        </p>
+
+        {% if user_object.bio %}
+            <p>{{ user_object.bio }}</p>
+        {% endif %}
+    </div>
+
+    {# TODO (Pi 2019-02-10): Show the user's activity stream here, once we have that. #}
+
+    {# get all the questions that the user has asked #}
+    <div>
+        {% for question in user_object.question_set.all %}
+            {% include 'includes/question_card_brief.html' with question=question only %}
+        {% endfor %}
+    </div>
+
 {% endblock %}

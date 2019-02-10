@@ -31,7 +31,7 @@ setup(
     use_scm_version=True,
 
     install_requires=[
-        'Django >2.0',
+        'Django ~=2.1.0',
 
         # General libraries
         'Pillow',

@@ -22,7 +22,23 @@
         <li><a href="{% url 'logout' %}">Sign out</a></li>
     </ul>
     {% endif %}
-        {# get all the questions that the user has liked or asked #}
-    {% include 'includes/user_card_full.html' with profile_user=user_object only %}
+
+    {# get all the questions that the user has asked #}
+    <div class="text-center">
+        <a href="{% url 'user-detail' user_object.pk %}">
+            @{{ user_object.username }}
+        </a>
+        <p class="date question__attribution buza-grey_text">
+        {% if user_object.bio %}
+            <p>{{ user_object.bio }}</p>
+        {% endif %}
+    </div>
+    <div class="subject_detail-container">
+        <div class="subject__question_list">
+            {% for question in user_object.question_set.all %}
+                {% include 'includes/question_card_brief.html' with question=question only %}
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

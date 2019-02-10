@@ -11,7 +11,7 @@
     <div class="question__card-header d-flex justify-content-between buza-blue_text">
         <a href="{% url 'user-detail' question.author.pk %}">
             @{{ question.author.username }}</a>
-        <a href="{% url 'subject-detail' question.subject.pk %}" class=" buza-green_text text-left">
+        <a href="{% url 'subject-detail' question.subject.pk %}" class=" buza-green_text">
             {{question.subject}}</a>
         <p class="date question__attribution buza-grey_text">
             {{ question.created | naturaltime}}</p>

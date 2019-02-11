@@ -1,0 +1,38 @@
+# docker-compose file for Buza.
+#
+# Check file formatting using:
+#   diff -u docker-compose-deploy.yml <(docker run -i --rm funkwerk/compose_format <docker-compose-deploy.yml)
+#
+version: '3.4'
+
+
+services:
+
+  db:
+    # Constrain PostgreSQL major version for data compatibility.
+    image: postgres:11-alpine
+    volumes:
+    - postgres-data-11:/var/lib/postgresql/data
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+      target: buza-django-gunicorn
+    environment:
+    - DJANGO_ALLOWED_HOSTS=127.0.0.1
+    - DJANGO_DATABASE_URL=postgres://postgres@db/postgres
+    - DJANGO_SECRET_KEY=buza-docker-test  # XXX
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+      target: buza-nginx
+    ports:
+    - 8000:80
+
+
+volumes:
+  postgres-data-11:
+

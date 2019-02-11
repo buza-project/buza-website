@@ -1,14 +1,25 @@
 
 
-# Base Python build image: Python + build-base
-FROM python:3.6-alpine AS python-alpine-build
-RUN apk add --no-cache \
-    build-base
+# Base Python image
+FROM python:3.6-alpine AS base-python
+ENV COMMAND_APK_ADD='apk add --no-cache'
+# Python: Don't write .pyc files on import
+ENV PYTHONDONTWRITEBYTECODE=1
+
+
+# Base image for building Python wheels
+FROM base-python AS base-python-build-wheel
+ENV COMMAND_PIP_WHEEL='pip --no-cache-dir wheel --wheel-dir=/wheels'
+
+
+# Base image for building Python C extensions
+FROM base-python-build-wheel AS base-python-build-c
+RUN ${COMMAND_APK_ADD:?} build-base
 
 
 # Stage: Build Pillow wheel for Alpine
-FROM python-alpine-build AS build-pillow
-RUN apk add --no-cache \
+FROM base-python-build-c AS build-pillow
+RUN ${COMMAND_APK_ADD:?} \
     # Pillow dependencies:
     # https://github.com/python-pillow/Pillow/blob/master/depends/alpine_Dockerfile
     # https://github.com/python-pillow/docker-images/blob/master/alpine/Dockerfile
@@ -20,57 +31,102 @@ RUN apk add --no-cache \
     tiff-dev \
     tk-dev \
     tcl-dev
-RUN pip wheel --no-cache \
-    --wheel-dir /wheels \
-    Pillow
-
-FROM python-alpine-build AS build-psycopg2
-RUN apk add --no-cache \
-    postgresql-dev
-RUN pip wheel --no-cache \
-    --wheel-dir /wheels \
-    psycopg2
+RUN ${COMMAND_PIP_WHEEL:?} --no-deps Pillow
+# Output dir: /wheels/
 
 
-# Stage: Build Yarn packages
-#FROM alpine AS build-yarn
-#RUN apk add --no-cache \
-#    yarn
-FROM node:alpine AS build-yarn
-# TODO: .yarnclean
-COPY package.json /
-RUN yarn
-# Output dir: /node_modules
-
-
-# Stage: Build wheels
-FROM python:3.6-alpine AS build-wheels
-# setuptools-scm needs git
-RUN apk add --no-cache git
-COPY --from=build-pillow /wheels /wheels
-COPY --from=build-psycopg2 /wheels /wheels
-COPY . /buza-website
-RUN pip wheel --no-cache \
-    --wheel-dir /wheels \
+# Stage: Build Buza's requirements-pipenv.txt as wheels
+FROM base-python-build-wheel AS build-buza-requirements
+# XXX: Copy in Pillow
+COPY --from=build-pillow /wheels/ /wheels/
+COPY requirements-pipenv.txt /
+RUN ${COMMAND_PIP_WHEEL:?} \
+    # Find existing wheels.
     --find-links /wheels \
-    /buza-website
-# Output dir: /wheels
+    --no-deps \
+    -r requirements-pipenv.txt
+# Output dir: /wheels/
 
 
-# Stage: Build site
-FROM python:3.6-alpine AS build-site
-COPY --from=build-wheels /wheels /wheels
-# TODO:
-COPY --from=build-yarn /node_modules /node_modules
+# Stage: Build Buza wheel
+FROM base-python-build-wheel AS build-buza-wheel
+# setuptools-scm needs git
+RUN ${COMMAND_APK_ADD:?} git
+COPY .git/ /buza-website/.git/
+COPY src/ /buza-website/src/
+COPY README.rst setup.cfg setup.py /buza-website/
+RUN ${COMMAND_PIP_WHEEL:?} --no-deps /buza-website
+# Output dir: /wheels/
+
+
+# Stage: Build Buza's Yarn packages
+FROM node:alpine AS build-buza-yarn
+COPY .yarnclean package.json /
+RUN yarn
+# Output dir: /node_modules/
+
+
+# Stage: Build psycopg2 wheel for Alpine
+FROM base-python-build-c AS build-psycopg2
+RUN ${COMMAND_APK_ADD:?} postgresql-dev
+RUN ${COMMAND_PIP_WHEEL:?} psycopg2
+# Output dir: /wheels/
+
+
+# Stage: Build Buza site and files
+FROM base-python-build-wheel AS build-buza-site
+COPY --from=build-buza-requirements /wheels/ /wheels/
+COPY --from=build-buza-wheel /wheels/ /wheels/
+# XXX deployment:
+COPY --from=build-psycopg2 /wheels/ /wheels/
 RUN pip install --no-cache \
     --no-index \
-    --user /wheels/*
-RUN /root/.local/bin/django-admin
-# Output dir: /root/.local
-# Output dir: /static_root
+    --user \
+    --no-deps \
+    /wheels/*
+# Just set enough to build the static files.
+COPY --from=build-buza-yarn /node_modules/ /node_modules/
+ENV PATH="/root/.local/bin:${PATH}"
+ENV DJANGO_SETTINGS_MODULE=buza.settings_env
+ENV BASE_DIR=/
+ENV DJANGO_SECRET_KEY=dummy-secret-key
+RUN django-admin collectstatic
+# XXX: Just copy these, for now.
+RUN cp -a /node_modules/* /static_root/
+# Output dir: /root/.local/
+# Output dir: /static_root/
 
 
-# Stage: Final image.
-FROM python:3.6-alpine
-COPY --from=build-site /root/.local /root/.local
-# TODO: COPY --from=build-site /static_root /static_root
+# Stage: Final Django image.
+FROM base-python AS buza-django
+# Library dependencies:
+RUN ${COMMAND_APK_ADD:?} \
+    # psycopg2
+    libpq \
+    # Pillow:
+    jpeg \
+    zlib \
+    freetype \
+    lcms2 \
+    openjpeg \
+    tiff \
+    tk \
+    tcl
+COPY --from=build-buza-site /root/.local /root/.local
+ENV PATH="/root/.local/bin:$PATH"
+ENV DJANGO_SETTINGS_MODULE=buza.settings_env
+ENV BASE_DIR=/instance
+
+
+# Stage: Final Django + Gunicorn image.
+FROM buza-django AS buza-django-gunicorn
+RUN pip install --no-cache --user gunicorn
+# TODO: Better bind host?
+CMD gunicorn --bind 0.0.0.0 'django.core.wsgi:get_wsgi_application()'
+
+
+# Stage: Final nginx image.
+FROM nginx:alpine AS buza-nginx
+COPY --from=build-buza-site /static_root/ /static_root/
+# Replace default.conf
+COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf

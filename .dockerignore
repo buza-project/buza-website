@@ -1,13 +1,16 @@
 *
 !.env.example
 !.git
+!.yarnclean
 !Pipfile
 !Pipfile.lock
 !README.rst
 !buza-instance
+!deploy/nginx.conf
 !examples
 !mypy.ini
 !package.json
+!requirements-pipenv.txt
 !setup.cfg
 !setup.py
 !src

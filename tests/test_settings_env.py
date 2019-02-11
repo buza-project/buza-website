@@ -35,6 +35,7 @@ def test_settings_env() -> None:
         **_get_settings(settings_base),
         'DEBUG': False,
         'SECRET_KEY': 'secret key',
+        'ALLOWED_HOSTS': [],
         'DATABASES': {
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',

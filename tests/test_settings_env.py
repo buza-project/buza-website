@@ -51,12 +51,10 @@ def test_settings_env() -> None:
         'MEDIA_URL': '/media/',
         'LANGUAGE_CODE': 'en-ZA',
         'TIME_ZONE': 'Africa/Johannesburg',
-        'LOGIN_ERROR_URL': '/',
-        'SOCIAL_AUTH_FACEBOOK_API_VERSION': '2.8',
-        'SOCIAL_AUTH_FACEBOOK_KEY': 'none',
-        'SOCIAL_AUTH_FACEBOOK_SECRET': 'none',
-        'SOCIAL_AUTH_GOOGLE_OAUTH2_KEY': 'none',
-        'SOCIAL_AUTH_RAISE_EXCEPTIONS': False,
-        'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET': 'none',
+        'SOCIAL_AUTH_RAISE_EXCEPTIONS': None,
+        'SOCIAL_AUTH_GOOGLE_OAUTH2_KEY': None,
+        'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET': None,
+        'SOCIAL_AUTH_FACEBOOK_KEY': None,
+        'SOCIAL_AUTH_FACEBOOK_SECRET': None,
     }
     assert expected_settings == _get_settings(settings_env)

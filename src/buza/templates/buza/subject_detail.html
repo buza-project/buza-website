@@ -11,7 +11,7 @@
 
 {% block content %}
     <div class="subject_detail-container">
-        <div class="subject__deck">
+        <div id="react" class="subject__deck">
            {% for view_subject in subject_list %}
                  {% include 'includes/subject_cards.html' with subject=view_subject user=user csrf_token=csrf_token selected_subject=subject only%}
             {% endfor %}
@@ -31,4 +31,10 @@
             {% endwith %}
         </div>
     </div>
+
+    <script>
+        window.props = {% autoescape off %}{{ props }}{% endautoescape %};
+        window.reactEntrypoint = document.getElementById('react');
+    </script>
+    <script type="text/javascript" src="{% static "components/SubjectCards.js" %}"></script>
 {% endblock %}

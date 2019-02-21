@@ -25,6 +25,7 @@ os.environ.setdefault('DJANGO_DEBUG', 'True')
 STATICFILES_DIRS = [
     # Path to Yarn's packages
     str(checkout_dir.joinpath('node_modules')),
+    str(checkout_dir.joinpath('src/buza-ui/build/')),
 ]
 
 # Include the local host by default for development.

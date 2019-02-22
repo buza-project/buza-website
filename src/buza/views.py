@@ -221,7 +221,7 @@ class QuestionList(generic.ListView):
                 request.user.subjects.add(follow_subject)
                 return HttpResponseRedirect(
                     reverse(
-                        'subject-list',
+                        'subject-detail',
                         kwargs=dict(pk=request.POST['follow-subject'])),
                 )
             elif 'following-subject' in request.POST:

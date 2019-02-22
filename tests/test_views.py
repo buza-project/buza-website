@@ -21,7 +21,7 @@ class TestRegister(TestCase):
         self.assertTemplateUsed(response, 'accounts/register.html')
         assert 'user_form' in response.context
 
-    def test_get__authenticated(self)-> None:
+    def test_get__authenticated(self) -> None:
         user: models.User = models.User.objects.create()
         self.client.force_login(user)
         response = self.client.get(self.path)
@@ -606,7 +606,7 @@ class TestQuestionUpdate(TestCase):
         ))
         assert HTTPStatus.FORBIDDEN == response.status_code
 
-    def test_post__author_update(self)-> None:
+    def test_post__author_update(self) -> None:
         """
         Question update allows author to update the question
 

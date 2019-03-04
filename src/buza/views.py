@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict, Optional, Type
 
 from crispy_forms import layout
@@ -14,7 +15,6 @@ from django.views import generic
 from django.views.generic.edit import FormMixin, ModelFormMixin
 
 from buza import models
-import json
 
 
 class CrispyFormMixin(FormMixin):
@@ -144,7 +144,10 @@ class SubjectDetail(generic.DetailView):
         queryset = queryset.order_by('-user_following', 'title')
         context_data.setdefault('subject_list', queryset)
         # TODO: Ntokozo: remove this once we have serialized models
-        context_data.setdefault('props', json.dumps({ 'subjects': [{ 'title': 'stuff', 'pk': 3 }], 'userSubjects': [], 'selectedSubjectId': 3 }));
+        context_data.setdefault('props', json.dumps(
+            {'subjects': list(queryset.values()),
+             'userSubjects': [],
+             'selectedSubjectId': self.kwargs.get('object').pk}))
         return context_data
 
     def post(self, request, *args, **kwargs):

@@ -5,6 +5,11 @@ FROM python:3.6
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
 
+# setup nginx
+RUN rm -f /etc/service/nginx/down
+RUN rm /etc/nginx/sites-enabled/default
+ADD app.conf /etc/nginx/sites-enabled/app.conf
+
 RUN mkdir /buza-website
 
 RUN set -ex; \
@@ -28,6 +33,9 @@ RUN set -ex; \
   yarn; \
   cp -p .env.example .env; \
   pipenv install --system --deploy; \
+  DJANGO_SETTINGS_MODULE = buza.settings_env \
   pipenv run django-admin migrate
 
 EXPOSE 8000
+
+CMD django-admin runserver 0.0.0.0:8000

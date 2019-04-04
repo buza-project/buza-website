@@ -19,7 +19,7 @@ script:
 - py.test
 env:
   global:
-  - IMAGE_NAME= buzaproject/buza-answers
+  - IMAGE_NAME=buzaproject/buza-answers
   - REGISTRY_USER=sewagodimo
   - secure: EHpFX2eS3iVEUyClYW8Bq44bi8YMyILzMvNg9dikKfQ/+Ua7r1diRmtLL7TLnXMJM2QB0nDik1r2b0DhIWM8aTEjLu1Eo18MUgj4c27NSiF3kLO1DnXD2pPs18QZcTa2L8Hr5mBLjBuhDSKuscHGMu45xcfwtlkx05LIcT/d8kt7IXZToFo1bmjR4n03MY6QEf7i6/FIUgDxfV4v9/acz1BJJj/EPyLp8GalIQbf5E5lOppWooYrfCsks2cI7GPjZWRDNRMxni7nOmXKJLwXHz2mjcfarBN+3/cg2GOq8/Wul7T0CtFIBATLCWZ+LV/EqFAeFBKXN59U2uylmfQK4fF2AAsId7tZ9ZTCfnbiUCV6fmEbAafdg9GztdmVsviNBo3J125lQfyU/BFLcFz9dfoLj+yxLLFrAP3ikkTBNSOr0WVyZ9dwqH6ezOeqs++Wop09tKiViIRFkPelDJKUeuuA8sgAe5TxTF5hP3cnlOyx+vrPzeQLTC5oYN9zJmnSwaGu5/+7zqDtTsKwRizVNexV35AmoRUKDKBDMAtQLyi4dSAlJ4euumh4yEhCWMfmjf4pWv0qmBHB7Vx9/I/5efFo76C+EHXHodskaltHpMFq7wdejEq9K+RukV2Gg0AclVRqxaZ79//XV1fjxwxNEGr3eRP1Ll92r86EI1eGGvk=
 after_success:

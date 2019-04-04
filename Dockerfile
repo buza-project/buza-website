@@ -28,6 +28,9 @@ RUN set -ex; \
   yarn; \
   cp -p .env.example .env; \
   pipenv install --system --deploy; \
+  ENV DJANGO_SETTINGS_MODULE = buza.settings_env \
   pipenv run django-admin migrate
 
 EXPOSE 8000
+
+CMD django-admin runserver 0.0.0.0:8000

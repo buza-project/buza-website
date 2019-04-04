@@ -1,19 +1,45 @@
 language: python
 cache: pip
-
 matrix:
   include:
-    - { python: '3.6', env: TOXENV=py36 }
-
-    # XXX (2018-08-10): Work around Travis shenanigans for Python 3.7:
-    # https://github.com/travis-ci/travis-ci/issues/9815
-    - { python: '3.7', env: TOXENV=py37, dist: xenial, sudo: true }
-
-    # Codecov reporting:
-    - { python: '3.6', env: TOXENV=py36-codecov }
-
+  - python: '3.6'
+    env: TOXENV=py36
+  - python: '3.7'
+    env: TOXENV=py37
+    dist: xenial
+    sudo: true
+  - python: '3.6'
+    env: TOXENV=py36-codecov
 install:
-  - pip install tox
-
+- pip install tox
 script:
-  - tox
+- flake8 malaria24
+- python manage.py makemigrations --dry-run | grep 'No changes detected' || (echo
+  'There are changes which require migrations.' && exit 1)
+- py.test
+env:
+  global:
+  - IMAGE_NAME= buzaproject/buza-answers
+  - REGISTRY_USER=sewagodimo
+  - secure: EHpFX2eS3iVEUyClYW8Bq44bi8YMyILzMvNg9dikKfQ/+Ua7r1diRmtLL7TLnXMJM2QB0nDik1r2b0DhIWM8aTEjLu1Eo18MUgj4c27NSiF3kLO1DnXD2pPs18QZcTa2L8Hr5mBLjBuhDSKuscHGMu45xcfwtlkx05LIcT/d8kt7IXZToFo1bmjR4n03MY6QEf7i6/FIUgDxfV4v9/acz1BJJj/EPyLp8GalIQbf5E5lOppWooYrfCsks2cI7GPjZWRDNRMxni7nOmXKJLwXHz2mjcfarBN+3/cg2GOq8/Wul7T0CtFIBATLCWZ+LV/EqFAeFBKXN59U2uylmfQK4fF2AAsId7tZ9ZTCfnbiUCV6fmEbAafdg9GztdmVsviNBo3J125lQfyU/BFLcFz9dfoLj+yxLLFrAP3ikkTBNSOr0WVyZ9dwqH6ezOeqs++Wop09tKiViIRFkPelDJKUeuuA8sgAe5TxTF5hP3cnlOyx+vrPzeQLTC5oYN9zJmnSwaGu5/+7zqDtTsKwRizVNexV35AmoRUKDKBDMAtQLyi4dSAlJ4euumh4yEhCWMfmjf4pWv0qmBHB7Vx9/I/5efFo76C+EHXHodskaltHpMFq7wdejEq9K+RukV2Gg0AclVRqxaZ79//XV1fjxwxNEGr3eRP1Ll92r86EI1eGGvk=
+after_success:
+- coveralls
+jobs:
+  include:
+  - stage: docker
+    services:
+    - docker
+    dist: xenial
+    python: '3.7'
+    before_script:
+    - docker pull "$IMAGE_NAME" || true
+    script:
+    - docker build --pull --cache-from "$IMAGE_NAME" -t "$IMAGE_NAME" .
+    before_deploy:
+    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+    - pip install docker-ci-deploy==0.3.0
+    deploy:
+      provider: script
+      script: dcd -V $(git rev-parse --short HEAD) -L "$IMAGE_NAME"
+      on:
+        branch: develop

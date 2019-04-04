@@ -26,9 +26,11 @@ COPY . /buza-website
 RUN set -ex; \
   pip install pipenv; \
   yarn; \
-  cp -p .env.example .env; \
-  pipenv install --system --deploy; \
-  ENV DJANGO_SETTINGS_MODULE = buza.settings_env \
+  cp -p .env.example .env; 
+
+ENV DJANGO_SETTINGS_MODULE="buza.settings_env"
+
+RUN pipenv install --system --deploy; \
   pipenv run django-admin migrate
 
 EXPOSE 8000

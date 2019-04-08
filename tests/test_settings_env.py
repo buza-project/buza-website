@@ -58,6 +58,6 @@ def test_settings_env() -> None:
         'SOCIAL_AUTH_GOOGLE_OAUTH2_KEY': 'none',
         'SOCIAL_AUTH_RAISE_EXCEPTIONS': False,
         'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET': 'none',
-        'ALLOWED_HOSTS': ['127.0.0.1', '0.0.0.0'],
+        'ALLOWED_HOSTS': ['localhost'],
     }
     assert expected_settings == _get_settings(settings_env)

@@ -44,4 +44,4 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("GoogleSecret", "none")
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("FbKey", "none")
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("FbSecret", "none")
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost']

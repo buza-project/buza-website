@@ -1,16 +1,17 @@
 version: '3.3'
 
 services:
+    db:
+      image: postgres
    web:
     build: .
     image: buzaproject/buza-answers:latest
     container_name: buza-container
     environment:
-      - DJANGO_SETTINGS_MODULE=buza.settings_env_dev # cater for the dodgy image env variables
+      - DJANGO_SETTINGS_MODULE=buza.settings_env # cater for the dodgy image env variables
     ports:
       - ${BUZA_PORT:-8000}:8000
-    command: pipenv run django-admin runserver 0.0.0.0:8000
+    command: django-admin runserver 0.0.0.0:8000
     depends_on:
       - db
-    db:
-      image: postgres
+

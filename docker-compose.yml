@@ -1,17 +1,25 @@
-version: '3.3'
+version: '3.7'
 
 services:
-    db:
-      image: postgres
-   web:
+  db:
+    image: postgres:10.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  web:
+    environment:
+      - DJANGO_SETTINGS_MODULE=buza.settings_docker # cater for the dodgy image env variables
+    env_file:
+      - secrets.py
     build: .
     image: buzaproject/buza-answers:latest
+    volumes:
+      - .:/code
     container_name: buza-container
-    environment:
-      - DJANGO_SETTINGS_MODULE=buza.settings_env # cater for the dodgy image env variables
     ports:
-      - ${BUZA_PORT:-8000}:8000
+      - 8000:8000
     command: django-admin runserver 0.0.0.0:8000
     depends_on:
       - db
 
+volumes:
+  postgres_data:

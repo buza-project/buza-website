@@ -34,7 +34,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("FbSecret", "none")
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "buza-answers"),
+        "NAME": os.environ.get("DB_NAME", "buza_answers"),
         "USER": os.environ.get("DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DB_PASSWORD", ""),
         "HOST": os.environ.get("DB_HOST", "127.0.0.1"),

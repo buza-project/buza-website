@@ -12,7 +12,8 @@ env = environ.Env()
 
 # Assume we're running from a Git checkout directory.
 checkout_dir: Path = Path(__file__).parent.parent.parent
-assert checkout_dir.joinpath('.git').exists(), checkout_dir
+if checkout_dir.joinpath('.git').exists():
+    assert checkout_dir.joinpath('.git').exists(), checkout_dir
 
 ROOT_URLCONF = 'buza.urls'
 
@@ -90,15 +91,6 @@ STATICFILES_DIRS = [
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 BASE_DIR = os.environ.get('BASE_DIR') or str(checkout_dir.joinpath('buza-instance'))
-base_dir = env.path('BASE_DIR')
-
-
-DATABASES = {
-    'default': env.db(
-        'DJANGO_DATABASE_URL',
-        default=f'sqlite:///' + base_dir('buza.sqlite3'),
-    ),
-}
 
 SECRET_KEY = 'secret-key'
 

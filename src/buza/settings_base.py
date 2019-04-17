@@ -1,8 +1,19 @@
 """
 Base Django settings for a buza-website instance.
 """
+import os
+from pathlib import Path
+
+import environ
 from django.urls import reverse_lazy
 
+
+env = environ.Env()
+
+# Assume we're running from a Git checkout directory.
+checkout_dir: Path = Path(__file__).parent.parent.parent
+if checkout_dir.joinpath('.git').exists():
+    assert checkout_dir.joinpath('.git').exists(), checkout_dir
 
 ROOT_URLCONF = 'buza.urls'
 
@@ -13,7 +24,6 @@ INSTALLED_APPS = [
     # Third-party apps
     'crispy_forms',
     'taggit',
-    # 'social_django',
 
     # Django apps
     'django.contrib.admin',
@@ -70,3 +80,25 @@ LOGIN_REDIRECT_URL = reverse_lazy('home')
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+STATICFILES_DIRS = [
+    # Path to Yarn's packages
+    str(checkout_dir.joinpath('node_modules')),
+]
+
+# Include the local host by default for development.
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+BASE_DIR = os.environ.get('BASE_DIR') or str(checkout_dir.joinpath('buza-instance'))
+
+SECRET_KEY = 'secret-key'
+
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT", "media")
+
+STATIC_ROOT = os.environ.get("STATIC_ROOT", "static")
+STATIC_URL = env('DJANGO_STATIC_URL', default='/static/')
+
+# Internationalization
+LANGUAGE_CODE = env('DJANGO_LANGUAGE_CODE', default='en-ZA')
+TIME_ZONE = env('DJANGO_TIME_ZONE', default='Africa/Johannesburg')

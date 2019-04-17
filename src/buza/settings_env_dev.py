@@ -8,6 +8,10 @@ but still allow overriding any individual settings.
 import os
 from pathlib import Path
 
+import environ
+
+
+env = environ.Env()
 
 # Assume we're running from a Git checkout directory.
 checkout_dir: Path = Path(__file__).parent.parent.parent

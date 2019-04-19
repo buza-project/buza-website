@@ -962,3 +962,14 @@ class TestPrivacyPolicy(TestCase):
             response,
             "Privacy Policy for",
         )
+
+
+class TestTermsOfService(TestCase):
+
+    def test_privacy_policy(self) -> None:
+        response = self.client.get(reverse("terms-of-service"))
+        self.assertTemplateUsed(response, "accounts/terms_of_service.html")
+        self.assertContains(
+            response,
+            "Welcome to Buza Answers",
+        )

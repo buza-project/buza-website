@@ -32,6 +32,8 @@ STATICFILES_DIRS = [
 ]
 
 # Include the local host by default for development.
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 from buza.settings_env import *  # noqa: F401 isort:skip
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = True

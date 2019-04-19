@@ -951,3 +951,14 @@ class Test404PageNotFound(TestCase):
             status_code=HTTPStatus.NOT_FOUND,
         )
         self.assertContains(response, 'Take me home', status_code=HTTPStatus.NOT_FOUND)
+
+
+class TestPrivacyPolicy(TestCase):
+
+    def test_privacy_policy(self) -> None:
+        response = self.client.get(reverse("privacy-policy"))
+        self.assertTemplateUsed(response, "accounts/privacy_policy.html")
+        self.assertContains(
+            response,
+            "Privacy Policy for",
+        )

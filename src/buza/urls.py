@@ -12,6 +12,7 @@ urlpatterns = [
     # social-auth-app-django
     url(r'^login/', include('social_django.urls', namespace='social')),
 
+    url(r'about/privacy/', views.PrivacyPolicyView.as_view(), name='privacy-policy'),
     # Django auth
     path('auth/', include(django.contrib.auth.urls)),
 

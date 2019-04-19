@@ -78,6 +78,10 @@ def register(request: HttpRequest) -> HttpResponse:
     )
 
 
+class PrivacyPolicyView(generic.TemplateView):
+    template_name = "accounts/privacy_policy.html"
+
+
 class UserUpdate(CrispyFormMixin, LoginRequiredMixin, generic.UpdateView):
     model = models.User
     fields = [

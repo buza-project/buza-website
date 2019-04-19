@@ -16,15 +16,18 @@
  	<input type="hidden" name="next" value="{{ next }}" />
  	<p><input type="submit" value="Log-in"> </p>
  	</form>
- 	<p><a href="{% url "password_reset" %} ">Forgot your password?</a></p>
+ 	<p><a href="{% url "password_reset" %}">Forgot your password?</a></p>
  </div>
 <div class="social">
 	<ul>
+
 		<li class="facebook"><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a></li>
 		<li class="google"> <a  href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a></li>
 		<li class="twitter"> <a href=" {% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a></li>
 	</ul>
 
 </div>
+By signing up you indicate that you have read and agree to Buza Answer's 
+Terms of Service and <a href="{% url "privacy-policy" %}">Privacy Policy.</a>
  {% endblock %}
 

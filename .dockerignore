@@ -5,12 +5,12 @@
 !Pipfile.lock
 !README.rst
 !buza-instance
-!examples
+examples
 !mypy.ini
 !package.json
 !setup.cfg
 !setup.py
 !src
-!tests
+tests
 !yarn.lock
 *.pyc

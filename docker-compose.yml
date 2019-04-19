@@ -7,10 +7,9 @@ services:
       - postgres_data:/var/lib/postgresql/data/
   web:
     environment:
-      - DJANGO_SETTINGS_MODULE=buza.settings_docker # cater for the dodgy image env variables
+      - DJANGO_SETTINGS_MODULE=buza.settings_docker
     env_file:
       - secrets.py
-    build: .
     image: buzaproject/buza-answers:latest
     volumes:
       - .:/code
@@ -22,4 +21,4 @@ services:
       - db
 
 volumes:
-  postgres_data:
+  postgres_data

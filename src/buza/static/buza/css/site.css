@@ -10,8 +10,14 @@
     --buza-purple: #B293BC;
 }
 
+@font-face {
+    font-family: buzaFont;
+    src: url(fonts/GothamRounded-Light.ttf);
+  }
+
 .bg-buza-site {
     background-color: --var(buza-grey);
+    font-family: buzaFont;
 }
 
 .buza-green_text{

@@ -1,0 +1,79 @@
+.header { grid-area: header; 
+    grid-column: 1 ; /* start at the leftmost */
+    grid-column-end: 3; /* cover the whole row */
+    grid-row: 1; /* place at the top, first row*/
+    text-align: center;
+    color: var(--buza-blue);
+}
+.socials { 
+    grid-area: socials;
+    grid-column: 1 ; /* start left*/
+    grid-row: 2;  /* on the second row*/
+    padding-left: 10%;
+}
+.login { 
+    grid-area: login;
+    grid-column: 2 ; /* place rightmost*/
+    grid-row: 2; 
+    padding-left: 10%;
+    padding-right: 3%;
+    border-left: 2px solid var(--buza-blue);
+}
+.footer { 
+    grid-area: footer; 
+    grid-column: 1 ;
+    grid-column-end: 3;
+    grid-row: 3}
+
+.homepage {
+    padding-top: 10%;
+    margin-left: 25%;
+}
+.login-container {
+    display: grid;
+    grid-gap: 3%;
+    background: white;
+    position: absolute;
+    width: 50%;
+    padding-bottom: 5%;
+    font-size: 13px;
+    box-shadow: 1px 1px 5px 5px lightgrey;
+    color: grey;
+  }
+
+@media screen and (min-width: 600px) {
+    login-container {
+        width: 100%;
+        right:0;
+        box-shadow: 0px 0px 0px 0px white;
+        margin-left: 5%;
+    }
+    homepage {
+        margin-left: 0%; 
+        width: 100%;
+    }
+}
+
+/* SOCIAL LOGIN BUTTONS */
+.social-button {
+    display: inline-block;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+    padding: 5px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+.facebook{
+    background: #3B5998;
+}
+
+.google {
+    background: #EA4335;
+}
+
+/************** SPEECH BUBBLES ******************/

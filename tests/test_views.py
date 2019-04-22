@@ -973,3 +973,22 @@ class TestTermsOfService(TestCase):
             response,
             "Welcome to Buza Answers",
         )
+
+
+class TestHomagePageView(TestCase):
+
+    def test__get__unauthenticated(self) -> None:
+        """Unauthenticated users are directed to the login page
+        """
+        response = self.client.get(reverse('home'))
+        expected_url = f'/auth/login/'
+        self.assertRedirects(response, expected_url)
+
+    def test__get__authenticated(self) -> None:
+        """Authenticated users are directed to their profile
+        """
+        self.user: models.User = models.User.objects.create()
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('home'))
+        expected_url = f'/users/{self.user.pk}/'
+        self.assertRedirects(response, expected_url)

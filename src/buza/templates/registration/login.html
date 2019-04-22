@@ -1,33 +1,69 @@
-{% extends "base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Bootstrap meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{%block title%} Logging-in {%endblock%}
+    {# TODO (Pi 2018-08-27): Minimise this to just the Bootstrap bits we actually use. #}
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
 
-{% block content%}
-<h1>Buza Login</h1>
-{%if form.errors %}
- <p>Your username and password do not match. Please try again</p>
- {% else %}
- <p>Please enter your login details below:</p>
- {% endif %}
- <div class="login-form">
- 	<form action="{% url  "login" %}" method="post">
- 	{{form.as_p}}
- 	{% csrf_token %}
- 	<input type="hidden" name="next" value="{{ next }}" />
- 	<p><input type="submit" value="Log-in"> </p>
- 	</form>
- 	<p><a href="{% url "password_reset" %}">Forgot your password?</a></p>
+    <link rel="icon" href="{% static 'buza/images/buza-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'buza/css/site.css' %}">
+	<link rel="stylesheet" href="{% static 'buza/css/login.css' %}">
+
+
+    <title>{% block title %}Buza Login{% endblock %}</title>
+</head>
+<body class="bg-buza-site">
+    <div class="container homepage">
+<div class="login-container">
+  <div class="header">
+			<h1>Buza Answers</h1>
+ 			<p>Connecting high school learners with University Students, <br>
+ 			Proffesionals and Experts accross the country.</p>
+
+		</div>
+  <div class="socials">
+		<div>
+		<button class="social-button facebook" >
+		<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" style="color:white;">
+		Login with Facebook</a>
+		</button>
+		</div>
+		<div> 
+		<button class="social-button google" ><span>
+		<a  href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}" style="color:white;">
+		Login with Google</a></span>
+		</button>
+		</div>
+		<div > 
+			By signing up you indicate that you <br>
+			have read and agree to Buza Answer's <br>
+			<a href="{% url "terms-of-service" %}">Terms of Service</a> and 
+			<a href="{% url "privacy-policy" %}">Privacy Policy.</a>
+ 		</div>
+
+		 </div>
+  <div class="login">
+
+		<div>
+		{%if form.errors %}
+		<p>Your username and password do not match. Please try again</p>
+		{% else %}
+		<p>Login:</p>
+		{% endif %}
+	</div>
+		<div class="login-form">
+			<form action="{% url  "login" %}" method="post">
+			{{form.as_p}}
+			{% csrf_token %}
+			<input type="hidden" name="next" value="{{ next }}" />
+			<p><a href="{% url "password_reset" %}">Forgot your password?</a>
+			<input type="submit" value="Log-in"></p>
+			</form>
+			
+ 	</div>
+  </div>
  </div>
-<div class="social">
-	<ul>
-
-		<li class="facebook"><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a></li>
-		<li class="google"> <a  href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a></li>
-		<li class="twitter"> <a href=" {% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a></li>
-	</ul>
-
-</div>
-By signing up you indicate that you have read and agree to Buza Answer's 
-<a href="{% url "terms-of-service" %}">Terms of Service</a> and <a href="{% url "privacy-policy" %}">Privacy Policy.</a>
- {% endblock %}
-

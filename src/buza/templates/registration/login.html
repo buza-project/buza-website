@@ -21,7 +21,7 @@
 <div class="login-container">
   <div class="header">
 			<h1>Buza Answers</h1>
- 			<p>Connecting high school learners with University Students, <br>
+ 			<p class="slogan-text">Connecting high school learners with University Students,
  			Proffesionals and Experts accross the country.</p>
 
 		</div>
@@ -38,9 +38,9 @@
 		Login with Google</a></span>
 		</button>
 		</div>
-		<div > 
-			By signing up you indicate that you <br>
-			have read and agree to Buza Answer's <br>
+		<div> 
+			By signing up you indicate that you 
+			have read and agree to Buza Answer's
 			<a href="{% url "terms-of-service" %}">Terms of Service</a> and 
 			<a href="{% url "privacy-policy" %}">Privacy Policy.</a>
  		</div>
@@ -52,7 +52,7 @@
 		{%if form.errors %}
 		<p>Your username and password do not match. Please try again</p>
 		{% else %}
-		<p>Login:</p>
+		<p style="text-align: center; font-weight:bold; ">Login</p>
 		{% endif %}
 	</div>
 		<div class="login-form">

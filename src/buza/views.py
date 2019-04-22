@@ -78,6 +78,19 @@ def register(request: HttpRequest) -> HttpResponse:
     )
 
 
+class HomePageView(generic.RedirectView):
+    permanent = False
+    query_string = True
+    pattern_name = 'login'
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+        if user.is_authenticated:
+            return reverse('user-detail', kwargs=dict(pk=user.pk))
+        else:
+            return '/auth/login/'
+
+
 class PrivacyPolicyView(generic.TemplateView):
     template_name = "accounts/privacy_policy.html"
 

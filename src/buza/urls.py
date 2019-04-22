@@ -2,7 +2,6 @@ import django.contrib.auth.urls
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
-from django.views import generic
 
 from buza import views
 
@@ -17,7 +16,7 @@ urlpatterns = [
     # Django auth
     path('auth/', include(django.contrib.auth.urls)),
 
-    path('', generic.RedirectView.as_view(pattern_name='question-list'), name='home'),
+    path('', views.HomePageView.as_view(), name='home'),
 
     # user related paths
     url(r'^register/$', views.register, name='register'),
@@ -28,7 +27,7 @@ urlpatterns = [
     path('subjects/<int:pk>/', views.SubjectDetail.as_view(), name='subject-detail'),
 
     # question related paths
-    path('home/', views.QuestionList.as_view(), name='question-list'),
+    path('questions/', views.QuestionList.as_view(), name='question-list'),
     path('questions/<int:pk>/', views.QuestionDetail.as_view(), name='question-detail'),
     path(
         'questions/<int:subject_pk>/ask/',
